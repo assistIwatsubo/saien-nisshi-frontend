@@ -5,10 +5,8 @@ import PageTitle from "@/components/ui/page-title";
 
 export default function Home() {
   return (
-    <>
-      <div id="diary-wrapper" className="py-10">
-        <PageTitle />
-      </div>
-    </>
+    <div id="diary-wrapper" className="py-10">
+      <PageTitle />
+    </div>
   );
 }

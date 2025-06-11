@@ -1,23 +1,27 @@
 import { getFormattedDate } from "@/lib/format-date";
 type Props = {
-  variant?: "today" | "editting" | "past";
+  variant?: "today" | "create" | "edit" | "past";
 };
 
 export default function PageTitle({ variant = "today" }: Props) {
-  const formatted = getFormattedDate();
+  const today = getFormattedDate();
+  const date = "6月5日(木)";
 
   let content: string;
 
   switch (variant) {
-    case "editting":
-      content = `${formatted}の記録をつける`;
+    case "create":
+      content = `${today}の記録をつける`;
+      break;
+    case "edit":
+      content = `${date}の記録を編集する`;
       break;
     case "past":
-      content = `${formatted}ではない過去の日付`;
+      content = `${date}`;
       break;
     case "today":
     default:
-      content = formatted;
+      content = today;
       break;
   }
 

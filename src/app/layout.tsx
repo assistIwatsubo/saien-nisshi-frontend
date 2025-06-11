@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { system } from "../lib/fonts";
 import "@/styles/globals.css";
+import Footer from "@/components/layout/footer";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -19,10 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body
-        className={`${system.className} font container mr-auto ml-auto text-base text-gray-800`}
-      >
+      <body className="ralative font z-0 mr-auto ml-auto w-full text-base">
         {children}
+        <Footer />
       </body>
     </html>
   );

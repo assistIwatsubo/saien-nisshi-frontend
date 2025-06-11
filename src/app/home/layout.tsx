@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import { system } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "home",
@@ -13,9 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main
-      className={`${system.className} container flex min-h-[100vh] w-full flex-col items-center justify-start bg-green-200 saturate-50 filter`}
-    >
+    <main className="flex w-full flex-col items-center justify-start bg-green-200 saturate-50 filter">
       {children}
     </main>
   );

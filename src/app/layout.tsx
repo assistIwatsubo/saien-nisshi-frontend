@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import Footer from "@/components/layout/footer";
+import Footer from "@/ui/atoms/footer";
+import { Providers } from "./providers";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -19,8 +20,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className="ralative font z-0 mr-auto ml-auto w-full text-base">
-        {children}
+      <body className="font mr-auto ml-auto w-full text-base">
+        <Providers>{children}</Providers>
         <Footer />
       </body>
     </html>

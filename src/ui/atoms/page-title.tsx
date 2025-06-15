@@ -2,11 +2,10 @@ import { getFormattedDate } from "@/lib/format-date";
 type Props = {
   variant?: "today" | "create" | "edit" | "past";
 };
+const today = getFormattedDate();
+const date = "6月5日(木)";
 
 export default function PageTitle({ variant = "today" }: Props) {
-  const today = getFormattedDate();
-  const date = "6月5日(木)";
-
   let content: string;
 
   switch (variant) {
@@ -25,5 +24,5 @@ export default function PageTitle({ variant = "today" }: Props) {
       break;
   }
 
-  return <h2 className="font-bold">{content}</h2>;
+  return <h2 className="my-4 text-center font-bold">{content}</h2>;
 }

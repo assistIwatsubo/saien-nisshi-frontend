@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { appTitle } from "../lib/fonts";
-import Link from "next/link";
+import DecorationArch from "@/ui/atoms/decoration-arch";
+import LoginWithModal from "@/ui/molecules/login-with-modal";
 
 export default function Page() {
   return (
@@ -17,7 +18,7 @@ export default function Page() {
         data-role="content-wrapper"
         className="relative mx-auto flex w-full flex-col items-center justify-start"
       >
-        <section data-role="apptitle-section" className="py-[8vw] lg:py-[16vh]">
+        <section data-role="apptitle-section" className="pt-[8vw] lg:pt-[16vh]">
           <hgroup className="py-4 text-center">
             <h1
               className={`${appTitle.className} mt-8 mb-4 text-4xl font-bold text-white drop-shadow`}
@@ -28,18 +29,9 @@ export default function Page() {
               私の脱！家庭菜園日誌
             </p>
           </hgroup>
-          <div
-            data-role="button-wrapper"
-            className="container py-4 text-center"
-          >
-            <Link
-              href="/home"
-              className="rounded-lg bg-green-600 px-4 py-1 font-bold text-white hover:bg-orange-600"
-            >
-              Homeへ
-            </Link>
-          </div>
+          <LoginWithModal />
         </section>
+        <DecorationArch />
         <div data-role="section-wrapper" className="bg-[var(--app-base-color)]">
           <section>
             <hgroup className="container m-auto my-[10vh] text-center">

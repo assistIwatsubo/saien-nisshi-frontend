@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
+import DynamicButton from "@/ui/atoms/dynamic-button";
+import BackgroundImage from "@/ui/atoms/backgroundImage";
 
 export const metadata: Metadata = {
   title: "home",
@@ -12,8 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex w-full flex-col items-center justify-start bg-green-200 saturate-50 filter">
-      {children}
-    </main>
+    <div
+      data-role="main-wrapper"
+      className="relative bg-[var(--app-base-color)]"
+    >
+      <BackgroundImage />
+      <main className="relative w-full">{children}</main>
+      <DynamicButton />
+    </div>
   );
 }

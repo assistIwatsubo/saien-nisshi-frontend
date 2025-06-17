@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
         const { email, password } = credentials ?? {};
 
         // ここに認証ロジックを書く（今はダミー）
-        if (email === "test@example.com" && password === "password123") {
+        if (email === "test@example.com" && password === "1234") {
           return {
             id: "1",
             name: "Test User",
@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
           };
         }
 
-        if (email === "beginner@example.com" && password === "password123") {
+        if (email === "beginner@example.com" && password === "1234") {
           return {
             id: "2",
             name: "Beginner User",

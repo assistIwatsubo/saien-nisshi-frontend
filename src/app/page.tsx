@@ -12,7 +12,7 @@ export default function Page() {
         alt="背景画像"
         width={1280}
         height={853}
-        className="fixed left-0 -z-0 min-h-[50vh] w-auto overflow-hidden object-cover object-right blur-[2px] saturate-80 filter lg:h-auto lg:w-full"
+        className="fixed left-0 -z-0 min-h-[70vh] w-auto overflow-hidden object-cover object-right blur-[2px] saturate-80 filter lg:h-auto lg:w-full"
       />
       <main
         data-role="content-wrapper"

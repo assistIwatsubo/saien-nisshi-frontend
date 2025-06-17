@@ -14,13 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div
-      data-role="main-wrapper"
-      className="relative bg-[var(--app-base-color)]"
-    >
+    <>
       <BackgroundImage />
       <main className="relative w-full">{children}</main>
       <DynamicButton />
-    </div>
+    </>
   );
 }

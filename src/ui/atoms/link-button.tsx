@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 type LinkButtonProps = {
-  children: React.ReactNode;
+  label: string;
   href: string;
   color?: "primary" | "secondary";
   shape?: "rectangle" | "rounded";
@@ -9,11 +9,11 @@ type LinkButtonProps = {
 };
 
 export default function LinkButton({
-  children,
-  href = "/",
+  label = "homeへ",
+  href = "/home",
   color = "primary",
   shape = "rectangle",
-  fullWidth = true,
+  fullWidth = false,
 }: LinkButtonProps) {
   const colorClasses = {
     primary:
@@ -28,7 +28,7 @@ export default function LinkButton({
   };
 
   const baseClass = [
-    "px-4 py-2 font-bold transition duration-150 bg-white border-2",
+    "px-4 py-2 font-bold transition duration-150 bg-white border-2 shadow-md",
     fullWidth ? "w-full" : "inline-block",
     shapeClasses[shape],
     colorClasses[color],
@@ -38,7 +38,7 @@ export default function LinkButton({
 
   return (
     <Link className={baseClass} href={href}>
-      {children}
+      {label}
     </Link>
   );
 }

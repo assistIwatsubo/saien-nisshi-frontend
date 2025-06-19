@@ -23,7 +23,7 @@ export default function DynamicButton({ variant = "home" }: Props) {
   return (
     <Link
       href={variant}
-      className="sticky bottom-0 left-1/2 z-1 block w-[120px] -translate-x-1/2 rounded-t-full bg-[var(--app-home-base-color)] p-4 text-center text-xs font-bold"
+      className="sticky bottom-0 left-1/2 z-1 block w-[120px] -translate-x-1/2 rounded-t-full bg-[var(--app-home-base-color)] p-4 text-center text-xs font-bold whitespace-nowrap shadow-lg"
     >
       <Image
         data-role="icon"

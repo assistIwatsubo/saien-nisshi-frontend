@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <BackgroundImage />
+      <BackgroundImage imageUrl="/images/sample-home-bg.jpeg" />
       <main className="relative w-full">{children}</main>
       <DynamicButton />
     </>

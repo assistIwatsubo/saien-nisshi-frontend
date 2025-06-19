@@ -9,7 +9,7 @@ export default function DecorationArch() {
       height={50}
       alt=""
       priority
-      className="relative top-0 z-0 mt-4 h-auto w-full object-cover xl:top-[1px]"
+      className="relative top-0 z-0 mt-4 h-auto w-full object-cover md:top-[1px]"
     />
   );
 }

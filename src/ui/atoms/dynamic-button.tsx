@@ -21,19 +21,22 @@ export default function DynamicButton({ variant = "home" }: Props) {
       break;
   }
   return (
-    <Link
-      href={variant}
-      className="sticky bottom-0 left-1/2 z-1 block w-[120px] -translate-x-1/2 rounded-t-full bg-[var(--app-home-base-color)] p-4 text-center text-xs font-bold whitespace-nowrap shadow-lg"
-    >
-      <Image
-        data-role="icon"
-        src="/icons/pencil.png"
-        alt=""
-        width={128}
-        height={128}
-        className="p-4 pt-2"
-      />
-      {text}
-    </Link>
+    <>
+      <div className="bottom0 absolute right-0 left-0 h-40 w-full bg-white"></div>
+      <Link
+        href={variant}
+        className="sticky bottom-0 left-1/2 z-1 block w-[120px] -translate-x-1/2 rounded-t-full bg-[var(--app-home-base-color)] p-4 text-center text-xs font-bold whitespace-nowrap shadow-lg"
+      >
+        <Image
+          data-role="icon"
+          src="/icons/pencil.png"
+          alt=""
+          width={128}
+          height={128}
+          className="p-4 pt-2"
+        />
+        {text}
+      </Link>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Pointer } from "lucide-react";
 import { Schedule } from "@/types/skedule";
+import TitleH3 from "../atoms/title-h3";
 
 export const dummySchedules: Schedule[] = [
   {
@@ -24,9 +25,12 @@ export default function HomeSchedules() {
 
   return (
     <section aria-labelledby="schedule-area-title" className="py-4">
-      <h3 className="app-text-shadow w-fit rounded-t-md bg-[var(--app-secondary-color)] px-2 text-sm leading-6 font-bold text-white shadow-md">
-        今日の予定
-      </h3>
+      <TitleH3
+        label="今日の予定"
+        type="likeTab"
+        color="accent"
+        id="schedule-area-title"
+      />
 
       <ul className="app-blurred-bg-white flex flex-col gap-4 rounded-md rounded-tl-none p-4 text-sm shadow-md">
         {visibleItems.map((item, index) => (

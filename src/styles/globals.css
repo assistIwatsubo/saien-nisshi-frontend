@@ -4,7 +4,8 @@
   --background: #ffffff;
   --foreground: #1f2937; /* text-gray-800 */
   --app-primary-color: #14532d; /* text-green-900 */
-  --app-secondary-color: #10b981; /* text-green-900 */
+  --app-secondary-color: #10b981;
+  --app-accent-color: #f97300;
   --app-base-color: #f8f3dc; /* bg-amber-100 saturate-50 */
   --app-home-base-color: #bef264;
   --app-border-gray: #cccccc;

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Tag } from "../atoms/tag";
 import { DiaryEntry } from "@/types/diary";
+import { comment } from "@/lib/fonts";
 
 export const dummyDiaryEntries: DiaryEntry[] = [
   {
@@ -47,35 +48,37 @@ export default function DiariesList() {
       <ol className="flex flex-col gap-4">
         {dummyDiaryEntries.map((entry) => (
           <li key={entry.date}>
-            <Link
-              href={`/diary/${entry.id}`}
-              className="app-blurred-bg-white flex gap-4 rounded-md border-2 border-[var(--app-secondary-color)] p-4"
-            >
-              <time
-                dateTime={entry.date}
-                className="my-auto flex w-1/5 flex-col items-stretch justify-start font-bold"
-              >
-                <span className="text-2xl">{entry.date.split("-")[1]}/</span>
-                <span className="mb-2 text-4xl">
-                  {entry.date.split("-")[2]}
-                </span>
-                <span className="whitespace-nowrap">
-                  {new Date(entry.date).toLocaleDateString("ja-JP", {
-                    weekday: "long",
-                  })}
-                </span>
-              </time>
-              <div data-role="diary-preview" className="flex flex-col gap-2">
-                <h4 className="container border-b-1 leading-loose font-bold">
-                  {entry.title}
-                </h4>
-                <p className="line-clamp-3 text-sm">{entry.body}</p>
-                <div data-role="tags-display" className="mt-2 flex gap-2">
-                  {(entry.tags ?? []).map((tag) => (
-                    <Tag key={tag} label={tag} />
-                  ))}
+            <Link href={`/diary/${entry.id}`}>
+              <article className="app-blurred-bg-white flex gap-4 rounded-md border-2 border-[var(--app-secondary-color)] p-4">
+                <time
+                  dateTime={entry.date}
+                  className="my-auto flex w-auto flex-col items-stretch justify-start font-bold"
+                >
+                  <span className="text-2xl">{entry.date.split("-")[1]}/</span>
+                  <span className="mb-2 text-4xl">
+                    {entry.date.split("-")[2]}
+                  </span>
+                  <span className="whitespace-nowrap">
+                    {new Date(entry.date).toLocaleDateString("ja-JP", {
+                      weekday: "long",
+                    })}
+                  </span>
+                </time>
+                <div
+                  data-role="diary-preview"
+                  className="flex flex-1 flex-col gap-2"
+                >
+                  <h4 className="containe border-b-1 leading-loose font-bold">
+                    {entry.title}
+                  </h4>
+                  <p className="line-clamp-3 text-sm">{entry.body}</p>
+                  <div data-role="tags-display" className="mt-2 flex gap-2">
+                    {(entry.tags ?? []).map((tag) => (
+                      <Tag key={tag} label={tag} />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </article>
             </Link>
           </li>
         ))}

@@ -5,7 +5,7 @@ type Props = {
 const today = getFormattedDate();
 const date = "6月5日(木)";
 
-export default function DiarySectionTitle({ variant = "today" }: Props) {
+export default function TitleDiarySection({ variant = "today" }: Props) {
   let content: string;
 
   switch (variant) {
@@ -25,7 +25,10 @@ export default function DiarySectionTitle({ variant = "today" }: Props) {
   }
 
   return (
-    <h2 id="diary-area-title" className="my-4 text-center text-xl font-bold">
+    <h2
+      id="diary-area-title"
+      className="my-4 w-full text-center text-xl font-bold"
+    >
       {content}
     </h2>
   );

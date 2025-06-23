@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import DiariesList from "../molecules/diaries-list";
 import CarouselNavigation from "../molecules/carousel-navigation";
-import LinkButton from "../atoms/link-button";
+import LinkButtonGeneral from "../atoms/link-button-general";
+import LinkButtonMini from "../atoms/link-button-mini";
 
 export default function HomeMenu() {
   return (
@@ -11,7 +12,11 @@ export default function HomeMenu() {
       <div className="py-8">
         <DiariesList />
         <div className="container m-auto flex items-center justify-center pt-8">
-          <LinkButton href="/diary" label="もっと見る" />
+          <LinkButtonMini
+            href="/diary"
+            label="もっと見る"
+            variant="secondary"
+          />
         </div>
       </div>
     </section>

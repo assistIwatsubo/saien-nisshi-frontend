@@ -1,4 +1,3 @@
-import Link from "next/link";
 import TitleH3 from "../atoms/title-h3";
 import LinkButtonTextIcon from "../atoms/link-button-text";
 

@@ -14,7 +14,7 @@ export default function Button({
   type = "button",
   color = "primary",
   shape = "rectangle",
-  fullWidth = true,
+  fullWidth = false,
   disabled = false,
 }: ButtonProps) {
   const colorClasses = {

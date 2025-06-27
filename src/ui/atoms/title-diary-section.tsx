@@ -1,8 +1,8 @@
-import { getFormattedDate } from "@/lib/format-date";
+import { getFormattedDate } from "@/lib/utils/format-date";
 type Props = {
   variant?: "today" | "create" | "edit" | "past";
 };
-const today = getFormattedDate();
+const today = getFormattedDate(new Date(), { includeWeekday: true });
 const date = "6月5日(木)";
 
 export default function TitleDiarySection({ variant = "today" }: Props) {
@@ -27,7 +27,7 @@ export default function TitleDiarySection({ variant = "today" }: Props) {
   return (
     <h2
       id="diary-area-title"
-      className="my-4 w-full text-center text-xl font-bold"
+      className="w-full pb-4 text-center text-xl font-bold"
     >
       {content}
     </h2>

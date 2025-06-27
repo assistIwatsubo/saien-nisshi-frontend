@@ -14,7 +14,7 @@ export default function FormLogin() {
       email,
       password,
       redirect: true,
-      callbackUrl: "/home", // ログイン後の遷移先（任意）
+      callbackUrl: "/terrace", // ログイン後の遷移先（任意）
     });
   };
 

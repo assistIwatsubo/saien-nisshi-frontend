@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import DynamicButton from "@/ui/atoms/dynamic-button";
 import BackgroundImage from "@/ui/atoms/backgroundImage";
+import DynamicButtonsArea from "@/ui/templates/dinamic-buttons-area";
 
 export const metadata: Metadata = {
   title: "home",
@@ -15,9 +15,8 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <BackgroundImage imageUrl="/images/sample-home-bg.jpeg" />
-      <main className="relative w-full">{children}</main>
-      <DynamicButton />
+      <main className="w-full bg-[var(--app-base-color)]">{children}</main>
+      <DynamicButtonsArea />
     </>
   );
 }

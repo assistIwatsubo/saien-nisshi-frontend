@@ -1,46 +1,34 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { NewsItem } from "@/types/news";
+import { NewsEntry } from "@/types/news";
+import { getFormattedDate } from "@/lib/utils/format-date";
+import ErrorMessage from "../atoms/error-message";
 
-export const latestNews: NewsItem = {
-  id: "123",
-  date: "2025-06-08",
-  title: "みどりぽのプロトタイピング開発を開始しました！",
+const contentClass = "block w-full bg-white p-2";
+
+type NewsProps = {
+  latestNews: NewsEntry | null;
 };
 
-export default function HomeNews() {
-  const dateObj = new Date(latestNews.date);
-  const month = dateObj.getMonth() + 1;
-  const day = dateObj.getDate();
-
-  const [isVisible, setIsVisible] = useState(true);
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY <= 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+export default function HomeNews({ latestNews }: NewsProps) {
   return (
     <aside className="container m-auto py-4 md:max-w-[80%]">
       <div className="m-auto flex flex-row items-stretch justify-start overflow-hidden rounded-md text-sm shadow-md md:max-w-[80vw]">
-        <h3 className="app-text-shadow bg-[var(--app-secondary-color)] p-2 font-bold whitespace-nowrap text-white">
-          みどりぽNEWS
+        <h3 className="app-text-shadow inline-flex items-center bg-[var(--app-secondary-color)] p-2 font-bold whitespace-nowrap text-white">
+          お知らせ
         </h3>
-        <Link
-          key={latestNews.id}
-          href={`/news/?id=${latestNews.id}`}
-          className="block w-full bg-white p-2"
-        >
-          {latestNews.title}
-          <time dateTime={latestNews.date}>
-            ({month}月{day}日)
-          </time>
-        </Link>
+        {!latestNews ? (
+          <ErrorMessage
+            message="ニュース情報の取得に失敗しました。"
+            className={contentClass}
+          />
+        ) : (
+          <Link href={`/news/?id=${latestNews.id}`} className={contentClass}>
+            {latestNews.title}
+            <time dateTime={latestNews.date}>
+              ({getFormattedDate(new Date(latestNews.date))})
+            </time>
+          </Link>
+        )}
       </div>
     </aside>
   );

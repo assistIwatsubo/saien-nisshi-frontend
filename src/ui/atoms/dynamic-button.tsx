@@ -2,30 +2,34 @@ import Link from "next/link";
 import Image from "next/image";
 
 type Props = {
-  variant?: "create" | "back" | "home";
+  variant?: "create" | "edit" | "back" | "home";
 };
 
 export default function DynamicButton({ variant = "home" }: Props) {
   let text: string;
+  let href: string;
 
   switch (variant) {
     case "create":
       text = "今日の記録を付ける";
+      href = "/home/create";
+      break;
+    case "edit":
+      text = "今日の記録を編集する";
+      href = "/home/edit";
       break;
     case "back":
-      text = "あなたのページへ";
-      break;
-    case "home":
     default:
-      text = "トップページへ";
+      text = "戻る";
+      href = "/home";
       break;
   }
+
   return (
     <>
-      <div className="bottom0 absolute right-0 left-0 h-40 w-full bg-white"></div>
       <Link
-        href={variant}
-        className="sticky bottom-0 left-1/2 z-1 block w-[120px] -translate-x-1/2 rounded-t-full bg-[var(--app-home-base-color)] p-4 text-center text-xs font-bold whitespace-nowrap shadow-lg"
+        href={href}
+        className="absolute bottom-0 left-1/2 z-1 w-[120px] -translate-x-1/2 rounded-t-full bg-[var(--app-home-base-color)] p-4 text-center text-xs font-bold shadow-lg"
       >
         <Image
           data-role="icon"

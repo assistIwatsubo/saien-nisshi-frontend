@@ -1,4 +1,4 @@
-import { appTitle } from "@/lib/fonts";
+import { appTitle } from "@/lib/utils/fonts";
 
 export default function SkeletonBackgroundImage() {
   return (

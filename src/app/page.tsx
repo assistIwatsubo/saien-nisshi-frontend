@@ -1,44 +1,48 @@
 import Image from "next/image";
-import { appTitle } from "../lib/fonts";
-import DecorationArch from "@/ui/atoms/decoration-arch";
+import { appTitle } from "../lib/utils/fonts";
 import LoginWithModal from "@/ui/molecules/login-with-modal";
 
 export default function Page() {
   return (
     <div data-role="page-wrapper">
-      <Image
-        data-role="background-image"
-        src="/images/top-bg.jpeg"
-        alt="背景画像"
-        width={1280}
-        height={853}
-        className="fixed left-0 -z-0 min-h-[70vh] w-auto overflow-hidden object-cover object-right blur-[2px] saturate-80 filter lg:h-auto lg:w-full"
-      />
       <main
         data-role="content-wrapper"
-        className="relative mx-auto flex w-full flex-col items-center justify-start"
+        className="mx-auto flex w-full flex-col items-center justify-start bg-[var(--app-base-color)]"
       >
-        <section data-role="apptitle-section" className="pt-[8vw] lg:pt-[16vh]">
-          <hgroup className="py-4 text-center">
-            <h1
-              className={`${appTitle.className} mt-8 mb-4 text-4xl font-bold text-white drop-shadow`}
-            >
-              みどりぽ
-            </h1>
-            <p className={`text-xl font-bold text-white drop-shadow`}>
-              私の脱！家庭菜園日誌
-            </p>
-          </hgroup>
-          <LoginWithModal />
+        <section data-role="apptitle-section" className="relative py-24">
+          <div className="absolute top-1/5 left-1/8 z-10 w-1/2">
+            <hgroup className="py-4 text-center">
+              <h1
+                className={`${appTitle.className} mb-4 text-4xl text-[var(--app-primary-color)] drop-shadow`}
+              >
+                えんがわ＋
+                <br />
+                Diary
+              </h1>
+              <p
+                className={`text-xl text-[var(--app-primary-color)] drop-shadow`}
+              >
+                家庭菜園から始める農ライフ
+              </p>
+            </hgroup>
+            <LoginWithModal />
+          </div>
+          <div className="m-auto max-w-2/3 opacity-80 md:max-w-1/3 lg:translate-x-2/5">
+            <Image
+              src="/images/hatake.png"
+              alt="家庭菜園から就農支援まで"
+              width={1200}
+              height={1081}
+            />
+          </div>
         </section>
-        <DecorationArch />
-        <div data-role="section-wrapper" className="bg-[var(--app-base-color)]">
+        <div data-role="section-wrapper">
           <section>
             <hgroup className="container m-auto my-[10vh] text-center">
               <h2
                 className={`${appTitle.className} my-8 text-2xl font-bold text-[var(--app-primary-color)]`}
               >
-                みどりぽ
+                えんがわ＋Diary（えんがわぷらすだいありー）
                 <span className="ml-1 text-xl font-normal text-gray-800">
                   とは？
                 </span>
@@ -48,8 +52,9 @@ export default function Page() {
                   農家になりたい人のための
                 </span>
                 <br />
-                栽培日誌アプリです。
+                栽培支援アプリです。
               </p>
+              <p>栽培日誌＋教科書＋コミュニティ機能＋直売所出店支援まで！</p>
             </hgroup>
           </section>
           <section>
@@ -88,7 +93,7 @@ export default function Page() {
                 <span
                   className={`${appTitle.className} mx-1 text-lg font-bold text-[var(--app-primary-color)]`}
                 >
-                  みどりぽ
+                  えんがわ＋Diary
                 </span>
                 なら！ ／
               </p>

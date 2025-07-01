@@ -1,81 +1,63 @@
 import Link from "next/link";
 import Image from "next/image";
-import TitleDairySection from "@/ui/atoms/title-diary-section";
 import HomeNews from "@/ui/molecules/home-news";
+import DateDisplay from "@/ui/atoms/date-display";
 import HomeSkedules from "@/ui/molecules/home-schedule";
 import HomeMenu from "@/ui/organisms/carousel-menu";
-import NonDiaryArea from "@/ui/templates/non-daiary-area";
+import EngawaArea from "@/ui/templates/engawa-area";
 import TitleH3 from "@/ui/atoms/title-h3";
 import SectionH3 from "@/ui/molecules/section-h3";
 import CommunityDiaryList from "@/ui/organisms/community-diray-list";
 import LinkButtonLarge from "@/ui/atoms/link-button-large";
 import LinkButtonMini from "@/ui/atoms/link-button-mini";
-import DiaryArea from "@/ui/templates/daiary-area";
+import HatakeArea from "@/ui/templates/hatake-area";
 import HomeCharacter from "@/ui/molecules/home-character";
 import { getNews } from "@/lib/getNews";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getDiary } from "@/lib/getDiary";
 import { getCommunityDiary } from "@/lib/getCommunityDiary";
-
 import Diaries from "@/ui/molecules/diaries";
 import Accountings from "@/ui/molecules/accountings";
 import Attendances from "@/ui/molecules/attendances";
+import { getSchedule } from "@/lib/getSchedule";
+import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
+
+import EngawaText from "@/ui/molecules/engawa-text";
 
 export default async function Page() {
-  const [latestNews, diaries, communityDiaries] = await Promise.all([
+  const [latestNews, schedules, diaries, communityDiaries] = await Promise.all([
     fetchSafe(getNews),
+    fetchSafe(getSchedule),
     fetchSafe(getDiary),
     fetchSafe(getCommunityDiary),
   ]);
 
   return (
     <>
-      <DiaryArea>
+      <HatakeArea>
         <HomeNews latestNews={latestNews} />
-        <HomeCharacter homeState="default" />
-        <TitleDairySection />
-        <Image src="/images/engawa.png" alt="" width={500} height="500" />
-        <HomeSkedules />
-        <HomeMenu
-          views={[
-            {
-              label: "直近の日誌一覧",
-              colorClass: "bg-[var(--app-secondary-color)]",
-              content: <Diaries entries={diaries} />,
-            },
-            {
-              label: "出納帳",
-              colorClass: "bg-[var(--app-accounting-color)]",
-              content: <Accountings entries={diaries} />,
-            },
-            {
-              label: "出退勤一覧",
-              colorClass: "bg-[var(--app-another-color)]",
-              content: <Attendances entries={diaries} />,
-            },
-          ]}
-        />
-      </DiaryArea>
-      <NonDiaryArea title="えんがわ日和">
-        <SectionH3>
-          <TitleH3
-            id="text-area-title"
-            label="教科書を読む"
-            type="withLine"
-            color="primary"
-            iconType="library"
-          />
-          <ul className="py-2">
-            <li>
-              <Link
-                href="/text/edamame"
-                className="block w-full rounded-md border-2 border-[var(--app-primary-color)] bg-white px-4 py-3"
-              >
-                エダマメの教科書
-              </Link>
-            </li>
-          </ul>
-        </SectionH3>
+        <div className="flex items-center justify-between gap-8">
+          <DateDisplay />
+          <div className="w-full">
+            <HomeSkedules schedules={schedules} />
+          </div>
+        </div>
+        {/* <HomeCharacter homeState="default" /> */}
+        <div
+          data-layout="animations"
+          className="block min-h-[50vh] lg:min-h-[30vh]"
+        ></div>
+        <nav className="py-4 text-center">
+          <h3>畑メニュー</h3>
+          <menu className="flex items-stretch justify-between p-4 md:justify-center md:gap-12">
+            <LinkButtonWithIcon href="/today" />
+            <LinkButtonWithIcon href="/diary" />
+            <LinkButtonWithIcon href="/schedule" />
+          </menu>
+        </nav>
+      </HatakeArea>
+      <EngawaArea title="えんがわ">
+        <EngawaText textName={["edamame", "ingen"]} />
         <SectionH3>
           <TitleH3
             id="text-area-title"
@@ -119,7 +101,7 @@ export default async function Page() {
           <LinkButtonLarge label="マイページへ" href="/mypage" />
           <LinkButtonLarge label="マイ設定へ" href="/setting" />
         </nav>
-      </NonDiaryArea>
+      </EngawaArea>
     </>
   );
 }

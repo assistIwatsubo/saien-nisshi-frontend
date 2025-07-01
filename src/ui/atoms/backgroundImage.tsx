@@ -10,7 +10,7 @@ export default function BackgroundImage({
   return (
     <div
       data-role="background-image"
-      className={`fixed top-0 left-0 h-full w-full bg-cover bg-center blur-[2px] saturate-90 transition-opacity duration-700`}
+      className={`fixed top-0 left-0 h-full w-full bg-cover bg-center`}
       style={{ backgroundImage: `url(${imageUrl})` }}
     />
   );

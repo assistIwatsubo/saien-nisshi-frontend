@@ -1,5 +1,5 @@
 import TitleH3 from "../atoms/title-h3";
-import LinkButtonTextIcon from "../atoms/link-button-text";
+import LinkButtonTextIcon from "../atoms/link-button-text-icon";
 
 const helpLinks = [
   { label: "よくあるご質問", href: "/faq" },

@@ -15,8 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <main className="w-full bg-[var(--app-base-color)]">{children}</main>
-      <DynamicButtonsArea />
+      <BackgroundImage imageUrl="/images/sample-engawa.png" />
+      <main className="relative z-0 w-full">{children}</main>
+      {/* <DynamicButtonsArea /> */}
     </>
   );
 }

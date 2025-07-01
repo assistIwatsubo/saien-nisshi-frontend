@@ -9,7 +9,7 @@ export default function NonDiaryArea({ title, children }: Props) {
   return (
     <section
       data-role="system-section"
-      className="pt-4"
+      className=" bg-[var(--app-base-color)] pt-4"
       aria-labelledby="non-diary-area-title"
     >
       <div

@@ -1,7 +1,16 @@
-import { Mochiy_Pop_One, BIZ_UDMincho, M_PLUS_2 } from "next/font/google";
+import {
+  Mochiy_Pop_One,
+  BIZ_UDMincho,
+  M_PLUS_2,
+  M_PLUS_Rounded_1c,
+} from "next/font/google";
 
 export const appTitle = Mochiy_Pop_One({
   weight: "400",
+});
+
+export const pageTitle = M_PLUS_Rounded_1c({
+  weight: ["300", "400", "700", "900"],
 });
 
 export const comment = BIZ_UDMincho({

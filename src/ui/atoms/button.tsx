@@ -21,7 +21,7 @@ export default function Button({
     primary:
       "bg-[var(--app-primary-color)] text-white hover:bg-[var(--app-secondary-color)] hover:border-[var(--app-secondary-color)] border-[var(--app-primary-color)]",
     secondary:
-      "bg-[var(--app-secondary-color)] text-white hover:bg-[var(--app-home-base-color)] border-[var(--app-secondary-color)] hover:border-[var(--app-home-base-color)] hover:text-[var(--app-primary-color)]",
+      "bg-[var(--app-secondary-color)] text-white  border-[var(--app-secondary-color)] app-secondary-button-shadow",
     danger: "bg-red-500 text-white hover:bg-red-600",
   };
 
@@ -31,7 +31,7 @@ export default function Button({
   };
 
   const baseClass = [
-    "px-4 py-2 border-2 font-bold transition duration-150",
+    "px-4 py-2 border-2 font-bold transition duration-150 app-text-shadow",
     fullWidth ? "w-full" : "inline-block",
     shapeClasses[shape],
     colorClasses[color],

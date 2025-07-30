@@ -43,7 +43,7 @@ export default function Diaries({ entries }: DiaryProps) {
                     <h4 className="containe border-b-1 leading-loose font-bold">
                       {entry.title}
                     </h4>
-                    <p className="line-clamp-3 text-sm">{entry.body}</p>
+                    <p className="line-clamp-3 text-sm">{entry.summary}</p>
                     <div data-role="tags-display" className="mt-2 flex gap-2">
                       {(entry.tags ?? []).map((tag) => (
                         <Tag key={tag} label={tag} />

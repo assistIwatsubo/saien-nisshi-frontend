@@ -1,9 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
-import HomeNews from "@/ui/molecules/home-news";
-import DateDisplay from "@/ui/atoms/date-display";
-import HomeSkedules from "@/ui/molecules/home-schedule";
-import HomeMenu from "@/ui/organisms/carousel-menu";
+import HomeNews from "@/ui/terrace/home-news";
+import DateDisplay from "@/ui/atoms/dairy-calendar-display";
+import HomeSkedules from "@/ui/terrace/home-schedule";
 import EngawaArea from "@/ui/templates/engawa-area";
 import TitleH3 from "@/ui/atoms/title-h3";
 import SectionH3 from "@/ui/molecules/section-h3";
@@ -11,24 +9,19 @@ import CommunityDiaryList from "@/ui/organisms/community-diray-list";
 import LinkButtonLarge from "@/ui/atoms/link-button-large";
 import LinkButtonMini from "@/ui/atoms/link-button-mini";
 import HatakeArea from "@/ui/templates/hatake-area";
-import HomeCharacter from "@/ui/molecules/home-character";
+// import HomeCharacter from "@/ui/molecules/home-character";
 import { getNews } from "@/lib/getNews";
 import { fetchSafe } from "@/lib/utils/fetchSate";
-import { getDiary } from "@/lib/getDiary";
 import { getCommunityDiary } from "@/lib/getCommunityDiary";
-import Diaries from "@/ui/molecules/diaries";
-import Accountings from "@/ui/molecules/accountings";
-import Attendances from "@/ui/molecules/attendances";
 import { getSchedule } from "@/lib/getSchedule";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 
 import EngawaText from "@/ui/molecules/engawa-text";
 
 export default async function Page() {
-  const [latestNews, schedules, diaries, communityDiaries] = await Promise.all([
+  const [latestNews, schedules, communityDiaries] = await Promise.all([
     fetchSafe(getNews),
     fetchSafe(getSchedule),
-    fetchSafe(getDiary),
     fetchSafe(getCommunityDiary),
   ]);
 
@@ -49,11 +42,11 @@ export default async function Page() {
         ></div>
         <nav className="py-4 text-center">
           <h3>畑メニュー</h3>
-          <menu className="flex items-stretch justify-between p-4 md:justify-center md:gap-12">
-            <LinkButtonWithIcon href="/today" />
-            <LinkButtonWithIcon href="/diary" />
-            <LinkButtonWithIcon href="/schedule" />
-          </menu>
+          <nav className="flex items-stretch justify-between p-4 md:justify-center md:gap-12">
+            <LinkButtonWithIcon href="today" />
+            <LinkButtonWithIcon href="diary" />
+            <LinkButtonWithIcon href="schedule" />
+          </nav>
         </nav>
       </HatakeArea>
       <EngawaArea title="えんがわ">

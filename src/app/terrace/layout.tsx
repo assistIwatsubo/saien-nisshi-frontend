@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import BackgroundImage from "@/ui/atoms/backgroundImage";
-import DynamicButtonsArea from "@/ui/templates/dinamic-buttons-area";
 
 export const metadata: Metadata = {
   title: "home",

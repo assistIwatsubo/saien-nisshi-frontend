@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 
 type TagProps =
   | { label: string; as?: "span" }

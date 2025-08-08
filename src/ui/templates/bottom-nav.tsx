@@ -18,7 +18,7 @@ export default function BottomNav({ children }: Props) {
     <div
       className={`sticky right-0 bottom-0 left-0 bg-[var(--app-home-base-color)]/25 backdrop-blur-sm transition-all duration-500 ease-out ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"} `}
     >
-      <nav className="m-auto flex max-w-xl items-stretch justify-between p-4">
+      <nav className="m-auto flex max-w-xl items-stretch justify-start gap-8 px-4 py-4 sm:px-0">
         {children}
       </nav>
     </div>

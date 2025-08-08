@@ -1,75 +1,105 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DiaryDetailMenu from "@/ui/diary/diary-detail-menu";
 import LinkButtonMini from "../atoms/link-button-mini";
 import { Tag } from "../atoms/tag";
 import { diaryTypeColorMap } from "@/lib/utils/color-map";
-import { DIARY_DETAIL_TYPES, type DiaryDetailType } from "@/types/diary";
+import {
+  DIARY_DETAIL_TYPES,
+  type DiaryDetailType,
+  type fieldLabelType,
+  type DiaryDetail,
+  fieldLabels,
+} from "@/types/diary";
+
+// フィールド候補データ
+const fieldOptions: Record<fieldLabelType, string[]> = {
+  cropName: ["ネギ", "人参"],
+  fieldName: ["北山", "山田さんの"],
+  pesticideName: ["マラソン乳剤", "スミチオン"],
+  concentration: [],
+  dilutionRate: [],
+};
+
+// DiaryDetailType ごとの表示フィールド設定
+const typeFieldMap: Record<DiaryDetailType, fieldLabelType[]> = {
+  crop: ["cropName", "fieldName"],
+  pesticide: [
+    "pesticideName",
+    "cropName",
+    "fieldName",
+    "concentration",
+    "dilutionRate",
+  ],
+  other: [],
+};
 
 type Props = {
   id: number;
   index: number;
+  detail?: DiaryDetail;
   onRemove: (id: number) => void;
 };
 
-// データリスト定義
-const sakumotsuList = ["ネギ", "人参"];
-const hojoList = ["北山", "山田さんの"];
-const yakuzaiList = ["マラソン乳剤", "スミチオン"];
-
-// DiaryDetailTypeをキーに持つ項目マップ
-const fieldMap: Record<DiaryDetailType, { label: string; tags?: string[] }[]> =
-  {
-    作物: [
-      { label: "作物名", tags: sakumotsuList },
-      { label: "圃場名", tags: hojoList },
-    ],
-    薬剤: [
-      { label: "薬剤名", tags: yakuzaiList },
-      { label: "作物名", tags: sakumotsuList },
-      { label: "圃場名", tags: hojoList },
-      { label: "濃度" },
-      { label: "希釈倍率" },
-    ],
-    その他: [],
-  };
-
-export default function DiaryDetailCard({ id, index, onRemove }: Props) {
+export default function DiaryDetailCardEditable({
+  id,
+  index,
+  detail,
+  onRemove,
+}: Props) {
   const [selectedType, setSelectedType] = useState<DiaryDetailType>(
     DIARY_DETAIL_TYPES[0],
   );
 
-  const { border, bg } = diaryTypeColorMap[selectedType];
+  const [fieldValues, setFieldValues] = useState<
+    Partial<Record<fieldLabelType, string>>
+  >({});
 
-  const currentFields = fieldMap[selectedType];
+  // 初期化処理：detail が与えられたらセットする
+  useEffect(() => {
+    if (detail) {
+      setSelectedType(detail.type);
+      setFieldValues(detail.fields);
+    }
+  }, [detail]);
+
+  const { border, bg } = diaryTypeColorMap[selectedType];
+  const currentFieldKeys = typeFieldMap[selectedType];
 
   return (
     <div
-      className={`relative flex w-full flex-col gap-8 rounded-xl border-2 ${border} shadow-sm} bg-white/50 p-6`}
+      className={`relative flex w-full flex-col gap-8 rounded-xl border-2 ${border} bg-white/50 p-6 shadow-sm`}
     >
       <DiaryDetailMenu
         selected={selectedType}
-        onChange={setSelectedType}
+        onChange={(type) => {
+          setSelectedType(type);
+          setFieldValues({}); // 種類変更時は入力値リセット
+        }}
         name={`detail-${id}`}
       />
 
-      {currentFields.map(({ label, tags }) => (
+      {currentFieldKeys.map((key) => (
         <div
           className="flex flex-col items-center justify-start gap-8"
-          key={label}
+          key={key}
         >
           <div className="flex w-full items-stretch justify-start gap-8">
-            <h4 className="min-w-1/6 py-2">{label}</h4>
+            <h4 className="min-w-1/6 py-2">{fieldLabels[key]}</h4>
             <div className="flex w-full flex-col gap-2">
               <input
                 type="text"
-                placeholder={`${label}を入力もしくは選択してください`}
+                placeholder={`${fieldLabels[key]}を入力もしくは選択してください`}
                 className="w-full rounded-sm border-2 border-[var(--app-border-gray)] bg-amber-50/50 p-2"
+                value={fieldValues[key] || ""}
+                onChange={(e) =>
+                  setFieldValues((prev) => ({ ...prev, [key]: e.target.value }))
+                }
               />
-              {tags && (
+              {fieldOptions[key] && fieldOptions[key].length > 0 && (
                 <div className="flex w-full flex-wrap items-center justify-start gap-2">
-                  {tags.map((tag, i) => (
+                  {fieldOptions[key].map((tag, i) => (
                     <Tag key={i} label={tag} as="span" />
                   ))}
                 </div>
@@ -114,7 +144,7 @@ export default function DiaryDetailCard({ id, index, onRemove }: Props) {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="4" // ← 線の太さを指定（ここがポイント）
+              strokeWidth="4"
               strokeLinecap="round"
               strokeLinejoin="round"
             >

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import BackgroundImage from "@/ui/atoms/backgroundImage";
+import SeasonalEffect from "@/ui/terrace/seasonal-animation";
 
 export const metadata: Metadata = {
   title: "home",
@@ -14,9 +15,13 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <BackgroundImage imageUrl="/images/sample-engawa.png" />
-      <main className="relative z-0 w-full">{children}</main>
-      {/* <DynamicButtonsArea /> */}
+      <div data-layout="background" className="relative">
+        <BackgroundImage imageUrl="/images/sample-engawa.png" />
+        <SeasonalEffect season="winter" />
+      </div>
+      <main className="relative z-0 min-h-screen w-full flex-grow">
+        {children}
+      </main>
     </>
   );
 }

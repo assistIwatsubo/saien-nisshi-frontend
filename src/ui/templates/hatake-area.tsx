@@ -2,11 +2,11 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function DiaryArea({ children }: Props) {
+export default function HatakeArea({ children }: Props) {
   return (
     <section
       data-role="diary-check-section"
-      className="container m-auto p-4 md:max-w-[80vw]"
+      className="relative m-auto min-h-screen flex-grow p-4 md:max-w-[80vw]"
       aria-labelledby="diary-section-title"
     >
       {children}

@@ -15,8 +15,8 @@ import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getCommunityDiary } from "@/lib/getCommunityDiary";
 import { getSchedule } from "@/lib/getSchedule";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
-
 import EngawaText from "@/ui/molecules/engawa-text";
+import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
 
 export default async function Page() {
   const [latestNews, schedules, communityDiaries] = await Promise.all([
@@ -36,12 +36,7 @@ export default async function Page() {
           </div>
         </div>
         {/* <HomeCharacter homeState="default" /> */}
-        <div
-          data-layout="animations"
-          className="block min-h-[50vh] lg:min-h-[30vh]"
-        ></div>
-        <nav className="py-4 text-center">
-          <h3>畑メニュー</h3>
+        <nav className="absolute right-0 bottom-0 left-0 w-full py-8 text-center">
           <nav className="flex items-stretch justify-between p-4 md:justify-center md:gap-12">
             <LinkButtonWithIcon href="today" />
             <LinkButtonWithIcon href="diary" />
@@ -49,7 +44,7 @@ export default async function Page() {
           </nav>
         </nav>
       </HatakeArea>
-      <EngawaArea title="えんがわ">
+      <EngawaArea title="休憩メニュー">
         <EngawaText textName={["edamame", "ingen"]} />
         <SectionH3>
           <TitleH3
@@ -95,6 +90,7 @@ export default async function Page() {
           <LinkButtonLarge label="マイ設定へ" href="/setting" />
         </nav>
       </EngawaArea>
+      <LinkButtonCalendar />
     </>
   );
 }

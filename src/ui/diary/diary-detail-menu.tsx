@@ -1,8 +1,8 @@
 import { diaryTypeColorMap } from "@/lib/utils/color-map";
-import { DIARY_DETAIL_TYPES, DiaryDetailType } from "@/types/diary";
+import { DIARY_DETAIL_TYPES, DiaryDetailType, typeLabels } from "@/types/diary";
 
 type DiaryDetailMenuProps = {
-  selected: string;
+  selected: DiaryDetailType;
   onChange: (value: DiaryDetailType) => void;
   name: string;
 };
@@ -38,7 +38,7 @@ export default function DiaryDetailMenu({
               htmlFor={`radio-${name}-${index}`}
               className="cursor-pointer font-bold text-gray-600"
             >
-              {value + "の記録"}
+              {typeLabels[value]}の記録
             </label>
           </li>
         );

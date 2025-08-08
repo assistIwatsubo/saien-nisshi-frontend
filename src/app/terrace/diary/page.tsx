@@ -1,6 +1,5 @@
 import HatakeArea from "@/ui/templates/hatake-area";
 import DiaryCalendarDisplay from "@/ui/atoms/dairy-calendar-display";
-import { diaryEntries } from "@/mocks/diary";
 import DiarySummary from "@/ui/diary/diary-summary";
 import Link from "next/link";
 import { Tag } from "@/ui/atoms/tag";
@@ -8,13 +7,18 @@ import { BookOpenText } from "lucide-react";
 import PageTitle from "@/ui/molecules/page-title";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import BottomNav from "@/ui/templates/bottom-nav";
+import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
+import { fetchSafe } from "@/lib/utils/fetchSate";
+import { getDiary } from "@/lib/getDiary";
+
+const [diaries] = await Promise.all([fetchSafe(getDiary)]);
 
 export default async function Page() {
   return (
     <>
-      <PageTitle title="日記一覧" icon={<BookOpenText size={32} />} />
+      <PageTitle title="日誌一覧" icon={<BookOpenText size={32} />} />
       <HatakeArea>
-        {diaryEntries.map((entry) => (
+        {diaries?.map((entry) => (
           <article
             key={entry.id}
             data-layout="diary"
@@ -47,6 +51,7 @@ export default async function Page() {
         <LinkButtonWithIcon href="today" />
         <LinkButtonWithIcon href="schedule" />
       </BottomNav>
+      <LinkButtonCalendar />
     </>
   );
 }

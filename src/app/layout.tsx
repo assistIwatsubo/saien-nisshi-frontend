@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import Footer from "@/ui/atoms/footer";
+import Footer from "@/ui/templates/footer";
 import { Providers } from "./providers";
 
 export async function generateMetadata(): Promise<Metadata> {

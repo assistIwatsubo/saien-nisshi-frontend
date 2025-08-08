@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 type PageTitleProps = {
   title: string;
   icon: ReactNode;
+  mode?: "edit";
 };
 
 export default function PageTitle({ title, icon }: PageTitleProps) {

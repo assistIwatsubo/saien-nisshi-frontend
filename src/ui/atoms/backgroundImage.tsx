@@ -1,5 +1,3 @@
-import SkeletonBackgroundImage from "../skeletons/skeleton-backgroundImage";
-
 type Props = {
   imageUrl: string;
 };

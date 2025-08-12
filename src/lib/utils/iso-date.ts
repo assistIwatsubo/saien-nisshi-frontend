@@ -12,8 +12,8 @@ export const getDateParts = (date: Date = new Date()) => {
 
   return {
     iso,
-    year: Number(year),
-    month: Number(month),
+    year: year,
+    month: month,
     day: day.padStart(2, "0"),
     weekday,
   };

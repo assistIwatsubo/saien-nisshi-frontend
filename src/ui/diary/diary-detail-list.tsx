@@ -5,15 +5,18 @@ import DiaryDetailCardEditable from "./diary-detail-card-editable";
 import DiaryDetailCardReadonly from "./diary-detail-card-readonly";
 import Button from "../atoms/button";
 import { DiaryDetail } from "@/types/diary";
+import { type fieldLabelType } from "@/types/diary";
 
 type Props = {
   readonly?: boolean;
   initialDetails?: DiaryDetail[];
+  tags?: Record<fieldLabelType, string[]>;
 };
 
 export default function DiaryDetailList({
   readonly = false,
   initialDetails = [],
+  tags,
 }: Props) {
   const [cards, setCards] = useState<{ id: number; detail?: DiaryDetail }[]>(
     [],
@@ -32,7 +35,6 @@ export default function DiaryDetailList({
     }
   }, [readonly, initialDetails]);
 
-  console.log(cards);
   const handleAddCard = () => {
     setCards((prev) => [...prev, { id: Date.now() }]);
   };
@@ -58,6 +60,7 @@ export default function DiaryDetailList({
             id={card.id}
             index={index}
             detail={card.detail}
+            tags={tags ?? tags}
             onRemove={handleRemoveCard}
           />
         ),

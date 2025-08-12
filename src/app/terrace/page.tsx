@@ -17,6 +17,8 @@ import { getSchedule } from "@/lib/getSchedule";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import EngawaText from "@/ui/molecules/engawa-text";
 import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
+import PageTitle from "@/ui/molecules/page-title";
+import { Sprout } from "lucide-react";
 
 export default async function Page() {
   const [latestNews, schedules, communityDiaries] = await Promise.all([
@@ -27,6 +29,7 @@ export default async function Page() {
 
   return (
     <>
+      <PageTitle title="縁側" icon={<Sprout size={32} />} />
       <HatakeArea>
         <HomeNews latestNews={latestNews} />
         <div className="flex items-center justify-between gap-8">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import BackgroundImage from "@/ui/atoms/backgroundImage";
 import SeasonalEffect from "@/ui/terrace/seasonal-animation";
+import { CalendarProvider } from "@/contexts/calendar-context";
 
 export const metadata: Metadata = {
   title: "home",
@@ -15,13 +16,15 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <div data-layout="background" className="relative">
-        <BackgroundImage imageUrl="/images/sample-engawa.png" />
-        <SeasonalEffect season="winter" />
-      </div>
-      <main className="relative z-0 min-h-screen w-full flex-grow">
-        {children}
-      </main>
+      <CalendarProvider>
+        <div data-layout="background" className="relative">
+          <BackgroundImage imageUrl="/images/sample-engawa.png" />
+          <SeasonalEffect season="winter" />
+        </div>
+        <main className="relative z-0 min-h-screen w-full flex-grow">
+          {children}
+        </main>
+      </CalendarProvider>
     </>
   );
 }

@@ -86,10 +86,7 @@ export default function Calendar({
   }
 
   return (
-    <div
-      id={`month-${year}-${String(month + 1).padStart(2, "0")}`}
-      className="app-blurred-bg-white mx-auto w-full max-w-md rounded-lg border-4 border-[var(--app-primary-color)] shadow-lg"
-    >
+    <div className="app-blurred-bg-white mx-auto w-full max-w-md rounded-lg border-4 border-[var(--app-primary-color)] shadow-lg">
       <div className="bg-[var(--app-primary-color)] p-2 text-center text-xl font-bold text-white">
         {year}年 {month + 1}月
       </div>

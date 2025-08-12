@@ -11,7 +11,7 @@ type NewsProps = {
 
 export default function HomeNews({ latestNews }: NewsProps) {
   return (
-    <aside className="container m-auto py-4">
+    <aside className="container m-auto pb-4">
       <div className="m-auto flex flex-row items-stretch justify-start overflow-hidden rounded-md text-sm shadow-md md:max-w-[80vw]">
         <h3 className="app-text-shadow inline-flex items-center bg-[var(--app-secondary-color)] p-2 font-bold whitespace-nowrap text-white">
           お知らせ

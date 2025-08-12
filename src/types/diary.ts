@@ -8,7 +8,6 @@ export type DiaryEntry = {
   date: string; // ISO形式 yyyy-mm-dd
   title: string;
   summary: string;
-  tags?: string[];
   details?: DiaryDetail[]; // ここに複数の詳細を入れる
 };
 
@@ -31,6 +30,14 @@ export type fieldLabelType =
   | "pesticideName"
   | "concentration"
   | "dilutionRate";
+
+export const FIELD_LABEL_TYPES: fieldLabelType[] = [
+  "cropName",
+  "fieldName",
+  "pesticideName",
+  "concentration",
+  "dilutionRate",
+];
 
 export const fieldLabels: Record<fieldLabelType, string> = {
   cropName: "作物名",

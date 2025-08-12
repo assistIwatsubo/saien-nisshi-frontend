@@ -1,5 +1,3 @@
-// app/diary/page.tsx
-import Calendar from "@/ui/atoms/Calendar";
 import { getDateParts } from "@/lib/utils/iso-date";
 import type { DiaryDetailType } from "@/types/diary";
 import PageTitle from "@/ui/molecules/page-title";
@@ -8,7 +6,8 @@ import HatakeArea from "@/ui/templates/hatake-area";
 import BottomNav from "@/ui/templates/bottom-nav";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import { fetchSafe } from "@/lib/utils/fetchSate";
-import { getDiary } from "@/lib/getDiary";
+import { getDiaryList } from "@/lib/getDiary";
+import CalendarViewWithScroll from "@/ui/molecules/calendar-view-with-scroll";
 
 type CalendarMap = Map<
   string,
@@ -20,7 +19,7 @@ type CalendarMap = Map<
 
 /** Map化ユーティリティ */
 function createCalendarMap(
-  entries: Awaited<ReturnType<typeof getDiary>> | null,
+  entries: Awaited<ReturnType<typeof getDiaryList>> | null,
 ): CalendarMap {
   const map: CalendarMap = new Map();
   if (entries) {
@@ -34,14 +33,15 @@ function createCalendarMap(
 }
 
 export default async function Page() {
-  const diaryEntries = await fetchSafe(getDiary);
+  const diaryEntries = await fetchSafe(getDiaryList);
   const calendarMap = createCalendarMap(diaryEntries);
 
-  const startMonth = 4;
+  const startMonth = 4; // 4月スタート
   const currentYear = new Date().getFullYear();
 
+  // 計算の都合により0ベースで月を保持（0=1月なので4月は3）
   const monthsToShow = Array.from({ length: 12 }, (_, i) => {
-    const month = (startMonth - 1 + i) % 12;
+    const month = (startMonth - 1 + i) % 12; // 0〜11
     const year = currentYear + Math.floor((startMonth - 1 + i) / 12);
     return { year, month };
   });
@@ -50,16 +50,10 @@ export default async function Page() {
     <>
       <PageTitle title="カレンダー" icon={<PencilLine size={32} />} />
       <HatakeArea>
-        <div className="flex flex-col gap-12 pb-8">
-          {monthsToShow.map(({ year, month }) => (
-            <Calendar
-              key={`${year}-${month}`}
-              year={year}
-              month={month}
-              calendarMap={calendarMap}
-            />
-          ))}
-        </div>
+        <CalendarViewWithScroll
+          monthsToShow={monthsToShow} // 0ベースのまま渡す
+          calendarMap={calendarMap}
+        />
       </HatakeArea>
       <BottomNav>
         <LinkButtonWithIcon href="terrace" />

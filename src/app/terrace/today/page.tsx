@@ -6,14 +6,31 @@ import DiaryDetailList from "@/ui/diary/diary-detail-list";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import BottomNav from "@/ui/templates/bottom-nav";
 import { PencilLine } from "lucide-react";
+import { Pencil } from "lucide-react";
 import PageTitle from "@/ui/molecules/page-title";
+import { fetchSafe } from "@/lib/utils/fetchSate";
+import { getDiaryByDate } from "@/lib/getDiary";
+import { getTags } from "@/lib/getTags";
+
+const tags = await fetchSafe(() => getTags());
+
+const { iso, month, day, weekday } = getDateParts(new Date());
+const diary = await fetchSafe(() => getDiaryByDate(iso));
 
 export default async function Page() {
-  const { iso, month, day, weekday } = getDateParts(new Date());
-
   return (
     <>
-      <PageTitle title="日記を記録する" icon={<PencilLine size={32} />} />
+      <PageTitle
+        title={`今日の日誌を${diary ? "編集する" : "記録する"}`}
+        icon={
+          diary ? (
+            <Pencil size={32} className="rotate-180" />
+          ) : (
+            <PencilLine size={32} />
+          )
+        }
+      />
+
       <HatakeArea>
         <section
           data-layout="diary"
@@ -28,7 +45,10 @@ export default async function Page() {
             data-role="diary-contents"
             className="m-auto flex w-full flex-col items-center justify-start gap-8 py-8 lg:max-w-9/10"
           >
-            <DiarySummary />
+            <DiarySummary
+              titleValue={diary?.title ?? ""}
+              summaryValue={diary?.summary ?? ""}
+            />
             <LinkButtonMini
               href="/"
               label="写真を追加する"
@@ -39,7 +59,18 @@ export default async function Page() {
               className="mt-4 flex w-full flex-col items-center justify-start gap-8 border-t-1 border-b-1 border-dashed border-gray-400 px-4 py-8"
             >
               <h3 className="text-lg font-bold">詳細を記録する</h3>
-              <DiaryDetailList initialDetails={[]} />
+              <DiaryDetailList
+                initialDetails={diary?.details ?? []}
+                tags={
+                  tags ?? {
+                    cropName: [],
+                    fieldName: [],
+                    pesticideName: [],
+                    concentration: [],
+                    dilutionRate: [],
+                  }
+                }
+              />
             </div>
           </div>
           <div className="w-full pb-8 text-center">

@@ -39,7 +39,7 @@ export default function DiaryDetailCardReadonly({ detail }: Props) {
           {tagFieldKeys.map((key) => {
             const value = detail.fields[key];
             return value ? (
-              <Tag key={key} label={String(value)} />
+              <Tag key={key} type={detail.type} label={String(value)} />
             ) : (
               <p
                 key={key}

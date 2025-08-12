@@ -13,33 +13,12 @@ import {
   fieldLabels,
 } from "@/types/diary";
 
-// フィールド候補データ
-const fieldOptions: Record<fieldLabelType, string[]> = {
-  cropName: ["ネギ", "人参"],
-  fieldName: ["北山", "山田さんの"],
-  pesticideName: ["マラソン乳剤", "スミチオン"],
-  concentration: [],
-  dilutionRate: [],
-};
-
-// DiaryDetailType ごとの表示フィールド設定
-const typeFieldMap: Record<DiaryDetailType, fieldLabelType[]> = {
-  crop: ["cropName", "fieldName"],
-  pesticide: [
-    "pesticideName",
-    "cropName",
-    "fieldName",
-    "concentration",
-    "dilutionRate",
-  ],
-  other: [],
-};
-
 type Props = {
   id: number;
   index: number;
   detail?: DiaryDetail;
   onRemove: (id: number) => void;
+  tags?: Record<fieldLabelType, string[]>;
 };
 
 export default function DiaryDetailCardEditable({
@@ -47,6 +26,7 @@ export default function DiaryDetailCardEditable({
   index,
   detail,
   onRemove,
+  tags,
 }: Props) {
   const [selectedType, setSelectedType] = useState<DiaryDetailType>(
     DIARY_DETAIL_TYPES[0],
@@ -55,6 +35,19 @@ export default function DiaryDetailCardEditable({
   const [fieldValues, setFieldValues] = useState<
     Partial<Record<fieldLabelType, string>>
   >({});
+
+  // DiaryDetailType ごとの表示フィールド設定
+  const typeFieldMap: Record<DiaryDetailType, fieldLabelType[]> = {
+    crop: ["cropName", "fieldName"],
+    pesticide: [
+      "pesticideName",
+      "cropName",
+      "fieldName",
+      "concentration",
+      "dilutionRate",
+    ],
+    other: [],
+  };
 
   // 初期化処理：detail が与えられたらセットする
   useEffect(() => {
@@ -97,11 +90,43 @@ export default function DiaryDetailCardEditable({
                   setFieldValues((prev) => ({ ...prev, [key]: e.target.value }))
                 }
               />
-              {fieldOptions[key] && fieldOptions[key].length > 0 && (
+              {tags && tags[key] && tags[key].length > 0 && (
                 <div className="flex w-full flex-wrap items-center justify-start gap-2">
-                  {fieldOptions[key].map((tag, i) => (
-                    <Tag key={i} label={tag} as="span" />
-                  ))}
+                  {tags[key].map((tag, i) => {
+                    const isUsed = fieldValues[key]?.includes(tag) ?? false;
+
+                    const handleTagClick = () => {
+                      setFieldValues((prev) => {
+                        const prevValue = prev[key] || "";
+
+                        const newValue = isUsed
+                          ? prevValue
+                              .split(",")
+                              .map((v) => v.trim())
+                              .filter((v) => v !== tag)
+                              .join(", ")
+                          : prevValue
+                            ? `${prevValue}, ${tag}`
+                            : tag;
+
+                        return {
+                          ...prev,
+                          [key]: newValue,
+                        };
+                      });
+                    };
+
+                    return (
+                      <Tag
+                        key={i}
+                        type={selectedType}
+                        label={tag}
+                        as="button"
+                        onClick={handleTagClick}
+                        active={isUsed}
+                      />
+                    );
+                  })}
                 </div>
               )}
             </div>

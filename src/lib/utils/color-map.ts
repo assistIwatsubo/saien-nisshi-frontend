@@ -1,19 +1,26 @@
-import { DIARY_DETAIL_TYPES, type DiaryDetailType } from "@/types/diary";
+// color-map.ts
+import type { DiaryDetailType } from "@/types/diary";
 
-// 各種 DiaryDetailType に対応するクラス
-const colorConfigs: { border: string; bg: string }[] = [
-  { border: "border-green-400", bg: "bg-green-400" },
-  { border: "border-blue-400", bg: "bg-blue-400" },
-  { border: "border-gray-400", bg: "bg-gray-400" },
-];
+type DiaryTypeStyle = {
+  border: string;
+  bg: string;
+  text?: string; // <- オプショナルにした
+};
 
-// Record<DiaryDetailType, { border: string; bg: string }>
-export const diaryTypeColorMap: Record<
-  DiaryDetailType,
-  { border: string; bg: string }
-> = Object.fromEntries(
-  DIARY_DETAIL_TYPES.map((type, index) => [
-    type,
-    colorConfigs[index] ?? { border: "border-gray-400", bg: "bg-gray-400" },
-  ]),
-) as Record<DiaryDetailType, { border: string; bg: string }>;
+export const diaryTypeColorMap: Record<DiaryDetailType, DiaryTypeStyle> = {
+  crop: {
+    border: "border-green-400",
+    bg: "bg-green-400",
+    text: "text-green-500",
+  },
+  pesticide: {
+    border: "border-blue-400",
+    bg: "bg-blue-400",
+    text: "text-blue-500",
+  },
+  other: {
+    border: "border-gray-400",
+    bg: "bg-gray-400",
+    text: "text-gray-500",
+  },
+};

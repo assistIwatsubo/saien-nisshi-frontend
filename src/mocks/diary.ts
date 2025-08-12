@@ -170,7 +170,6 @@ export const diaryEntries: DiaryEntry[] = [
     title: "山田さんとエダマメの誘引",
     summary:
       "山田さんちに植えた方が草丈５０センチを超えてきたので、山田さんに教わりながら誘引しました。",
-    tags: ["エダマメ"],
     details: [],
   },
   {
@@ -184,7 +183,6 @@ export const diaryEntries: DiaryEntry[] = [
     title: "支柱立てとマルチング作業",
     summary:
       "午前中は支柱立て、午後からマルチングを実施。風が強くてビニールの固定に苦戦した。",
-    tags: ["支柱", "マルチング", "天候"],
     details: [],
   },
   {
@@ -198,7 +196,6 @@ export const diaryEntries: DiaryEntry[] = [
     title: "雨天のため作業中止",
     summary:
       "一日中雨が降り続き、畑には一歩も出られなかったため、予定していた作業はすべて中止となった。",
-    tags: ["雨天", "作業なし"],
     details: [],
   },
 ];

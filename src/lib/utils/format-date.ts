@@ -19,3 +19,12 @@ export const getFormattedDate = (
     .filter(Boolean)
     .join(" ");
 };
+
+export const getFormattedDateTime = (
+  isoString: string,
+  options: FormatOptions = { includeWeekday: true, includeTime: true },
+): string => {
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) return ""; // 無効な日付の場合空文字
+  return getFormattedDate(date, options);
+};

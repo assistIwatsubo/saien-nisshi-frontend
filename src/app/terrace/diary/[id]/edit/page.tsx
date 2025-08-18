@@ -92,7 +92,7 @@ export default async function Page({ params }: Props) {
       <BottomNav>
         <LinkButtonWithIcon href="terrace" />
         <LinkButtonWithIcon href="diary" />
-        <LinkButtonWithIcon href="cancel" editSuffixPath={id} />
+        <LinkButtonWithIcon href="diary" cancel editSuffixPath={id} />
       </BottomNav>
     </>
   );

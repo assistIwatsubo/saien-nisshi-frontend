@@ -11,8 +11,10 @@ import {
 } from "lucide-react";
 
 type Props = {
-  href: "today" | "diary" | "schedule" | "terrace" | "edit" | "cancel";
+  href: "today" | "diary" | "schedule" | "terrace";
   editSuffixPath?: string; // editのときに付け足すパスを渡せるように
+  edit?: boolean;
+  cancel?: boolean;
 };
 
 const IconComponentMap: Record<
@@ -23,45 +25,101 @@ const IconComponentMap: Record<
   diary: BookOpenText,
   schedule: ListTodo,
   terrace: Sprout,
-  edit: Pencil,
-  cancel: X,
 };
 
 const LabelMap: Record<NonNullable<Props["href"]>, string> = {
   today: "記録をする",
   diary: "日誌を見る",
-  schedule: "予定を確認",
+  schedule: "予定一覧へ",
   terrace: "縁側に戻る",
-  edit: "編集する",
-  cancel: "編集中止",
 };
 
 const linkHrefMap = (
+  href: NonNullable<Props["href"]>,
+  edit: boolean | undefined,
+  cancel: boolean | undefined,
   editSuffixPath?: string,
-): Record<NonNullable<Props["href"]>, string> => ({
-  today: "/terrace/today",
-  diary: "/terrace/diary/",
-  schedule: "/terrace/schedule/",
-  terrace: "/terrace/",
-  edit: editSuffixPath
-    ? `/terrace/diary/${editSuffixPath}/edit`
-    : "/terrace/diary/",
-  cancel: `/terrace/diary/${editSuffixPath}`,
-});
+): string => {
+  if (cancel) {
+    // キャンセルリンク
+    switch (href) {
+      case "diary":
+        return editSuffixPath
+          ? `/terrace/diary/${editSuffixPath}`
+          : "/terrace/diary/";
+      case "schedule":
+        return editSuffixPath
+          ? `/terrace/schedule/${editSuffixPath}`
+          : "/terrace/schedule/";
+      default:
+        return "/";
+    }
+  }
 
-export default function LinkButtonWithIcon({ href, editSuffixPath }: Props) {
-  const IconComponent = IconComponentMap[href];
-  const label = LabelMap[href];
+  if (edit) {
+    // 編集リンク
+    switch (href) {
+      case "diary":
+        return editSuffixPath
+          ? `/terrace/diary/${editSuffixPath}/edit`
+          : "/terrace/diary/";
+      case "schedule":
+        return editSuffixPath
+          ? `/terrace/schedule/${editSuffixPath}/edit`
+          : "/terrace/schedule/";
+      default:
+        return "/";
+    }
+  }
 
-  const linkHref = linkHrefMap(editSuffixPath)[href];
+  // 通常リンク
+  switch (href) {
+    case "today":
+      return "/terrace/today";
+    case "diary":
+      return "/terrace/diary/";
+    case "schedule":
+      return "/terrace/schedule/";
+    case "terrace":
+      return "/terrace/";
+    default:
+      return "/";
+  }
+};
 
-  // 鉛筆だけ回転させるクラス
-  const iconClassName = href === "edit" ? "rotate-180" : "";
+export default function LinkButtonWithIcon({
+  href,
+  editSuffixPath,
+  edit,
+  cancel,
+}: Props) {
+  // アイコン選択
+  const IconComponent = cancel
+    ? X
+    : edit && (href === "diary" || href === "schedule")
+      ? Pencil
+      : IconComponentMap[href];
+
+  // ラベル選択
+  const label = cancel
+    ? "編集中止"
+    : edit && (href === "diary" || href === "schedule")
+      ? "編集する"
+      : LabelMap[href];
+
+  const linkHref = linkHrefMap(href, edit, cancel, editSuffixPath);
+
+  // 鉛筆アイコン回転は編集時のみ
+  const iconClassName = edit ? "rotate-180" : "";
 
   return (
     <Link
       href={linkHref}
-      className={`rounded-md border-4 border-[var(--app-primary-color)] p-2 text-center font-bold shadow-md backdrop-blur-sm ${href === "terrace" ? "app-text-shadow bg-[var(--app-primary-color)]/50 text-lime-100" : "bg-white/75 text-[var(--app-primary-color)]"}`}
+      className={`rounded-md border-4 border-[var(--app-primary-color)] p-2 text-center font-bold shadow-md backdrop-blur-sm ${
+        href === "terrace" && !edit && !cancel
+          ? "app-text-shadow bg-[var(--app-primary-color)]/50 text-lime-100"
+          : "bg-white/75 text-[var(--app-primary-color)]"
+      }`}
     >
       <IconComponent
         color="currentColor"

@@ -2,7 +2,8 @@ import HatakeArea from "@/ui/templates/hatake-area";
 import DiaryCalendarDisplay from "@/ui/atoms/dairy-calendar-display";
 import DiarySummary from "@/ui/diary/diary-summary";
 import DiaryDetailList from "@/ui/diary/diary-detail-list";
-import { diaryEntries } from "@/mocks/diary";
+import { fetchSafe } from "@/lib/utils/fetchSate";
+import { getDiaryById } from "@/lib/getDiary";
 import BottomNav from "@/ui/templates/bottom-nav";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
@@ -16,16 +17,15 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   const { id } = await params;
-  const diaryEntry = diaryEntries.find((entry) => entry.id === id);
-
+  const diaryEntry = await fetchSafe(() => getDiaryById(id));
   if (!diaryEntry) {
-    // 適宜 404 を表示させたい場合はここで return
     return (
       <div className="py-8 text-center text-red-500">
         指定された記録が見つかりません。
       </div>
     );
   }
+
   const { year, month } = getDateParts(new Date(diaryEntry.date));
 
   return (
@@ -64,7 +64,7 @@ export default async function Page({ params }: Props) {
       <BottomNav>
         <LinkButtonWithIcon href="terrace" />
         <LinkButtonWithIcon href="diary" />
-        <LinkButtonWithIcon href="edit" editSuffixPath={id} />
+        <LinkButtonWithIcon href="diary" edit editSuffixPath={id} />
       </BottomNav>
       <LinkButtonCalendar year={year} month={month} />
     </>

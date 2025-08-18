@@ -1,7 +1,7 @@
 import Link from "next/link";
 import HomeNews from "@/ui/terrace/home-news";
 import DateDisplay from "@/ui/atoms/dairy-calendar-display";
-import HomeSkedules from "@/ui/terrace/home-schedule";
+import SchedulesDisplay from "@/ui/terrace/home-schedule";
 import EngawaArea from "@/ui/templates/engawa-area";
 import TitleH3 from "@/ui/atoms/title-h3";
 import SectionH3 from "@/ui/molecules/section-h3";
@@ -13,7 +13,7 @@ import HatakeArea from "@/ui/templates/hatake-area";
 import { getNews } from "@/lib/getNews";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getCommunityDiary } from "@/lib/getCommunityDiary";
-import { getSchedule } from "@/lib/getSchedule";
+import { getScheduleList } from "@/lib/getSchedule";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import EngawaText from "@/ui/molecules/engawa-text";
 import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
@@ -23,7 +23,7 @@ import { Sprout } from "lucide-react";
 export default async function Page() {
   const [latestNews, schedules, communityDiaries] = await Promise.all([
     fetchSafe(getNews),
-    fetchSafe(getSchedule),
+    fetchSafe(getScheduleList),
     fetchSafe(getCommunityDiary),
   ]);
 
@@ -32,15 +32,13 @@ export default async function Page() {
       <PageTitle title="縁側" icon={<Sprout size={32} />} />
       <HatakeArea>
         <HomeNews latestNews={latestNews} />
-        <div className="flex items-center justify-between gap-8">
+        <div className="flex items-start justify-between gap-8">
           <DateDisplay />
-          <div className="w-full">
-            <HomeSkedules schedules={schedules} />
-          </div>
+          <SchedulesDisplay schedules={schedules} />
         </div>
         {/* <HomeCharacter homeState="default" /> */}
         <nav className="absolute right-0 bottom-0 left-0 w-full py-8 text-center">
-          <nav className="flex items-stretch justify-between p-4 md:justify-center md:gap-12">
+          <nav className="flex items-start justify-between p-4 md:justify-center md:gap-12">
             <LinkButtonWithIcon href="today" />
             <LinkButtonWithIcon href="diary" />
             <LinkButtonWithIcon href="schedule" />

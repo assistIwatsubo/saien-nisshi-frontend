@@ -29,7 +29,7 @@ export default function Page() {
           </div>
           <div className="m-auto max-w-2/3 opacity-80 md:max-w-1/3 lg:translate-x-2/5">
             <Image
-              src="/images/hatake.png"
+              src="/images/engawa.png"
               alt="家庭菜園から就農支援まで"
               width={1200}
               height={1081}

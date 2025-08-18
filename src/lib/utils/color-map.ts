@@ -1,5 +1,6 @@
 // color-map.ts
 import type { DiaryDetailType } from "@/types/diary";
+import type { ScheduleTimePhase, ScheduleStatus } from "@/types/schedule";
 
 type DiaryTypeStyle = {
   border: string;
@@ -23,4 +24,16 @@ export const diaryTypeColorMap: Record<DiaryDetailType, DiaryTypeStyle> = {
     bg: "bg-gray-400",
     text: "text-gray-500",
   },
+};
+
+export const scheduleTimePhaseColorMap: Record<ScheduleTimePhase, string> = {
+  before: "text-yellow-500",
+  during: "text-red-400",
+  after: "border-transparent",
+};
+
+export const scheduleStatus: Record<ScheduleStatus, string> = {
+  undone: "text-green-600",
+  done: "text-red-600",
+  none: "",
 };

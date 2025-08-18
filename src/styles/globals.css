@@ -4,6 +4,7 @@
   --background: #ffffff;
   --foreground: #1f2937; /* text-gray-800 */
   --app-primary-color: #14532d; /* text-green-900 */
+  --app-primary-color-dark: #09351a;
   --app-secondary-color: #10b981;
   --app-secondary-color-dark: #059669;
   --app-accent-color: #f97300;
@@ -37,13 +38,29 @@ body {
   background-color: rgba(255, 255, 255, 0.75); /* bg-white/75 相当 */
   backdrop-filter: blur(4px); /* backdrop-blur-sm 相当 */
 }
+.app-blurred-bg-ivory {
+  background-color: rgba(248, 243, 220, 0.75); /* bg-white/75 相当 */
+  backdrop-filter: blur(4px); /* backdrop-blur-sm 相当 */
+}
+
+.app-primary-button-shadow {
+  background-color: var(--app-primary-color);
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 4px 0 var(--app-primary-color-dark);
+  transition: all 0.2s ease;
+}
+.app-primary-button-shadow:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 var(--app-primary-color-dark);
+}
 
 .app-secondary-button-shadow {
   background-color: var(--app-secondary-color);
   color: white;
   font-weight: bold;
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
   box-shadow: 0 4px 0 var(--app-secondary-color-dark);
   transition: all 0.2s ease;
 }

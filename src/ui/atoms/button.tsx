@@ -19,7 +19,7 @@ export default function Button({
 }: ButtonProps) {
   const colorClasses = {
     primary:
-      "bg-[var(--app-primary-color)] text-white hover:bg-[var(--app-secondary-color)] hover:border-[var(--app-secondary-color)] border-[var(--app-primary-color)]",
+      "bg-[var(--app-primary-color)] text-white border-[var(--app-primary-color)] app-primary-button-shadow",
     secondary:
       "bg-[var(--app-secondary-color)] text-white  border-[var(--app-secondary-color)] app-secondary-button-shadow",
     danger: "bg-red-500 text-white hover:bg-red-600",

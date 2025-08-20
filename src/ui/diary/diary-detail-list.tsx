@@ -44,7 +44,7 @@ export default function DiaryDetailList({
   };
 
   return (
-    <div className="w-full space-y-12">
+    <div className="w-full space-y-8">
       {cards.map((card, index) =>
         readonly ? (
           card.detail ? (

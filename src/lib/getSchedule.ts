@@ -21,3 +21,23 @@ export const getScheduleById = async (
 ): Promise<ScheduleEntry | undefined> => {
   return ScheduleEntries.find((s) => s.id === id);
 };
+
+export const getScheduleByDate = async (
+  date: string,
+): Promise<ScheduleEntry[]> => {
+  const targetDate = new Date(date);
+  targetDate.setHours(0, 0, 0, 0);
+
+  // 仮データを取得（mocksからimport済みの場合はそのまま使える）
+  const schedules: ScheduleEntry[] = ScheduleEntries;
+
+  return schedules.filter((entry) => {
+    const startDate = new Date(entry.start);
+    startDate.setHours(0, 0, 0, 0);
+
+    const endDate = entry.end ? new Date(entry.end) : startDate;
+    endDate.setHours(0, 0, 0, 0);
+
+    return targetDate >= startDate && targetDate <= endDate;
+  });
+};

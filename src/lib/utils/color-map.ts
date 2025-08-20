@@ -27,13 +27,13 @@ export const diaryTypeColorMap: Record<DiaryDetailType, DiaryTypeStyle> = {
 };
 
 export const scheduleTimePhaseColorMap: Record<ScheduleTimePhase, string> = {
-  before: "text-yellow-500",
-  during: "text-red-400",
+  before: "border-gray-400",
+  during: "border-yellow-500",
   after: "border-transparent",
 };
 
 export const scheduleStatus: Record<ScheduleStatus, string> = {
-  undone: "text-green-600",
-  done: "text-red-600",
+  done: "text-green-500",
+  undone: "text-red-500",
   none: "",
 };

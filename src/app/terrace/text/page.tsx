@@ -10,7 +10,6 @@ import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getDiaryList } from "@/lib/getDiary";
 import { Tag } from "@/ui/atoms/tag"; // Tagコンポーネントのimport
-import ScheduleSummary from "@/ui/atoms/schedule-summary";
 
 const diaries = await fetchSafe(getDiaryList);
 
@@ -25,7 +24,7 @@ export default async function Page() {
             data-layout="diary"
             className="app-blurred-bg-white m-auto mb-8 rounded-md border-2 border-white/80 p-4 lg:max-w-4/5"
           >
-            <Link href={`/terrace/diary/${entry.date}`}>
+            <Link href={`/terrace/day/${entry.date}`}>
               <div className="flex items-start justify-between gap-5">
                 <DiaryCalendarDisplay iso={entry.date} />
                 <div className="w-full">
@@ -33,7 +32,6 @@ export default async function Page() {
                     readonly
                     titleValue={entry.title}
                     summaryValue={entry.summary}
-                    clamped
                   />
                   {/* ここからタグ表示部分 */}
                   <div className="mt-2 flex flex-wrap gap-2">
@@ -76,7 +74,6 @@ export default async function Page() {
                   {/* ここまで */}
                 </div>
               </div>
-              <ScheduleSummary date={entry.date} />
             </Link>
           </article>
         ))}

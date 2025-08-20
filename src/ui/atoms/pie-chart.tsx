@@ -72,8 +72,6 @@ export default function PieChart({ types, size = 30 }: PieChartProps) {
         zIndex: -1,
       }}
     >
-      {/* 背景の薄灰色円 */}
-      <circle cx={0} cy={0} r={1} fill="#ffffff" style={{ zIndex: -1 }} />
       {slices}
     </svg>
   );

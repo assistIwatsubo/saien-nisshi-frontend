@@ -3,11 +3,11 @@
 import { useEffect } from "react";
 import Calendar from "@/ui/atoms/Calendar";
 import { useCalendar } from "@/contexts/calendar-context";
-import type { DiaryDetailType } from "@/types/diary";
+import type { CalendarMap } from "@/types/calendar";
 
 type Props = {
-  monthsToShow: { year: number; month: number }[]; // monthは0ベースのまま
-  calendarMap: Map<string, { id: string; detailTypes: DiaryDetailType[] }>;
+  monthsToShow: { year: number; month: number }[]; // monthは0ベース
+  calendarMap: CalendarMap;
 };
 
 export default function CalendarViewWithScroll({
@@ -15,7 +15,6 @@ export default function CalendarViewWithScroll({
   calendarMap,
 }: Props) {
   const { year, month } = useCalendar();
-  console.log("calendarcontext:", year, month);
 
   useEffect(() => {
     if (!year || month === undefined) return;
@@ -30,13 +29,17 @@ export default function CalendarViewWithScroll({
   return (
     <div className="flex flex-col gap-12 pb-8">
       {monthsToShow.map(({ year, month }) => {
-        const displayMonth = month + 1; // 1〜12 表示用に変換
+        const displayMonth = month + 1; // 1〜12 表示用
         return (
           <div
             key={`${year}-${displayMonth}`}
             id={`calendar-${year}-${displayMonth}`}
           >
-            <Calendar year={year} month={month} calendarMap={calendarMap} />
+            <Calendar
+              year={year}
+              month={month}
+              calendarMap={calendarMap} // diary + schedule を統合した map
+            />
           </div>
         );
       })}

@@ -2,12 +2,14 @@ type DiarySummaryProps = {
   readonly?: boolean;
   titleValue?: string;
   summaryValue?: string;
+  clamped?: boolean;
 };
 
 export default function DiarySummary({
   readonly = false,
   titleValue = "",
   summaryValue = "",
+  clamped = false,
 }: DiarySummaryProps) {
   return (
     <div
@@ -38,7 +40,7 @@ export default function DiarySummary({
       <label>
         {readonly ? (
           <div
-            className="line-clamp-2 w-full px-2 py-1 text-gray-700"
+            className={`w-full px-2 py-1 text-gray-700 ${clamped && "line-clamp-2"}`}
             title={summaryValue}
           >
             {summaryValue || "（まとめ未記入）"}

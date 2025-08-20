@@ -3,6 +3,7 @@
 import { useScheduleStatus } from "@/hooks/useScheduleStatus";
 import type { ScheduleStatus } from "@/types/schedule";
 import { Square, SquareCheck } from "lucide-react";
+import { scheduleStatus } from "@/lib/utils/color-map";
 
 type Props = {
   initialStatus: ScheduleStatus;
@@ -19,8 +20,8 @@ export default function ChangeScheduleStatus({ initialStatus }: Props) {
       onClick={toggleStatus}
       className={`absolute top-2 right-4 flex items-center justify-center rounded-full border-2 px-2 text-xs transition-colors duration-200 ${
         isDone
-          ? "border-green-500 text-green-400"
-          : "border-dashed border-red-400 text-red-400"
+          ? ` ${scheduleStatus[status]}`
+          : `border-dashed ${scheduleStatus[status]}`
       }`}
     >
       {isDone ? (

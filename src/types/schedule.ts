@@ -9,7 +9,7 @@ export interface ScheduleEntry {
   end?: string;
   status: ScheduleStatus;
   /** ISO8601形式の作成日時 */
-  created_at?: string;
+  created_at: string;
   /** ISO8601形式の更新日時 */
   updated_at?: string;
   /** 任意のメモテキスト */

@@ -28,3 +28,23 @@ export const getFormattedDateTime = (
   if (isNaN(date.getTime())) return ""; // 無効な日付の場合空文字
   return getFormattedDate(date, options);
 };
+
+export const getDatetimeLocalString = (isoString: string): string => {
+  if (!isoString) return "";
+
+  const date = new Date(isoString);
+  // datetime-local は "YYYY-MM-DDTHH:mm" 形式
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  return (
+    date.getFullYear() +
+    "-" +
+    pad(date.getMonth() + 1) +
+    "-" +
+    pad(date.getDate()) +
+    "T" +
+    pad(date.getHours()) +
+    ":" +
+    pad(date.getMinutes())
+  );
+};

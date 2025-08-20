@@ -4,14 +4,14 @@ import Link from "next/link";
 import {
   PencilLine,
   BookOpenText,
-  ListTodo,
   Sprout,
   Pencil,
   X,
+  CalendarPlus,
 } from "lucide-react";
 
 type Props = {
-  href: "today" | "diary" | "schedule" | "terrace";
+  href: "today" | "diary" | "terrace" | "scheduleCreate";
   editSuffixPath?: string; // editのときに付け足すパスを渡せるように
   edit?: boolean;
   cancel?: boolean;
@@ -23,15 +23,15 @@ const IconComponentMap: Record<
 > = {
   today: PencilLine,
   diary: BookOpenText,
-  schedule: ListTodo,
   terrace: Sprout,
+  scheduleCreate: CalendarPlus,
 };
 
 const LabelMap: Record<NonNullable<Props["href"]>, string> = {
   today: "記録をする",
-  diary: "日誌を見る",
-  schedule: "予定一覧へ",
+  diary: "日誌一覧へ",
   terrace: "縁側に戻る",
+  scheduleCreate: "予定を作成",
 };
 
 const linkHrefMap = (
@@ -47,10 +47,6 @@ const linkHrefMap = (
         return editSuffixPath
           ? `/terrace/diary/${editSuffixPath}`
           : "/terrace/diary/";
-      case "schedule":
-        return editSuffixPath
-          ? `/terrace/schedule/${editSuffixPath}`
-          : "/terrace/schedule/";
       default:
         return "/";
     }
@@ -63,10 +59,6 @@ const linkHrefMap = (
         return editSuffixPath
           ? `/terrace/diary/${editSuffixPath}/edit`
           : "/terrace/diary/";
-      case "schedule":
-        return editSuffixPath
-          ? `/terrace/schedule/${editSuffixPath}/edit`
-          : "/terrace/schedule/";
       default:
         return "/";
     }
@@ -75,13 +67,13 @@ const linkHrefMap = (
   // 通常リンク
   switch (href) {
     case "today":
-      return "/terrace/today";
+      return "/terrace/diary/today";
     case "diary":
-      return "/terrace/diary/";
-    case "schedule":
-      return "/terrace/schedule/";
+      return "/terrace/diary";
     case "terrace":
-      return "/terrace/";
+      return "/terrace";
+    case "scheduleCreate":
+      return "/terrace/diary/create/schedule/"; // ? 考え中…
     default:
       return "/";
   }
@@ -96,14 +88,14 @@ export default function LinkButtonWithIcon({
   // アイコン選択
   const IconComponent = cancel
     ? X
-    : edit && (href === "diary" || href === "schedule")
+    : edit && href === "diary"
       ? Pencil
       : IconComponentMap[href];
 
   // ラベル選択
   const label = cancel
     ? "編集中止"
-    : edit && (href === "diary" || href === "schedule")
+    : edit && href === "diary"
       ? "編集する"
       : LabelMap[href];
 

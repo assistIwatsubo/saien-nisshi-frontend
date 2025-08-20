@@ -4,8 +4,8 @@ export const ScheduleEntries: ScheduleEntry[] = [
   {
     id: "123",
     title: "エダマメ定植",
-    start: "2025-06-17",
-    end: "2025-06-18",
+    start: "2025-08-06",
+    end: "2025-08-08",
     status: "undone",
     created_at: "2025-05-01T10:00:00Z",
     updated_at: "2025-05-15T15:30:00Z",
@@ -46,7 +46,7 @@ export const ScheduleEntries: ScheduleEntry[] = [
     title: "肥料散布",
     start: "2025-06-22",
     end: "2025-06-22",
-    status: "undone",
+    status: "none",
     created_at: "2025-05-25T12:00:00Z",
     updated_at: "2025-05-30T15:00:00Z",
     memo: "効率よく肥料を散布するために分散作業。",
@@ -94,7 +94,7 @@ export const ScheduleEntries: ScheduleEntry[] = [
   {
     id: "132",
     title: "水やりチェック",
-    start: "2025-06-29T06:00:00Z",
+    start: "2025-08-28T06:00:00Z",
     end: "2025-08-29T07:00:00Z",
     status: "none",
     created_at: "2025-06-18T05:00:00Z",

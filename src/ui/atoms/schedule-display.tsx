@@ -7,6 +7,7 @@ import { getScheduleTimePhase } from "@/lib/getScheduleTimePhase";
 import { scheduleTimePhaseColorMap } from "@/lib/utils/color-map";
 import type { ScheduleEntry } from "@/types/schedule";
 import ChangeScheduleStatus from "../molecules/change-schedule-status";
+import { Sticky } from "./sticky";
 
 type Props = {
   entry: ScheduleEntry;
@@ -20,11 +21,11 @@ export default function ScheduleDisplay({
   const displayStatus = getScheduleTimePhase(entry);
 
   return (
-    <article
-      className={`${variant === "detailed" ? "w-full" : "w-fit"} relative h-full flex-grow border-t-4 border-amber-100`}
+    <Sticky
+      className={`${variant === "detailed" ? "w-full" : "w-fit"} relative h-full flex-grow`}
     >
       <div
-        className={`h-full border-b-2 bg-[var(--app-base-color)] p-2 text-center shadow-md ${scheduleTimePhaseColorMap[displayStatus]}`}
+        className={`h-full border-b-2 bg-[var(--app-base-color)] p-2 text-center ${scheduleTimePhaseColorMap[displayStatus]}`}
       >
         {variant === "simple" ? (
           <Link
@@ -59,7 +60,7 @@ export default function ScheduleDisplay({
               </h3>
             </div>
             <Link
-              href={`/terrace/schedule/${entry.id}/edit`}
+              href={`/terrace/diary/${entry.id}/edit`}
               className="flex w-full flex-col items-stretch justify-start gap-4 text-left"
             >
               <p className="px-1 text-left text-sm text-gray-600">
@@ -84,6 +85,6 @@ export default function ScheduleDisplay({
           </div>
         )}
       </div>
-    </article>
+    </Sticky>
   );
 }

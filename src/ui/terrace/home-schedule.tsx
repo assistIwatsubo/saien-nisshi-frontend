@@ -21,7 +21,7 @@ export default function HomeSchedules({ schedules }: ScheduleProps) {
         {visibleItems ? (
           visibleItems?.length > 0 &&
           visibleItems.slice(0, 3).map((item) => (
-            <li key={item.id} className="w-fit border-t-4 border-amber-100">
+            <li key={item.id} className="w-fit">
               <ScheduleDisplay entry={item} variant="simple" />
             </li>
           ))

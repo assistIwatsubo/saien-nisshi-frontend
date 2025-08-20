@@ -8,20 +8,20 @@ import BottomNav from "@/ui/templates/bottom-nav";
 import { Pencil } from "lucide-react";
 import PageTitle from "@/ui/molecules/page-title";
 import { fetchSafe } from "@/lib/utils/fetchSate";
-import { getDiaryById } from "@/lib/getDiary";
+import { getDiaryByDate } from "@/lib/getDiary";
 import { getTags } from "@/lib/getTags";
 
 type Props = {
   params: {
-    id: string;
+    date: string;
   };
 };
 
 const tags = await fetchSafe(getTags);
 
 export default async function Page({ params }: Props) {
-  const { id } = await params;
-  const diaryEntry = await fetchSafe(() => getDiaryById(id));
+  const { date } = await params;
+  const diaryEntry = await fetchSafe(() => getDiaryByDate(date));
   if (!diaryEntry) {
     // 適宜 404 を表示させたい場合はここで return
     return (
@@ -92,7 +92,11 @@ export default async function Page({ params }: Props) {
       <BottomNav>
         <LinkButtonWithIcon href="terrace" />
         <LinkButtonWithIcon href="diary" />
-        <LinkButtonWithIcon href="diary" cancel editSuffixPath={id} />
+        <LinkButtonWithIcon
+          href="diary"
+          cancel
+          editSuffixPath={diaryEntry.id}
+        />
       </BottomNav>
     </>
   );

@@ -6,7 +6,8 @@ import { Pencil } from "lucide-react";
 import PageTitle from "@/ui/molecules/page-title";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getScheduleById } from "@/lib/getSchedule";
-import { getFormattedDateTime } from "@/lib/utils/format-date";
+import { getDatetimeLocalString } from "@/lib/utils/format-date";
+import { getDateParts } from "@/lib/utils/iso-date";
 
 type Props = {
   params: {
@@ -24,6 +25,13 @@ export default async function Page({ params }: Props) {
       </div>
     );
   }
+  const { iso, year, month, day } = getDateParts(
+    new Date(scheduleEntry.created_at),
+  );
+
+  const updatedDateParts = scheduleEntry.updated_at
+    ? getDateParts(new Date(scheduleEntry.updated_at!))
+    : undefined;
 
   return (
     <>
@@ -36,36 +44,61 @@ export default async function Page({ params }: Props) {
           data-layout="schedule"
           className="app-blurred-bg-ivory m-auto mb-8 rounded-md border-2 border-[var(--app-base-color)]/80 p-4 xl:max-w-4/5"
         >
-          <div className="flex flex-col items-start justify-start gap-4 px-4">
-            <label htmlFor="schedule-title">
+          <div className="flex flex-col items-start justify-start gap-4 px-4 pb-4">
+            <label htmlFor="schedule-title" className="w-full">
               <input
                 type="text"
                 id="schedule-title"
                 name="title"
                 placeholder="予定のタイトルを入れてください"
                 defaultValue={scheduleEntry.title ?? scheduleEntry.title}
+                className="w-full rounded-sm border-2 border-[var(--app-border-gray)] bg-white/25 px-2 py-1"
               />
             </label>
             <p className="text-sm text-gray-600">
-              <time dateTime={scheduleEntry.start}>
-                {getFormattedDateTime(scheduleEntry.start)}
-              </time>
+              <input
+                type="datetime-local"
+                className="rounded-sm border-2 border-[var(--app-border-gray)] bg-white/25 px-2 py-1"
+                defaultValue={getDatetimeLocalString(scheduleEntry.start)}
+              />
               {scheduleEntry.end && (
                 <>
                   <span className="mx-1">～</span>
-                  <time dateTime={scheduleEntry.end}>
-                    {getFormattedDateTime(scheduleEntry.end)}
-                  </time>
+                  <input
+                    type="datetime-local"
+                    className="rounded-sm border-2 border-[var(--app-border-gray)] bg-white/25 px-2 py-1"
+                    defaultValue={
+                      scheduleEntry.end &&
+                      getDatetimeLocalString(scheduleEntry.end)
+                    }
+                  />
                 </>
               )}
             </p>
+
             {scheduleEntry.memo && (
-              <p className="mb-2 w-full rounded-sm bg-white/50 px-2 py-1 text-left text-gray-700">
-                {scheduleEntry.memo}
-              </p>
+              <textarea
+                className="w-full rounded-sm border-2 border-[var(--app-border-gray)] bg-white/25 px-2 py-1"
+                defaultValue={scheduleEntry.memo}
+              ></textarea>
             )}
           </div>
-          <div className="w-full pb-8 text-center">
+          <p className="w-full px-4 text-right text-xs text-gray-600">
+            作成日：
+            <time dateTime={iso}>
+              {year}年{month}月{day}日
+            </time>
+          </p>
+          {updatedDateParts && (
+            <p className="w-full px-4 text-right text-xs text-gray-600">
+              最終更新日：
+              <time dateTime={updatedDateParts.iso}>
+                {updatedDateParts.year}年{updatedDateParts.month}月
+                {updatedDateParts.day}日
+              </time>
+            </p>
+          )}
+          <div className="w-full py-4 text-center">
             <LinkButtonMini
               href="/terrace/"
               label="編集を完了する"

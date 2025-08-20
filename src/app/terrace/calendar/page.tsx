@@ -1,5 +1,5 @@
+// page.tsx
 import { getDateParts } from "@/lib/utils/iso-date";
-import type { DiaryDetailType } from "@/types/diary";
 import PageTitle from "@/ui/molecules/page-title";
 import { PencilLine } from "lucide-react";
 import HatakeArea from "@/ui/templates/hatake-area";
@@ -8,33 +8,72 @@ import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getDiaryList } from "@/lib/getDiary";
 import CalendarViewWithScroll from "@/ui/molecules/calendar-view-with-scroll";
-
-type CalendarMap = Map<
-  string,
-  {
-    id: string;
-    detailTypes: DiaryDetailType[];
-  }
->;
+import { getScheduleList } from "@/lib/getSchedule";
+import type {
+  CalendarMap,
+  CalendarDiary,
+  CalendarSchedule,
+} from "@/types/calendar";
 
 /** Map化ユーティリティ */
 function createCalendarMap(
-  entries: Awaited<ReturnType<typeof getDiaryList>> | null,
+  diaryEntries: Awaited<ReturnType<typeof getDiaryList>> | null,
+  scheduleEntries: Awaited<ReturnType<typeof getScheduleList>> | null,
 ): CalendarMap {
   const map: CalendarMap = new Map();
-  if (entries) {
-    for (const entry of entries) {
+
+  // diary をマップに登録
+  if (diaryEntries) {
+    for (const entry of diaryEntries) {
       const iso = getDateParts(new Date(entry.date)).iso;
-      const detailTypes = entry.details?.map((d) => d.type) ?? [];
-      map.set(iso, { id: entry.id, detailTypes });
+      const diary: CalendarDiary = {
+        id: entry.id,
+        detailTypes: entry.details?.map((d) => d.type) ?? [],
+      };
+
+      const prev = map.get(iso) ?? {};
+      const diaries = prev.diaries ?? [];
+      diaries.push(diary);
+
+      map.set(iso, { ...prev, diaries });
     }
   }
+
+  // schedule をマップに追加
+  if (scheduleEntries) {
+    for (const s of scheduleEntries) {
+      // スケジュールの開始日から終了日までを日単位でマップに登録
+      const start = new Date(s.start);
+      const end = s.end ? new Date(s.end) : start;
+
+      for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        const iso = getDateParts(d).iso;
+
+        const prev = map.get(iso) ?? {};
+        const schedules = prev.schedules ?? [];
+
+        const schedule: CalendarSchedule = {
+          id: s.id,
+          title: s.title,
+          status: s.status,
+          start: s.start,
+          end: s.end,
+        };
+
+        schedules.push(schedule);
+
+        map.set(iso, { ...prev, schedules });
+      }
+    }
+  }
+
   return map;
 }
 
 export default async function Page() {
   const diaryEntries = await fetchSafe(getDiaryList);
-  const calendarMap = createCalendarMap(diaryEntries);
+  const scheduleEntries = await fetchSafe(getScheduleList);
+  const calendarMap = createCalendarMap(diaryEntries, scheduleEntries);
 
   const startMonth = 4; // 4月スタート
   const currentYear = new Date().getFullYear();

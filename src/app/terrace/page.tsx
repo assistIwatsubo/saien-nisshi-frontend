@@ -37,13 +37,12 @@ export default async function Page() {
           <SchedulesDisplay schedules={schedules} />
         </div>
         {/* <HomeCharacter homeState="default" /> */}
-        <nav className="absolute right-0 bottom-0 left-0 w-full py-8 text-center">
-          <nav className="flex items-start justify-between p-4 md:justify-center md:gap-12">
+        <div className="absolute right-0 bottom-0 left-0 w-full py-8 text-center">
+          <nav className="flex items-start justify-between p-4 md:justify-center md:gap-8">
             <LinkButtonWithIcon href="today" />
             <LinkButtonWithIcon href="diary" />
-            <LinkButtonWithIcon href="schedule" />
           </nav>
-        </nav>
+        </div>
       </HatakeArea>
       <EngawaArea title="休憩メニュー">
         <EngawaText textName={["edamame", "ingen"]} />

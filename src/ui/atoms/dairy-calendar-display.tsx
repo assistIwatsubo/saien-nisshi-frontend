@@ -1,7 +1,7 @@
-import { getDateParts } from "@/lib/utils/iso-date";
+import { getDateParts } from "@/lib/utils/format-date";
 
 type Props = {
-  iso?: string; // optional にしておくと fallback 可能
+  iso?: string;
 };
 
 export default function DailyCalendarDisplay({ iso }: Props) {
@@ -16,7 +16,7 @@ export default function DailyCalendarDisplay({ iso }: Props) {
       <span className="bg-gray-100 text-center text-gray-400">{year}</span>
       <div className="flex w-auto flex-col items-stretch justify-start px-4 py-1">
         <span className="text-2xl leading-6">{month}/</span>
-        <span className="text-4xl">{day.padStart(2, "0")}</span>
+        <span className="text-4xl">{day}</span>
         <span className="whitespace-nowrap">{weekday}</span>
       </div>
     </time>

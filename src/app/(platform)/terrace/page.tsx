@@ -10,7 +10,7 @@ import LinkButtonLarge from "@/ui/atoms/link-button-large";
 import LinkButtonMini from "@/ui/atoms/link-button-mini";
 import HatakeArea from "@/ui/templates/hatake-area";
 // import HomeCharacter from "@/ui/molecules/home-character";
-import { getNews } from "@/lib/getNews";
+import { getNewsLatest } from "@/lib/getNews";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getCommunityDiary } from "@/lib/getCommunityDiary";
 import { getScheduleList } from "@/lib/getSchedule";
@@ -18,18 +18,18 @@ import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import EngawaText from "@/ui/molecules/engawa-text";
 import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
 import PageTitle from "@/ui/molecules/page-title";
-import { Sprout } from "lucide-react";
+import { HousePlus } from "lucide-react";
 
 export default async function Page() {
   const [latestNews, schedules, communityDiaries] = await Promise.all([
-    fetchSafe(getNews),
+    fetchSafe(getNewsLatest),
     fetchSafe(getScheduleList),
     fetchSafe(getCommunityDiary),
   ]);
 
   return (
     <>
-      <PageTitle title="縁側" icon={<Sprout size={32} />} />
+      <PageTitle title="縁側" icon={<HousePlus size={32} />} />
       <HatakeArea>
         <HomeNews latestNews={latestNews} />
         <div className="flex items-start justify-between gap-8">

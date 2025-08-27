@@ -7,7 +7,7 @@ import PageTitle from "@/ui/molecules/page-title";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getScheduleById } from "@/lib/getSchedule";
 import { getDatetimeLocalString } from "@/lib/utils/format-date";
-import { getDateParts } from "@/lib/utils/iso-date";
+import { getDateParts, getISODate } from "@/lib/utils/format-date";
 
 type Props = {
   params: {
@@ -109,8 +109,12 @@ export default async function Page({ params }: Props) {
       </HatakeArea>
       <BottomNav>
         <LinkButtonWithIcon href="terrace" />
-        <LinkButtonWithIcon href="schedule" />
-        <LinkButtonWithIcon href="schedule" cancel editSuffixPath={id} />
+        <LinkButtonWithIcon href="diary" />
+        <LinkButtonWithIcon
+          href="diary"
+          cancel
+          editSuffixPath={getISODate(new Date(scheduleEntry.start))}
+        />
       </BottomNav>
     </>
   );

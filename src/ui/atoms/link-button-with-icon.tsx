@@ -4,7 +4,7 @@ import Link from "next/link";
 import {
   PencilLine,
   BookOpenText,
-  Sprout,
+  HousePlus,
   Pencil,
   X,
   CalendarPlus,
@@ -23,7 +23,7 @@ const IconComponentMap: Record<
 > = {
   today: PencilLine,
   diary: BookOpenText,
-  terrace: Sprout,
+  terrace: HousePlus,
   scheduleCreate: CalendarPlus,
 };
 
@@ -96,7 +96,7 @@ export default function LinkButtonWithIcon({
   const label = cancel
     ? "編集中止"
     : edit && href === "diary"
-      ? "編集する"
+      ? "記録を編集"
       : LabelMap[href];
 
   const linkHref = linkHrefMap(href, edit, cancel, editSuffixPath);

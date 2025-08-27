@@ -1,43 +1,36 @@
-import { getDateParts } from "@/lib/utils/iso-date";
+import { getDateParts } from "@/lib/utils/format-date";
 import LinkButtonMini from "@/ui/atoms/link-button-mini";
 import HatakeArea from "@/ui/templates/hatake-area";
 import DiarySummary from "@/ui/diary/diary-summary";
-import DiaryDetailList from "@/ui/diary/diary-detail-list";
+import DiaryDetailList from "@/ui/molecules/forms/diary/diary-detail-list";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import BottomNav from "@/ui/templates/bottom-nav";
+import { PencilLine } from "lucide-react";
 import { Pencil } from "lucide-react";
 import PageTitle from "@/ui/molecules/page-title";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getDiaryByDate } from "@/lib/getDiary";
 import { getTags } from "@/lib/getTags";
 
-type Props = {
-  params: {
-    date: string;
-  };
-};
+const tags = await fetchSafe(() => getTags());
 
-const tags = await fetchSafe(getTags);
+const { iso, month, day, weekday } = getDateParts(new Date());
+const diary = await fetchSafe(() => getDiaryByDate(iso));
 
-export default async function Page({ params }: Props) {
-  const { date } = await params;
-  const diaryEntry = await fetchSafe(() => getDiaryByDate(date));
-  if (!diaryEntry) {
-    // 適宜 404 を表示させたい場合はここで return
-    return (
-      <div className="py-8 text-center text-red-500">
-        指定された記録が見つかりません。
-      </div>
-    );
-  }
-
-  const { iso, month, day, weekday } = getDateParts(new Date(diaryEntry.date));
+export default async function Page() {
   return (
     <>
       <PageTitle
-        title="日記を編集する"
-        icon={<Pencil size={32} className="rotate-180" />}
+        title={`今日の日誌を${diary ? "編集する" : "記録する"}`}
+        icon={
+          diary ? (
+            <Pencil size={32} className="rotate-180" />
+          ) : (
+            <PencilLine size={32} />
+          )
+        }
       />
+
       <HatakeArea>
         <section
           data-layout="diary"
@@ -53,8 +46,8 @@ export default async function Page({ params }: Props) {
             className="m-auto flex w-full flex-col items-center justify-start gap-8 py-8 lg:max-w-9/10"
           >
             <DiarySummary
-              titleValue={diaryEntry.title ?? ""}
-              summaryValue={diaryEntry.summary ?? ""}
+              titleValue={diary?.title ?? ""}
+              summaryValue={diary?.summary ?? ""}
             />
             <LinkButtonMini
               href="/"
@@ -65,9 +58,9 @@ export default async function Page({ params }: Props) {
               data-role="diary-content-details"
               className="mt-4 flex w-full flex-col items-center justify-start gap-8 border-t-1 border-b-1 border-dashed border-gray-400 px-4 py-8"
             >
-              <h3 className="text-lg font-bold">詳細を編集する</h3>
+              <h3 className="text-lg font-bold">詳細を記録する</h3>
               <DiaryDetailList
-                initialDetails={diaryEntry.details}
+                initialDetails={diary?.details ?? []}
                 tags={
                   tags ?? {
                     cropName: [],
@@ -83,7 +76,7 @@ export default async function Page({ params }: Props) {
           <div className="w-full pb-8 text-center">
             <LinkButtonMini
               href="/terrace/"
-              label="編集を完了する"
+              label="記録を完了する"
               variant="secondary"
             />
           </div>
@@ -92,11 +85,6 @@ export default async function Page({ params }: Props) {
       <BottomNav>
         <LinkButtonWithIcon href="terrace" />
         <LinkButtonWithIcon href="diary" />
-        <LinkButtonWithIcon
-          href="diary"
-          cancel
-          editSuffixPath={diaryEntry.id}
-        />
       </BottomNav>
     </>
   );

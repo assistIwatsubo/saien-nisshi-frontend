@@ -22,7 +22,7 @@ export default function HomeNews({ latestNews }: NewsProps) {
             className={contentClass}
           />
         ) : (
-          <Link href={`/news/?id=${latestNews.id}`} className={contentClass}>
+          <Link href={`/news/${latestNews.id}`} className={contentClass}>
             {latestNews.title}
             <time dateTime={latestNews.date}>
               ({getFormattedDate(new Date(latestNews.date))})

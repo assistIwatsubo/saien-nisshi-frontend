@@ -29,7 +29,7 @@ export default function ScheduleDisplay({
       >
         {variant === "simple" ? (
           <Link
-            href={`/terrace/schedule/${entry.id}/edit`}
+            href={`/terrace/diary/schedule/${entry.id}/edit`}
             className="flex w-full flex-col items-stretch justify-start gap-4"
           >
             <p className="leading-loose text-[var(--foreground)]">
@@ -60,7 +60,7 @@ export default function ScheduleDisplay({
               </h3>
             </div>
             <Link
-              href={`/terrace/diary/${entry.id}/edit`}
+              href={`/terrace/diary/schedule/${entry.id}/edit`}
               className="flex w-full flex-col items-stretch justify-start gap-4 text-left"
             >
               <p className="px-1 text-left text-sm text-gray-600">

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { CalendarDays } from "lucide-react";
 import { useCalendar } from "@/contexts/calendar-context";
-import { getDateParts } from "@/lib/utils/iso-date";
+import { getDateParts } from "@/lib/utils/format-date";
 
 type Props = {
   year?: string;

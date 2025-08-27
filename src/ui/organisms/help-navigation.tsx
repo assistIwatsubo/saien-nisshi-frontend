@@ -10,8 +10,8 @@ const helpLinks = [
 
 export default function HelpAside() {
   return (
-    <aside className="bg-white pb-8" aria-labelledby="help-nav">
-      <div className="container m-auto px-4 py-8 md:max-w-[80vw]">
+    <aside className="w-screen bg-white py-8" aria-labelledby="help-nav">
+      <div className="container m-auto px-4 md:max-w-[80vw]">
         <TitleH3
           id="help-nav"
           label="困ったときは"

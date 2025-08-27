@@ -38,7 +38,6 @@ export default async function Page({ params }: Props) {
       </HatakeArea>
       <BottomNav>
         <LinkButtonWithIcon href="terrace" />
-        <LinkButtonWithIcon href="schedule" />
       </BottomNav>
       <LinkButtonCalendar />
     </>

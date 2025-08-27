@@ -1,5 +1,5 @@
 // page.tsx
-import { getDateParts } from "@/lib/utils/iso-date";
+import { getDateParts } from "@/lib/utils/format-date";
 import PageTitle from "@/ui/molecules/page-title";
 import { PencilLine } from "lucide-react";
 import HatakeArea from "@/ui/templates/hatake-area";
@@ -29,6 +29,7 @@ function createCalendarMap(
       const diary: CalendarDiary = {
         id: entry.id,
         detailTypes: entry.details?.map((d) => d.type) ?? [],
+        date: entry.date
       };
 
       const prev = map.get(iso) ?? {};

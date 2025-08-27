@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Calendar from "@/ui/atoms/Calendar";
+import Calendar from "@/ui/atoms/calendar";
 import { useCalendar } from "@/contexts/calendar-context";
 import type { CalendarMap } from "@/types/calendar";
 

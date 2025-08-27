@@ -1,6 +1,4 @@
-import Link from "next/link";
-import { Tag } from "../atoms/tag";
-import { DiaryEntry } from "@/types/diary";
+import Link from "next/link";import { DiaryEntry } from "@/types/diary";
 import ErrorMessage from "../atoms/error-message";
 
 type DiaryProps = {
@@ -45,9 +43,6 @@ export default function Diaries({ entries }: DiaryProps) {
                     </h4>
                     <p className="line-clamp-3 text-sm">{entry.summary}</p>
                     <div data-role="tags-display" className="mt-2 flex gap-2">
-                      {(entry.tags ?? []).map((tag) => (
-                        <Tag key={tag} label={tag} />
-                      ))}
                     </div>
                   </div>
                 </article>

@@ -38,11 +38,11 @@ type Particle = {
 
 const seasonConfigs: Record<Season, SeasonConfig> = {
   spring: {
-    maxParticles: 200,
-    createIntervalFrames: 30,
+    maxParticles: 20,
+    createIntervalFrames: 80,
     sizeRange: [10, 15],
-    speedYRange: [1.0, 1.8],
-    speedXRange: [0, 0.4],
+    speedYRange: [0.9, 1.2],
+    speedXRange: [0, 0.2],
     opacityRange: [0.9, 1],
     colors: [],
     imagePaths: [

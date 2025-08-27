@@ -4,7 +4,7 @@ import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import BottomNav from "@/ui/templates/bottom-nav";
 import { CalendarPlus } from "lucide-react";
 import PageTitle from "@/ui/molecules/page-title";
-import { getDateParts } from "@/lib/utils/iso-date";
+import { getDateParts } from "@/lib/utils/format-date";
 
 export default async function Page() {
   const { iso } = getDateParts(new Date());
@@ -69,7 +69,6 @@ export default async function Page() {
       </HatakeArea>
       <BottomNav>
         <LinkButtonWithIcon href="terrace" />
-        <LinkButtonWithIcon href="schedule" />
       </BottomNav>
     </>
   );

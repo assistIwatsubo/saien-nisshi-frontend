@@ -15,7 +15,7 @@ export default async function Page() {
     <>
       <PageTitle title="予定一覧" icon={<ListTodo size={32} />} />
       <HatakeArea>
-        <ul className="flex flex-grow flex-col items-center justify-start gap-8">
+        <ul className="flex flex-grow flex-col items-center justify-start gap-8 pb-6">
           {schedules?.map((entry) => (
             <li key={entry.id} className="w-full">
               <ScheduleDisplay entry={entry} variant="detailed" />

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
 import Button from "@/ui/atoms/button";
 
 export default function FormLogin() {
@@ -10,12 +10,12 @@ export default function FormLogin() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: true,
-      callbackUrl: "/terrace", // ログイン後の遷移先（任意）
-    });
+    // const res = await signIn("credentials", {
+    //   email,
+    //   password,
+    //   redirect: true,
+    //   callbackUrl: "/terrace", // ログイン後の遷移先（任意）
+    // });
   };
 
   return (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getDateParts } from "@/lib/utils/iso-date";
+import { getDateParts } from "@/lib/utils/format-date";
 import PieChart from "@/ui/atoms/pie-chart";
 import { Square, SquareCheck } from "lucide-react";
 import type { CalendarMap } from "@/types/calendar";

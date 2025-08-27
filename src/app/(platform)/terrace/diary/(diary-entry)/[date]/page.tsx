@@ -1,17 +1,18 @@
 import HatakeArea from "@/ui/templates/hatake-area";
 import DiaryCalendarDisplay from "@/ui/atoms/dairy-calendar-display";
 import DiarySummary from "@/ui/diary/diary-summary";
-import DiaryDetailList from "@/ui/diary/diary-detail-list";
+import DiaryDetailCardReadonly from "@/ui/diary/diary-detail-card-readonly";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getDiaryByDate } from "@/lib/getDiary";
 import BottomNav from "@/ui/templates/bottom-nav";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
-import { getDateParts } from "@/lib/utils/iso-date";
+import { getDateParts } from "@/lib/utils/format-date";
 import ScheduleDisplay from "@/ui/atoms/schedule-display";
 import { getScheduleByDate } from "@/lib/getSchedule";
 import PageTitle from "@/ui/molecules/page-title";
 import { CalendarSearch } from "lucide-react";
+import SnsButtonsNav from "@/ui/templates/sns-buttons-nav";
 
 type Props = {
   params: {
@@ -32,8 +33,11 @@ export default async function Page({ params }: Props) {
     );
   }
 
-  // diaryEntry がある場合のみ日付を参照
-  const { year, month, day } = getDateParts(new Date(date));
+  const today = new Date();
+  const targetDate = new Date(date);
+  const isFuture = targetDate > today;
+
+  const { year, month, day } = getDateParts(targetDate);
 
   return (
     <>
@@ -44,7 +48,8 @@ export default async function Page({ params }: Props) {
         />
       )}
       <HatakeArea>
-        {diaryEntry && (
+        {/* 未来日付の場合は diary 表示をスキップ */}
+        {!isFuture && (
           <article
             data-layout="diary"
             className="app-blurred-bg-white m-auto mb-8 rounded-md border-2 border-white/80 p-4 xl:max-w-4/5"
@@ -54,31 +59,43 @@ export default async function Page({ params }: Props) {
               className="m-auto flex w-full flex-col items-center justify-start gap-4 py-4 lg:max-w-9/10"
             >
               <div className="flex w-full items-start justify-between gap-5 px-4">
-                <DiaryCalendarDisplay iso={diaryEntry.date} />
+                <DiaryCalendarDisplay iso={diaryEntry?.date ?? date} />
+
                 <div className="w-full">
-                  <DiarySummary
-                    readonly
-                    titleValue={diaryEntry.title}
-                    summaryValue={diaryEntry.summary}
-                  />
+                  {diaryEntry ? (
+                    <DiarySummary
+                      titleValue={diaryEntry.title}
+                      summaryValue={diaryEntry.summary}
+                    />
+                  ) : (
+                    // ダミーを出す
+                    <DiarySummary
+                      titleValue="記録がありません"
+                      summaryValue="なし"
+                    />
+                  )}
                 </div>
               </div>
-              {diaryEntry.details && diaryEntry.details.length > 0 && (
+              {diaryEntry && <SnsButtonsNav diary={diaryEntry} />}
+
+              {diaryEntry?.details && diaryEntry.details.length > 0 && (
                 <div
                   data-role="diary-content-details"
                   className="flex w-full flex-col items-center justify-start gap-8 border-t-1 border-b-1 border-dashed border-gray-400 px-4 py-8"
                 >
                   <h3 className="text-lg font-bold">詳細</h3>
-                  <DiaryDetailList
-                    readonly
-                    initialDetails={diaryEntry.details}
-                  />
+                  <div className="w-full space-y-8">
+                    {diaryEntry.details.map((detail, i) => (
+                      <DiaryDetailCardReadonly key={i} id={i} detail={detail} />
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
           </article>
         )}
 
+        {/* スケジュールは未来でも表示 */}
         {scheduleEntry && scheduleEntry.length > 0 && (
           <section data-layout="schedule" className="flex flex-col gap-6 pb-6">
             {scheduleEntry.map((entry) => (
@@ -95,12 +112,8 @@ export default async function Page({ params }: Props) {
       <BottomNav>
         <LinkButtonWithIcon href="terrace" />
         <LinkButtonWithIcon href="diary" />
-        {diaryEntry && (
-          <LinkButtonWithIcon
-            href="diary"
-            edit
-            editSuffixPath={diaryEntry.id}
-          />
+        {!isFuture && (
+          <LinkButtonWithIcon href="diary" edit editSuffixPath={date} />
         )}
       </BottomNav>
       <LinkButtonCalendar year={year} month={month} />

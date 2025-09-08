@@ -21,6 +21,16 @@ body {
   color: var(--foreground);
   font-family: "M PLUS 2", sans-serif;
   letter-spacing: 0.05em;
+
+  summary {
+    list-style: none; /* Chrome系 */
+  }
+  summary::-webkit-details-marker {
+    display: none; /* Safari/Chrome */
+  }
+  summary::marker {
+    content: ""; /* Firefox */
+  }
 }
 
 .app-accounting-color {

@@ -11,60 +11,36 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        const { email, password } = credentials ?? {};
+      async authorize(credentials) {
+        if (!credentials) return null;
 
-        // ここに認証ロジックを書く（今はダミー）
-        if (email === "test@example.com" && password === "1234") {
-          return {
-            id: "1",
-            name: "Test User",
-            email: "test@example.com",
-            userType: "advanced",
-            role: "admin",
-          };
-        }
+        const res = await fetch("http://localhost:8080/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: credentials.email,
+            password: credentials.password,
+          }),
+        });
 
-        if (email === "beginner@example.com" && password === "1234") {
-          return {
-            id: "2",
-            name: "Beginner User",
-            email: "beginner@example.com",
-            userType: "beginner",
-            // roleは付与しない
-          };
-        }
+        const user = await res.json();
 
-        return null; // 認証失敗
+        return res.ok && user ? user : null;
       },
     }),
   ],
   session: {
     strategy: "jwt",
   },
-  pages: {
-    signIn: "/",
-  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.userType = user.userType ?? "beginner"; // beginner or advanced
-
-        if (token.userType === "advanced") {
-          token.role = user.role ?? "worker"; // roleをセット
-        } else {
-          delete token.role; // beginnerならroleは持たせない
-        }
+        token.accessToken = user.accessToken;
       }
       return token;
     },
     async session({ session, token }) {
-      session.user.userType = token.userType;
-      if (token.userType === "advanced") {
-        session.user.role = token.role;
-      } else {
-        delete session.user.role;
-      }
+      if (session.user) session.user.accessToken = token.accessToken;
       return session;
     },
   },

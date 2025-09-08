@@ -5,6 +5,8 @@ import {
   Smile,
   Lightbulb,
   BadgeHelpIcon,
+  Sprout,
+  Wrench,
 } from "lucide-react";
 
 type TitleH3Props = {
@@ -12,7 +14,15 @@ type TitleH3Props = {
   id: string;
   type?: "likeTab" | "withLine";
   color?: "primary" | "secondary" | "accent" | "gray";
-  iconType?: "book" | "library" | "star" | "smile" | "lightbulb" | "badgeHelp";
+  iconType?:
+    | "book"
+    | "library"
+    | "star"
+    | "smile"
+    | "lightbulb"
+    | "badgeHelp"
+    | "sprout"
+    | "settings";
 };
 
 // ✅ LucideIcon型を使えば、型エラーも防げる
@@ -26,6 +36,8 @@ const iconMap: Record<
   smile: Smile,
   lightbulb: Lightbulb,
   badgeHelp: BadgeHelpIcon,
+  sprout: Sprout,
+  settings: Wrench,
 };
 
 export default function TitleH3({

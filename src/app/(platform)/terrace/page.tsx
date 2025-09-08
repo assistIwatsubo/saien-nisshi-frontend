@@ -19,8 +19,19 @@ import EngawaText from "@/ui/molecules/engawa-text";
 import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
 import PageTitle from "@/ui/molecules/page-title";
 import { HousePlus } from "lucide-react";
+import HelpNavigation from "@/ui/organisms/help-navigation";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Logout from "@/ui/molecules/logout";
 
 export default async function Page() {
+  const session = await getServerSession(authOptions);
+
+  if (session) {
+    console.log("ログインユーザー情報（サーバー側）:", session.user);
+    console.log("アクセストークン:", session.user.accessToken);
+  }
+
   const [latestNews, schedules, communityDiaries] = await Promise.all([
     fetchSafe(getNewsLatest),
     fetchSafe(getScheduleList),
@@ -86,10 +97,12 @@ export default async function Page() {
           aria-label="設定項目のナビゲーション"
           className="container flex flex-col items-center gap-8 py-8"
         >
-          <LinkButtonLarge label="マイページへ" href="/mypage" />
-          <LinkButtonLarge label="マイ設定へ" href="/setting" />
+          <LinkButtonLarge label="マイページへ" href="/terrace/mypage" />
+          <LinkButtonLarge label="マイ設定へ" href="/terrace/settings" />
+          <Logout />
         </nav>
       </EngawaArea>
+      <HelpNavigation />
       <LinkButtonCalendar />
     </>
   );

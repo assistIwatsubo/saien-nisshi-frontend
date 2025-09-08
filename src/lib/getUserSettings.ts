@@ -1,5 +1,5 @@
 // lib/fetchUserSettings.ts
-export async function fetchUserSettings(
+export default async function getUserSettings(
   userId: string,
 ): Promise<Record<string, string>> {
   const res = await fetch(

@@ -1,4 +1,3 @@
-import HelpNavigation from "@/ui/organisms/help-navigation";
 import { appTitle } from "@/lib/utils/fonts";
 type Props = {
   title: string;
@@ -9,7 +8,7 @@ export default function NonDiaryArea({ title, children }: Props) {
   return (
     <section
       data-role="system-section"
-      className=" bg-[var(--app-base-color)] pt-4"
+      className="min-h-screen bg-[var(--app-base-color)] pt-4"
       aria-labelledby="non-diary-area-title"
     >
       <div
@@ -24,7 +23,6 @@ export default function NonDiaryArea({ title, children }: Props) {
         </h2>
         {children}
       </div>
-      <HelpNavigation />
     </section>
   );
 }

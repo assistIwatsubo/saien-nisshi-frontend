@@ -12,7 +12,7 @@ export default function HomeSchedules({ schedules }: ScheduleProps) {
     (item) => item.status !== "done" && getScheduleTimePhase(item) !== "after",
   );
 
-  return (
+  return visibleItems && visibleItems.length > 0 ? (
     <section className="flex-grow overflow-hidden rounded-md bg-white shadow-md">
       <h3 className="block w-full bg-gray-100 py-1 text-center text-xs font-bold text-[var(--app-accent-color)]">
         今日の予定
@@ -30,5 +30,5 @@ export default function HomeSchedules({ schedules }: ScheduleProps) {
         )}
       </ul>
     </section>
-  );
+  ) : null;
 }

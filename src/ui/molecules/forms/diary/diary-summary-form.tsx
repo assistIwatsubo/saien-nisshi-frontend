@@ -15,6 +15,7 @@ export default function DiarySummaryForm({
         placeholder="ここに今日のまとめを書けます。感想やメモにお使いください。"
         className="w-full px-2 py-1"
         value={value}
+        rows={5}
         onChange={(e) => onChange(e.target.value)}
       />
     </label>

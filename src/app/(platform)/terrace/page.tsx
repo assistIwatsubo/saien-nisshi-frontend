@@ -1,7 +1,7 @@
 import Link from "next/link";
 import HomeNews from "@/ui/terrace/home-news";
 import DateDisplay from "@/ui/atoms/dairy-calendar-display";
-import SchedulesDisplay from "@/ui/terrace/home-schedule";
+import BoardSchedules from "@/ui/terrace/scheduleBoard";
 import EngawaArea from "@/ui/templates/engawa-area";
 import TitleH3 from "@/ui/atoms/title-h3";
 import SectionH3 from "@/ui/molecules/section-h3";
@@ -20,23 +20,18 @@ import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
 import PageTitle from "@/ui/molecules/page-title";
 import { HousePlus } from "lucide-react";
 import HelpNavigation from "@/ui/organisms/help-navigation";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { diaryInfo } from "@/lib/utils/diaryInfo";
+
 import Logout from "@/ui/molecules/logout";
 
 export default async function Page() {
-  const session = await getServerSession(authOptions);
-
-  if (session) {
-    console.log("ログインユーザー情報（サーバー側）:", session.user);
-    console.log("アクセストークン:", session.user.accessToken);
-  }
-
   const [latestNews, schedules, communityDiaries] = await Promise.all([
     fetchSafe(getNewsLatest),
     fetchSafe(getScheduleList),
     fetchSafe(getCommunityDiary),
   ]);
+
+  const { hasDiary, date } = await diaryInfo();
 
   return (
     <>
@@ -45,13 +40,18 @@ export default async function Page() {
         <HomeNews latestNews={latestNews} />
         <div className="flex items-start justify-between gap-8">
           <DateDisplay />
-          <SchedulesDisplay schedules={schedules} />
+          <BoardSchedules schedules={schedules} />
         </div>
         {/* <HomeCharacter homeState="default" /> */}
         <div className="absolute right-0 bottom-0 left-0 w-full py-8 text-center">
           <nav className="flex items-start justify-between p-4 md:justify-center md:gap-8">
-            <LinkButtonWithIcon href="today" />
-            <LinkButtonWithIcon href="diary" />
+            <LinkButtonWithIcon
+              variant="editor"
+              type="diary"
+              mode={hasDiary ? "edit" : "create"}
+              editSuffixPath={date}
+            />
+            <LinkButtonWithIcon variant="archive" />
           </nav>
         </div>
       </HatakeArea>

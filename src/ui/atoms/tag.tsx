@@ -19,7 +19,7 @@ type TagProps =
     };
 
 const baseClass =
-  "inline-block rounded-full px-2 py-1 text-xs font-bold border ";
+  "inline-block rounded-full px-2 py-1 text-xs font-bold border w-fit";
 
 export function Tag(props: TagProps) {
   const { label, type, active = false } = props;

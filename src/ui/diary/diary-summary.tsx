@@ -1,12 +1,10 @@
 type DiarySummaryProps = {
-  readonly?: boolean;
-  titleValue?: string;
-  summaryValue?: string;
+  titleValue: string;
+  summaryValue: string;
   clamped?: boolean;
 };
 
 export default function DiarySummary({
-  readonly = false,
   titleValue = "",
   summaryValue = "",
   clamped = false,
@@ -14,46 +12,22 @@ export default function DiarySummary({
   return (
     <div
       data-role="diary-content-summary"
-      className={`flex w-full flex-col gap-2 rounded-sm ${
-        readonly
-          ? "border-none bg-transparent"
-          : "border-2 border-[var(--app-border-gray)] bg-amber-50/50 p-2"
-      }`}
+      className={`bg-transparent" } flex w-full flex-col gap-2 rounded-sm border-none`}
     >
       <label>
-        {readonly ? (
-          <p className="w-full border-b border-[var(--app-border-gray)] px-2 py-1">
-            {titleValue || "（タイトルなし）"}
-          </p>
-        ) : (
-          <input
-            type="text"
-            name="diary-title"
-            id="title"
-            placeholder="今日のまとめ　タイトル"
-            className="w-full border-b border-[var(--app-border-gray)] px-2 py-1"
-            defaultValue={titleValue ?? ""}
-          />
-        )}
+        <p
+          className={`w-full border-b border-[var(--app-border-gray)] px-2 py-1 ${titleValue ? "text-gray-700" : "text-gray-500"}`}
+        >
+          {titleValue || "（タイトルなし）"}
+        </p>
       </label>
-
       <label>
-        {readonly ? (
-          <div
-            className={`w-full px-2 py-1 text-gray-700 ${clamped && "line-clamp-2"}`}
-            title={summaryValue}
-          >
-            {summaryValue || "（まとめ未記入）"}
-          </div>
-        ) : (
-          <textarea
-            name="diary-summary"
-            id="summary"
-            placeholder="ここに今日のまとめを書けます。感想やメモにお使いください。"
-            className="w-full px-2 py-1"
-            defaultValue={summaryValue ?? ""}
-          />
-        )}
+        <div
+          className={`w-full px-2 py-1 ${clamped && "line-clamp-2"} ${summaryValue ? "text-gray-700" : "text-gray-500"}`}
+          title={summaryValue}
+        >
+          {summaryValue || "（まとめ未記入）"}
+        </div>
       </label>
     </div>
   );

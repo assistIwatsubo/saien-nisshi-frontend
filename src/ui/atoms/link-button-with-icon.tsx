@@ -10,105 +10,108 @@ import {
   CalendarPlus,
 } from "lucide-react";
 
+type Variant = "editor" | "archive" | "terrace" | "scheduleCreate";
+type Mode = "create" | "edit" | "cancel";
+type ButtonType = "diary" | "schedule";
+
 type Props = {
-  href: "today" | "diary" | "terrace" | "scheduleCreate";
-  editSuffixPath?: string; // editのときに付け足すパスを渡せるように
-  edit?: boolean;
-  cancel?: boolean;
+  variant: Variant;
+  mode?: Mode;
+  editSuffixPath?: string;
+  type?: ButtonType; // optional
 };
 
-const IconComponentMap: Record<
-  NonNullable<Props["href"]>,
-  React.FC<React.SVGProps<SVGSVGElement>>
-> = {
-  today: PencilLine,
-  diary: BookOpenText,
-  terrace: HousePlus,
-  scheduleCreate: CalendarPlus,
-};
-
-const LabelMap: Record<NonNullable<Props["href"]>, string> = {
-  today: "記録をする",
-  diary: "日誌一覧へ",
-  terrace: "縁側に戻る",
-  scheduleCreate: "予定を作成",
-};
-
-const linkHrefMap = (
-  href: NonNullable<Props["href"]>,
-  edit: boolean | undefined,
-  cancel: boolean | undefined,
+const resolveConfig = (
+  variant: Variant,
+  mode?: Mode,
   editSuffixPath?: string,
-): string => {
-  if (cancel) {
-    // キャンセルリンク
-    switch (href) {
-      case "diary":
-        return editSuffixPath
-          ? `/terrace/diary/${editSuffixPath}`
-          : "/terrace/diary/";
-      default:
-        return "/";
-    }
-  }
-
-  if (edit) {
-    // 編集リンク
-    switch (href) {
-      case "diary":
-        return editSuffixPath
-          ? `/terrace/diary/${editSuffixPath}/edit`
-          : "/terrace/diary/";
-      default:
-        return "/";
-    }
-  }
-
-  // 通常リンク
-  switch (href) {
-    case "today":
-      return "/terrace/diary/today";
-    case "diary":
-      return "/terrace/diary";
+  type?: ButtonType,
+) => {
+  const defaultSet = {
+    icon: HousePlus,
+    label: "縁側に戻る",
+    href: "/terrace",
+  };
+  switch (variant) {
+    case "archive":
+      return {
+        icon: BookOpenText,
+        label: "日誌一覧へ",
+        href: "/terrace/diary",
+      };
+    case "editor":
+      if (type === "diary") {
+        switch (mode) {
+          case "edit":
+            return {
+              icon: Pencil,
+              label: "日誌を編集",
+              href: `/terrace/diary/${editSuffixPath ?? ""}/editor`,
+            };
+          case "cancel":
+            return {
+              icon: X,
+              label: "編集中止",
+              href: `/terrace/diary/${editSuffixPath ?? ""}`,
+            };
+          case "create":
+          default:
+            return {
+              icon: PencilLine,
+              label: "日誌を書く",
+              href: `/terrace/diary/${editSuffixPath ?? ""}/editor`,
+            };
+        }
+      } else if (type === "schedule") {
+        switch (mode) {
+          case "edit":
+            return {
+              icon: CalendarPlus,
+              label: "予定を編集",
+              href: `/terrace/schedule/${editSuffixPath ?? "/terrace"}/editor`,
+            };
+          case "cancel":
+            return {
+              icon: X,
+              label: "編集中止",
+              href: `/terrace/schedule/${editSuffixPath ?? "/terrace"}`,
+            };
+          case "create":
+          default:
+            return {
+              icon: CalendarPlus,
+              label: "予定を作成",
+              href: "/terrace/schedule/create",
+            };
+        }
+      } else {
+        return defaultSet;
+      }
     case "terrace":
-      return "/terrace";
-    case "scheduleCreate":
-      return "/terrace/diary/create/schedule/"; // ? 考え中…
     default:
-      return "/";
+      return defaultSet;
   }
 };
 
 export default function LinkButtonWithIcon({
-  href,
+  variant,
+  mode,
   editSuffixPath,
-  edit,
-  cancel,
+  type,
 }: Props) {
-  // アイコン選択
-  const IconComponent = cancel
-    ? X
-    : edit && href === "diary"
-      ? Pencil
-      : IconComponentMap[href];
+  const {
+    icon: IconComponent,
+    label,
+    href,
+  } = resolveConfig(variant, mode, editSuffixPath, type);
 
-  // ラベル選択
-  const label = cancel
-    ? "編集中止"
-    : edit && href === "diary"
-      ? "記録を編集"
-      : LabelMap[href];
-
-  const linkHref = linkHrefMap(href, edit, cancel, editSuffixPath);
-
-  // 鉛筆アイコン回転は編集時のみ
-  const iconClassName = edit ? "rotate-180" : "";
+  const iconClassName = mode === "edit" ? "rotate-180" : "";
 
   return (
     <Link
-      href={linkHref}
+      href={href ?? "/terrace"}
       className={`rounded-md border-4 border-[var(--app-primary-color)] p-2 text-center font-bold shadow-md backdrop-blur-sm ${
-        href === "terrace" && !edit && !cancel
+        variant === "terrace" && !mode
           ? "app-text-shadow bg-[var(--app-primary-color)]/50 text-lime-100"
           : "bg-white/75 text-[var(--app-primary-color)]"
       }`}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import DiaryDetailForm from "./diary-detail-form";
 import Button from "@/ui/atoms/button";
-import { DiaryDetail, fieldLabelType } from "@/types/diary";
+import { DiaryDetail, FieldLabelType } from "@/types/diary";
 import { v4 as uuidv4 } from "uuid";
 
 type Card = {
@@ -13,7 +13,7 @@ type Card = {
 
 type Props = {
   values?: DiaryDetail[];
-  tags?: Record<fieldLabelType, string[]>;
+  tags?: Record<FieldLabelType, string[]>;
   onChange?: (updated: DiaryDetail[]) => void;
 };
 
@@ -63,17 +63,19 @@ export default function DiaryDetailList({
 
   return (
     <div className="w-full space-y-8">
-      {cards.map((card, index) => (
-        <DiaryDetailForm
-          key={card.id}
-          id={card.id}
-          index={index}
-          detail={card.detail}
-          tags={tags}
-          onChange={(detail) => handleUpdateCard(card.id, detail)}
-          onRemove={handleRemoveCard}
-        />
-      ))}
+      {(cards.length > 0 ? cards : [{ id: uuidv4(), detail: undefined }]).map(
+        (card, index) => (
+          <DiaryDetailForm
+            key={card.id}
+            id={card.id}
+            index={index}
+            detail={card.detail}
+            tags={tags}
+            onChange={(detail) => handleUpdateCard(card.id, detail)}
+            onRemove={handleRemoveCard}
+          />
+        ),
+      )}
       <div className="mb-4 text-center">
         <Button onClick={handleAddCard} color="secondary">
           項目を追加する

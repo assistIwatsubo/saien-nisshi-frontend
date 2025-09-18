@@ -7,9 +7,9 @@ type ScheduleProps = {
   schedules: ScheduleEntry[] | null;
 };
 
-export default function HomeSchedules({ schedules }: ScheduleProps) {
+export default function ScheduleBoard({ schedules }: ScheduleProps) {
   const visibleItems = schedules?.filter(
-    (item) => item.status !== "done" && getScheduleTimePhase(item) !== "after",
+    (item) => getScheduleTimePhase(item) !== "after",
   );
 
   return visibleItems && visibleItems.length > 0 ? (
@@ -17,11 +17,11 @@ export default function HomeSchedules({ schedules }: ScheduleProps) {
       <h3 className="block w-full bg-gray-100 py-1 text-center text-xs font-bold text-[var(--app-accent-color)]">
         今日の予定
       </h3>
-      <ul className="flex flex-wrap items-stretch gap-4 p-2 text-sm">
+      <ul className="flex flex-wrap items-stretch text-sm">
         {visibleItems ? (
           visibleItems?.length > 0 &&
           visibleItems.slice(0, 3).map((item) => (
-            <li key={item.id} className="w-fit">
+            <li key={item.id} className="max-w-1/4 p-2">
               <ScheduleDisplay entry={item} variant="simple" />
             </li>
           ))

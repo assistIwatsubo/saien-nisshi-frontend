@@ -19,7 +19,8 @@ export default async function Page({ params }: Props) {
   const { date } = params;
 
   // データ取得
-  const diaryEntry = await fetchSafe(() => getDiaryByDate(date));
+  const diaryEntries = await fetchSafe(() => getDiaryByDate(date));
+  const diaryEntry = diaryEntries?.[0] ?? null;
   const tags = await fetchSafe(getTags);
 
   const { iso, month, day, weekday } = getDateParts(new Date(date));
@@ -27,7 +28,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <PageTitle
-        title={diaryEntry ? "記録を編集する" : "記録を追加する"}
+        title={diaryEntry ? "日誌を編集" : "日誌を書く"}
         icon={
           diaryEntry ? (
             <Pencil size={32} className="rotate-180" />
@@ -50,18 +51,23 @@ export default async function Page({ params }: Props) {
 
           <FormDiary
             diaryId={diaryEntry?.id ?? "0"}
-            initialTitle={diaryEntry?.title}
-            initialSummary={diaryEntry?.summary}
-            initialDetails={diaryEntry?.details}
+            initialTitle={diaryEntry?.title ?? ""}
+            initialSummary={diaryEntry?.summary ?? ""}
+            initialDetails={diaryEntry?.details ?? []}
             tags={tags ?? {}}
           />
         </section>
       </HatakeArea>
 
       <BottomNav>
-        <LinkButtonWithIcon href="terrace" />
-        <LinkButtonWithIcon href="diary" />
-        <LinkButtonWithIcon href="diary" cancel editSuffixPath={date} />
+        <LinkButtonWithIcon variant="terrace" />
+        <LinkButtonWithIcon variant="archive" />
+        <LinkButtonWithIcon
+          variant="editor"
+          type="diary"
+          mode="cancel"
+          editSuffixPath={date}
+        />
       </BottomNav>
     </>
   );

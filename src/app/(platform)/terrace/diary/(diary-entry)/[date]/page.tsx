@@ -1,7 +1,7 @@
 import HatakeArea from "@/ui/templates/hatake-area";
 import DiaryCalendarDisplay from "@/ui/atoms/dairy-calendar-display";
 import DiarySummary from "@/ui/diary/diary-summary";
-import DiaryDetailCardReadonly from "@/ui/diary/diary-detail-card-readonly";
+import DiaryDetailCard from "@/ui/diary/diary-detail-card";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getDiaryByDate } from "@/lib/getDiary";
 import BottomNav from "@/ui/templates/bottom-nav";
@@ -22,7 +22,8 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   const { date } = params;
-  const diaryEntry = await fetchSafe(() => getDiaryByDate(date));
+  const diaryEntries = await fetchSafe(() => getDiaryByDate(date));
+  const diaryEntry = diaryEntries?.[0] ?? null;
   const scheduleEntry = await fetchSafe(() => getScheduleByDate(date));
 
   if (!diaryEntry && (!scheduleEntry || scheduleEntry.length === 0)) {
@@ -33,11 +34,9 @@ export default async function Page({ params }: Props) {
     );
   }
 
-  const today = new Date();
-  const targetDate = new Date(date);
-  const isFuture = targetDate > today;
+  const isFuture = new Date(date) >= new Date();
 
-  const { year, month, day } = getDateParts(targetDate);
+  const { year, month, day } = getDateParts(new Date(date));
 
   return (
     <>
@@ -64,8 +63,8 @@ export default async function Page({ params }: Props) {
                 <div className="w-full">
                   {diaryEntry ? (
                     <DiarySummary
-                      titleValue={diaryEntry.title}
-                      summaryValue={diaryEntry.summary}
+                      titleValue={diaryEntry.title ?? ""}
+                      summaryValue={diaryEntry.summary ?? ""}
                     />
                   ) : (
                     // ダミーを出す
@@ -86,7 +85,7 @@ export default async function Page({ params }: Props) {
                   <h3 className="text-lg font-bold">詳細</h3>
                   <div className="w-full space-y-8">
                     {diaryEntry.details.map((detail, i) => (
-                      <DiaryDetailCardReadonly key={i} id={i} detail={detail} />
+                      <DiaryDetailCard key={i} detail={detail} />
                     ))}
                   </div>
                 </div>
@@ -110,10 +109,15 @@ export default async function Page({ params }: Props) {
       </HatakeArea>
 
       <BottomNav>
-        <LinkButtonWithIcon href="terrace" />
-        <LinkButtonWithIcon href="diary" />
+        <LinkButtonWithIcon variant="terrace" />
+        <LinkButtonWithIcon variant="archive" type="diary" />
         {!isFuture && (
-          <LinkButtonWithIcon href="diary" edit editSuffixPath={date} />
+          <LinkButtonWithIcon
+            variant="editor"
+            type="diary"
+            mode="edit"
+            editSuffixPath={date}
+          />
         )}
       </BottomNav>
       <LinkButtonCalendar year={year} month={month} />

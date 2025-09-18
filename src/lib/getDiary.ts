@@ -1,19 +1,62 @@
-import { diaryEntries } from "@/mocks/diary";
-import type { DiaryEntry } from "@/types/diary";
+import { DiaryEntry } from "@/types/diary";
+import { getAccessToken } from "./getAccessToken";
 
-export const getDiaryList = async (date?: string): Promise<DiaryEntry[]> => {
-  // DBからデータを取得する場合は、username（一意なら）やdate、diaryId等を組み合わせて問い合わせるはずなので、これを活用するためfilterを残す
-  return date ? diaryEntries.filter((d) => d.date === date) : diaryEntries;
+export const getDiaryList = async (): Promise<DiaryEntry[]> => {
+  try {
+    const token = await getAccessToken();
+    const res = await fetch(`http://localhost:8080/api/diaries/`, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      console.error("API request failed:", res.status, res.statusText);
+      return [];
+    }
+
+    const diaries = await res.json();
+    console.log(diaries);
+    return diaries;
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return [];
+  }
 };
 
-export const getDiaryById = async (
-  id: string,
-): Promise<DiaryEntry | undefined> => {
-  return diaryEntries.find((d) => d.id === id);
+export const getDiaryById = async (id: string): Promise<DiaryEntry> => {
+  const token = await getAccessToken();
+  const res = await fetch(`http://localhost:8080/api/diaries/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch schedule ${id}`);
+  }
+
+  const schedule: DiaryEntry = await res.json();
+  return schedule;
 };
 
-export const getDiaryByDate = async (
-  date: string,
-): Promise<DiaryEntry | undefined> => {
-  return diaryEntries.find((d) => d.date === date);
+export const getDiaryByDate = async (date: string): Promise<DiaryEntry[]> => {
+  const token = await getAccessToken();
+  const res = await fetch(
+    `http://localhost:8080/api/diaries?date=${encodeURIComponent(date)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch diaries");
+  }
+  const diaries: DiaryEntry[] = await res.json();
+  console.log(diaries);
+
+  return diaries;
 };

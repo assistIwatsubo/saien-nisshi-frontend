@@ -23,9 +23,13 @@ export const authOptions: NextAuthOptions = {
           }),
         });
 
-        const user = await res.json();
+        const data = await res.json();
+        if (!res.ok || !data.access_token) return null;
 
-        return res.ok && user ? user : null;
+        return {
+          id: data.id,
+          accessToken: data.access_token,
+        };
       },
     }),
   ],
@@ -40,7 +44,10 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      if (session.user) session.user.accessToken = token.accessToken;
+      if (session.user) {
+        session.user.accessToken =
+          typeof token.accessToken === "string" ? token.accessToken : "";
+      }
       return session;
     },
   },

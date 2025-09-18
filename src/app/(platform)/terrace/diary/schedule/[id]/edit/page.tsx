@@ -80,6 +80,7 @@ export default async function Page({ params }: Props) {
               <textarea
                 className="w-full rounded-sm border-2 border-[var(--app-border-gray)] bg-white/25 px-2 py-1"
                 defaultValue={scheduleEntry.memo}
+                rows={5}
               ></textarea>
             )}
           </div>

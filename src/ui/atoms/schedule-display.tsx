@@ -32,7 +32,7 @@ export default function ScheduleDisplay({
             href={`/terrace/diary/schedule/${entry.id}/edit`}
             className="flex w-full flex-col items-stretch justify-start gap-4"
           >
-            <p className="leading-loose text-[var(--foreground)]">
+            <p className="leading-6 text-[var(--foreground)]">
               {entry.title}
               <span className="mt-1 block text-xs font-normal text-gray-500">
                 <time dateTime={entry.start}>
@@ -52,7 +52,7 @@ export default function ScheduleDisplay({
         ) : (
           <div className="flex flex-col items-start justify-start gap-4 px-4">
             <div className="flex max-w-3/4 items-center justify-start gap-4">
-              {entry.status !== "none" && (
+              {entry.status !== "unused" && (
                 <ChangeScheduleStatus initialStatus={entry.status} />
               )}
               <h3 className="text-lg font-bold text-[var(--foreground)]">

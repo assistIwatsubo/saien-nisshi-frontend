@@ -1,18 +1,14 @@
-export type ScheduleStatus = "undone" | "done" | "none";
+export type ScheduleStatus = "unused" | "undone" | "done";
 
 export interface ScheduleEntry {
   id: string;
+  user_id: string;
   title: string;
-  /** ISO8601形式（YYYY-MM-DD or YYYY-MM-DDTHH:mm） */
   start: string;
-  /** ISO8601形式。指定がなければ start から自動計算 */
   end?: string;
   status: ScheduleStatus;
-  /** ISO8601形式の作成日時 */
   created_at: string;
-  /** ISO8601形式の更新日時 */
   updated_at?: string;
-  /** 任意のメモテキスト */
   memo?: string;
 }
 

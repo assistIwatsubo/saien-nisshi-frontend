@@ -1,43 +1,64 @@
-import { ScheduleEntry, ScheduleStatus } from "@/types/schedule";
-import { ScheduleEntries } from "@/mocks/schedule";
+import { ScheduleEntry } from "@/types/schedule";
+import { getAccessToken } from "./getAccessToken";
 
-// API化したらここを書き換える
-export const getScheduleList = async (
-  status?: ScheduleStatus,
-): Promise<ScheduleEntry[]> => {
-  // 実際はAPI呼び出しでクエリパラメータにstatusを含める想定
-  const entries = !status
-    ? ScheduleEntries
-    : ScheduleEntries.filter((entry) => entry.status === status);
+export const getScheduleList = async (): Promise<ScheduleEntry[]> => {
+  try {
+    const token = await getAccessToken();
+    const res = await fetch(`http://localhost:8080/api/schedules/`, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  // 日付の新しい順にソート（時刻付きISO文字列に対応）
-  return entries.sort(
-    (a, b) => new Date(b.start).getTime() - new Date(a.start).getTime(),
-  );
+    if (!res.ok) {
+      console.error("API request failed:", res.status, res.statusText);
+      return [];
+    }
+
+    const schedules = await res.json();
+    // console.log(schedules);
+    return schedules;
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return [];
+  }
 };
 
-export const getScheduleById = async (
-  id: string,
-): Promise<ScheduleEntry | undefined> => {
-  return ScheduleEntries.find((s) => s.id === id);
+export const getScheduleById = async (id: string): Promise<ScheduleEntry> => {
+  const token = await getAccessToken();
+  const res = await fetch(`http://localhost:8080/api/schedules/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch schedule ${id}`);
+  }
+
+  const schedule: ScheduleEntry = await res.json();
+  return schedule;
 };
 
 export const getScheduleByDate = async (
   date: string,
 ): Promise<ScheduleEntry[]> => {
-  const targetDate = new Date(date);
-  targetDate.setHours(0, 0, 0, 0);
+  const token = await getAccessToken();
+  const res = await fetch(
+    `http://localhost:8080/api/schedules?date=${encodeURIComponent(date)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
 
-  // 仮データを取得（mocksからimport済みの場合はそのまま使える）
-  const schedules: ScheduleEntry[] = ScheduleEntries;
+  if (!res.ok) {
+    throw new Error("Failed to fetch schedules");
+  }
 
-  return schedules.filter((entry) => {
-    const startDate = new Date(entry.start);
-    startDate.setHours(0, 0, 0, 0);
+  const schedules: ScheduleEntry[] = await res.json();
 
-    const endDate = entry.end ? new Date(entry.end) : startDate;
-    endDate.setHours(0, 0, 0, 0);
-
-    return targetDate >= startDate && targetDate <= endDate;
-  });
+  return schedules;
 };

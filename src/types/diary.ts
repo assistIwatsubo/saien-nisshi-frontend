@@ -6,9 +6,9 @@ export type DiaryEntry = {
     avatarUrl?: string;
   };
   date: string; // ISO形式 yyyy-mm-dd
-  title: string;
-  summary: string;
-  details?: DiaryDetail[]; // ここに複数の詳細を入れる
+  title: string | null;
+  summary: string | null;
+  details?: DiaryDetail[];
 };
 
 export type DiaryDetailType = "crop" | "pesticide" | "other";
@@ -24,33 +24,56 @@ export const typeLabels: Record<DiaryDetailType, string> = {
   other: "その他",
 };
 
-export type fieldLabelType =
-  | "cropName"
-  | "fieldName"
-  | "pesticideName"
-  | "concentration"
-  | "dilutionRate";
-
-export const FIELD_LABEL_TYPES: fieldLabelType[] = [
-  "cropName",
-  "fieldName",
-  "pesticideName",
+export const FIELD_LABEL_TYPES = [
+  "crop_name",
+  "field_name",
+  "pesticide_name",
   "concentration",
-  "dilutionRate",
-];
+  "dilution_rate",
+  "applied_amount",
+] as const;
+export type FieldLabelType = (typeof FIELD_LABEL_TYPES)[number];
 
-export const fieldLabels: Record<fieldLabelType, string> = {
-  cropName: "作物名",
-  fieldName: "圃場名",
-  pesticideName: "薬剤名",
+export const fieldLabels: Record<FieldLabelType, string> = {
+  crop_name: "作物名",
+  field_name: "圃場名",
+  pesticide_name: "薬剤名",
   concentration: "濃度",
-  dilutionRate: "希釈倍率",
+  dilution_rate: "希釈倍率",
+  applied_amount: "散布量",
 };
 
-// DiaryDetailの型定義
-export type DiaryDetail = {
+// --- 各 detailType ごとの DiaryDetail 型 ---
+export type CropDetail = {
   id: string;
-  type: DiaryDetailType;
-  fields: Partial<Record<fieldLabelType, string>>;
+  diary_id: string;
+  type: "crop";
+  crop_name: string[];
+  field_name: string[];
   memo?: string;
 };
+
+export type PesticideDetail = {
+  id: string;
+  diary_id: string;
+  type: "pesticide";
+  crop_name: string;
+  field_name: string[];
+  pesticide_name: string;
+  concentration?: string; // 原液濃度
+  concentration_unit?: string; // % とか割
+  dilution_rate?: string; // 希釈率
+  applied_amount?: string; // 実際に散布した量
+  amount_unit?: string; // L, ml, g, kg
+  memo?: string;
+};
+
+export type OtherDetail = {
+  id: string;
+  diary_id: string;
+  type: "other";
+  memo?: string;
+};
+
+// --- Union ---
+export type DiaryDetail = CropDetail | PesticideDetail | OtherDetail;

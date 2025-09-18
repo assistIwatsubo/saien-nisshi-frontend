@@ -29,7 +29,7 @@ function createCalendarMap(
       const diary: CalendarDiary = {
         id: entry.id,
         detailTypes: entry.details?.map((d) => d.type) ?? [],
-        date: entry.date
+        date: entry.date,
       };
 
       const prev = map.get(iso) ?? {};
@@ -96,8 +96,8 @@ export default async function Page() {
         />
       </HatakeArea>
       <BottomNav>
-        <LinkButtonWithIcon href="terrace" />
-        <LinkButtonWithIcon href="diary" />
+        <LinkButtonWithIcon variant="terrace" />
+        <LinkButtonWithIcon variant="archive" type="diary" />
       </BottomNav>
     </>
   );

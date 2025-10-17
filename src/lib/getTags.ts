@@ -1,39 +1,25 @@
-// アプリ内でタグとして取得するデータを取得するための関数（今のところは日誌モックデータ内で使用されたfieldLabelTypeの登録値を取得し、整理して返すが、将来的にはtagsテーブルからデータを取得）
+import { FieldLabelType } from "@/types/diary";
+import { getFieldCrop } from "./getFieldCrop";
+import { getUserField } from "./getUserField";
+import { FieldCrop, UserField } from "@/types/tags";
 
-import { getDiaryList } from "@/lib/getDiary";
-import { FIELD_LABEL_TYPES, fieldLabelType } from "@/types/diary";
+export const getTags = async (): Promise<Record<FieldLabelType, string[]>> => {
+  const [fieldCrops, userFields] = await Promise.all([
+    getFieldCrop(),
+    getUserField(),
+  ]);
 
-export const getTags = async (): Promise<Record<fieldLabelType, string[]>> => {
-  const diaryEntries = await getDiaryList();
-
-  // 初期化（空配列）
-  const tags: Record<fieldLabelType, Set<string>> = {
-    cropName: new Set(),
-    fieldName: new Set(),
-    pesticideName: new Set(),
-    concentration: new Set(),
-    dilutionRate: new Set(),
+  // tagsオブジェクトを初期化
+  const tags: Record<FieldLabelType, string[]> = {
+    crop_name: fieldCrops.map((item: FieldCrop) => item?.crop_name),
+    field_name: userFields.map((item: UserField) => item?.name),
+    pesticide_name: [],
+    concentration: [],
+    dilution_rate: [],
+    applied_amount: [],
   };
 
-  diaryEntries.forEach((entry) => {
-    entry.details?.forEach((detail) => {
-      FIELD_LABEL_TYPES.forEach((key) => {
-        const val = detail.fields[key];
-        if (val && val.trim() !== "") {
-          tags[key].add(val.trim());
-        }
-      });
-    });
-  });
-
-  // Setから配列に変換
-  const result = FIELD_LABEL_TYPES.reduce(
-    (acc, key) => {
-      acc[key] = Array.from(tags[key]);
-      return acc;
-    },
-    {} as Record<fieldLabelType, string[]>,
-  );
-
-  return result;
+  // そのまま返す
+  console.log(tags);
+  return tags;
 };

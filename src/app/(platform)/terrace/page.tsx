@@ -1,7 +1,7 @@
 import Link from "next/link";
 import HomeNews from "@/ui/terrace/home-news";
 import DateDisplay from "@/ui/atoms/dairy-calendar-display";
-import BoardSchedules from "@/ui/terrace/scheduleBoard";
+import ScheduleBoard from "@/ui/terrace/scheduleBoard";
 import EngawaArea from "@/ui/templates/engawa-area";
 import TitleH3 from "@/ui/atoms/title-h3";
 import SectionH3 from "@/ui/molecules/section-h3";
@@ -38,13 +38,13 @@ export default async function Page() {
       <PageTitle title="縁側" icon={<HousePlus size={32} />} />
       <HatakeArea>
         <HomeNews latestNews={latestNews} />
-        <div className="flex items-start justify-between gap-8">
+        <div className="flex items-stretch justify-between gap-8">
           <DateDisplay />
-          <BoardSchedules schedules={schedules} />
+          <ScheduleBoard schedules={schedules} />
         </div>
         {/* <HomeCharacter homeState="default" /> */}
         <div className="absolute right-0 bottom-0 left-0 w-full py-8 text-center">
-          <nav className="flex items-start justify-between p-4 md:justify-center md:gap-8">
+          <nav className="flex items-start justify-center gap-8 p-4">
             <LinkButtonWithIcon
               variant="editor"
               type="diary"

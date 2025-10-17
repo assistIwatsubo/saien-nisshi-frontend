@@ -5,13 +5,13 @@ import { Megaphone, CircleArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function Page({ params }: Props) {
-  const { id } = params;
+  const { id } = await params;
   const newsEntry = await fetchSafe(() => getNewsById(id));
 
   if (!newsEntry) {
@@ -38,14 +38,14 @@ export default async function Page({ params }: Props) {
           </nav>
         </div>
         <section
-          className="m-auto p-4 md:max-w-[80vw] bg-white/75 my-8 rounded-sm"
+          className="m-auto my-8 rounded-sm bg-white/75 p-4 md:max-w-[80vw]"
           data-layout="official-body"
         >
-          <h3 className="text-3xl font-bold py-2">{newsEntry.title}</h3>
+          <h3 className="py-2 text-3xl font-bold">{newsEntry.title}</h3>
           <p className="py-4 text-sm text-gray-500">
             公開日：{getFormattedDate(new Date(newsEntry.date))}
           </p>
-          <div className="py-4 border-t-1 border-[var(--app-secondary-color)] border-dashed">
+          <div className="border-t-1 border-dashed border-[var(--app-secondary-color)] py-4">
             <p>{newsEntry.body}</p>
           </div>
         </section>

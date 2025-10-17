@@ -13,7 +13,7 @@ export default function DiaryDetailMenu({
   name,
 }: DiaryDetailMenuProps) {
   return (
-    <ul className="mb-6 flex items-center justify-between lg:justify-center lg:gap-8">
+    <ul className="m-auto mb-6 flex flex-row items-start justify-center gap-8">
       {DIARY_DETAIL_TYPES.map((value, index) => {
         const isSelected = selected === value;
         const borderClass = isSelected
@@ -38,7 +38,10 @@ export default function DiaryDetailMenu({
               htmlFor={`radio-${name}-${index}`}
               className="cursor-pointer font-bold text-gray-600"
             >
-              {typeLabels[value]}の記録
+              {typeLabels[value]}
+              <span className="block text-xs font-normal text-gray-600">
+                について
+              </span>
             </label>
           </li>
         );

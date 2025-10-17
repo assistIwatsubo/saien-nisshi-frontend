@@ -10,13 +10,13 @@ import { getDiaryByDate } from "@/lib/getDiary";
 import { getTags } from "@/lib/getTags";
 
 type Props = {
-  params: {
+  params: Promise<{
     date: string;
-  };
+  }>;
 };
 
 export default async function Page({ params }: Props) {
-  const { date } = params;
+  const { date } = await params;
 
   // データ取得
   const diaryEntries = await fetchSafe(() => getDiaryByDate(date));
@@ -49,13 +49,7 @@ export default async function Page({ params }: Props) {
             </time>
           </div>
 
-          <FormDiary
-            diaryId={diaryEntry?.id ?? "0"}
-            initialTitle={diaryEntry?.title ?? ""}
-            initialSummary={diaryEntry?.summary ?? ""}
-            initialDetails={diaryEntry?.details ?? []}
-            tags={tags ?? {}}
-          />
+          <FormDiary initialData={diaryEntry ?? undefined} tags={tags ?? {}} />
         </section>
       </HatakeArea>
 

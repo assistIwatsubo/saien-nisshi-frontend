@@ -5,41 +5,57 @@ import Router from "next/router";
 import DiaryTitleForm from "./diary/diary-title-form";
 import DiarySummaryForm from "./diary/diary-summary-form";
 import DiaryDetailList from "./diary/diary-detail-list";
-import Button from "@/ui/atoms/button"; // 保存ボタン用
+import Button from "@/ui/atoms/button";
 
-import { DiaryDetail } from "@/types/diary";
+import { DiaryDetail, DiaryEntry } from "@/types/diary";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
-  initialTitle?: string;
-  initialSummary?: string;
-  initialDetails?: DiaryDetail[];
-  diaryId: string;
-  tags: Record<string, string[]>; // ここは fieldLabelType に合わせるとより型安全
+  initialData?: DiaryEntry;
+  tags: Record<string, string[]>;
 };
 
-export default function FormDiary({
-  initialTitle = "",
-  initialSummary = "",
-  initialDetails = [],
-  tags,
-  diaryId,
-}: Props) {
-  const [title, setTitle] = useState(initialTitle);
-  const [summary, setSummary] = useState(initialSummary);
-  const [details, setDetails] = useState<DiaryDetail[]>(initialDetails);
+export default function FormDiary({ initialData, tags }: Props) {
+  const [title, setTitle] = useState(initialData?.title ?? "");
+  const [summary, setSummary] = useState(initialData?.summary ?? "");
+  const [details, setDetails] = useState<DiaryDetail[]>(
+    initialData?.details ?? [],
+  );
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // API 呼び出しで保存
-    const res = await fetch("/api/diary/edit", {
-      method: "POST",
+
+    const endpoint = initialData
+      ? `/api/diaries/${initialData.date}` // 更新は日付単位でPUT
+      : `/api/diaries`; // 新規作成はPOST
+
+    const method = initialData ? "PUT" : "POST";
+    const token = await getAccessToken();
+
+    const res = await fetch(`http://localhost:8080/${endpoint}`, {
+      method,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ title, summary, details }),
-      headers: { "Content-Type": "application/json" },
     });
+
     if (res.ok) {
       alert("保存しました！");
-      sessionStorage.setItem("flashMessage", "編集完了しました");
-      Router.push(`/terrace/diary/${diaryId}`);
+      sessionStorage.setItem(
+        "flashMessage",
+        initialData ? "編集完了しました" : "追加完了しました",
+      );
+      if (initialData && initialData?.id) {
+        Router.push(`/terrace/diary/${initialData.id}`);
+      } else {
+        Router.push("/terrace"); // 新規作成後は一覧やトップに遷移
+      }
+    } else {
+      const errorData = await res.json();
+      setError(`保存に失敗しました： ${errorData.error}`);
     }
   };
 
@@ -63,10 +79,10 @@ export default function FormDiary({
         <h3 className="text-lg font-bold">詳細を編集する</h3>
         <DiaryDetailList values={details} tags={tags} onChange={setDetails} />
       </div>
-
+      <p className="font-red-500">{error}</p>
       <div className="w-full pb-8 text-center">
         <Button type="submit" color="primary">
-          {diaryId ? "編集を完了する" : "追加を完了する"}
+          {initialData ? "編集を完了する" : "記録を完了する"}
         </Button>
       </div>
     </form>

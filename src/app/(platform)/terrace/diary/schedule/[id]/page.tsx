@@ -9,9 +9,9 @@ import { Pencil } from "lucide-react";
 import ScheduleDisplay from "@/ui/atoms/schedule-display";
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function Page({ params }: Props) {
@@ -37,7 +37,7 @@ export default async function Page({ params }: Props) {
         </article>
       </HatakeArea>
       <BottomNav>
-        <LinkButtonWithIcon href="terrace" />
+        <LinkButtonWithIcon variant="terrace" />
       </BottomNav>
       <LinkButtonCalendar />
     </>

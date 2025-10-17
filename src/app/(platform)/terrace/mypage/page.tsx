@@ -5,9 +5,9 @@ import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import BottomNav from "@/ui/templates/bottom-nav";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getUserData } from "@/lib/getUserData";
-import Image from "next/image";
-import { APP_MODE_LABEL } from "@/types";
-import UserIcon from "@/ui/atoms/user-icon";
+// import Image from "next/image";
+// import { APP_MODE_LABEL } from "@/types";
+// import UserIcon from "@/ui/atoms/user-icon";
 import { demoUsers } from "@/mocks/userData";
 import LinkButtonMini from "@/ui/atoms/link-button-mini";
 import { Pencil } from "lucide-react";
@@ -22,54 +22,54 @@ export default async function Page() {
     return;
   }
 
-  function calcDaysSince(dateString?: string): number | null {
-    if (!dateString) return null;
-    const start = new Date(dateString);
-    const today = new Date();
+  // function calcDaysSince(dateString?: string): number | null {
+  //   if (!dateString) return null;
+  //   const start = new Date(dateString);
+  //   const today = new Date();
 
-    // ミリ秒差分 → 日数
-    const diffMs = today.getTime() - start.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  //   // ミリ秒差分 → 日数
+  //   const diffMs = today.getTime() - start.getTime();
+  //   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-    // 当日を1日目として数える
-    return diffDays + 1;
-  }
+  //   // 当日を1日目として数える
+  //   return diffDays + 1;
+  // }
 
   return (
     <>
       <EngawaArea title="マイページ">
         <div className="flex flex-col items-center justify-start p-8">
           <figure className="rounded-full bg-white p-6">
-            <Image
+            {/* <Image
               src={userData.iconUrl}
               alt={`${userData.name}`}
               width={150}
               height={150}
-            />
+            /> */}
           </figure>
           <div className="flex flex-col gap-2 py-6 text-center font-bold">
             <p className="text-xl">{userData.name}さん</p>
             <p className="text-lg">
               レベル
-              {userData.appMode === "pro"
+              {/* {userData.appMode === "pro"
                 ? userData.proLevel
-                : userData.beginnerLevel}
+                : userData.beginnerLevel} */}
             </p>
           </div>
           <ul className="flex w-3/4 flex-col gap-4 rounded-2xl bg-white px-8 py-4">
             <li className="border-b-2 border-[var(--app-secondary-color)] pb-2 text-center">
               {" "}
-              {APP_MODE_LABEL[userData.appMode]}モード継続：
+              {/* {APP_MODE_LABEL[userData.appMode]}モード継続：
               {(() => {
                 const days = calcDaysSince(userData.currentAppModeStartedAt);
                 return days !== null ? `${days}日` : "―";
-              })()}
+              })()} */}
             </li>
             <li className="flex">
               <div className="flex-2/5">二つ名</div>
               <div className="flex flex-3/5 items-center before:mr-2 before:content-[':']">
                 <button className="flex w-full items-center justify-between border-b border-dashed px-2">
-                  <span>{userData.nickname}</span>
+                  {/* <span>{userData.nickname}</span> */}
                   <Pencil size={18} />
                 </button>
               </div>
@@ -79,7 +79,7 @@ export default async function Page() {
               <div className="flex-2/5">好きな作物</div>
               <div className="flex flex-3/5 items-center before:mr-2 before:content-[':']">
                 <button className="flex w-full items-center justify-between border-b border-dashed px-2">
-                  <span>{userData.favoriteCrop}</span>
+                  {/* <span>{userData.favoriteCrop}</span> */}
                   <Pencil size={18} />
                 </button>
               </div>
@@ -132,11 +132,11 @@ export default async function Page() {
           <ol className="flex flex-wrap gap-4 py-4">
             {demoUsers.map((u) => (
               <li key={u.id}>
-                <UserIcon
+                {/* <UserIcon
                   userId={u.id}
                   userName={u.name}
                   iconSrc={u.iconUrl ?? ""}
-                />
+                /> */}
               </li>
             ))}
           </ol>
@@ -150,7 +150,7 @@ export default async function Page() {
         </SectionH3>
       </EngawaArea>
       <BottomNav>
-        <LinkButtonWithIcon href="terrace" />
+        <LinkButtonWithIcon variant="terrace" />
       </BottomNav>
     </>
   );

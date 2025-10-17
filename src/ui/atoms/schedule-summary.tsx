@@ -1,21 +1,18 @@
-import { fetchSafe } from "@/lib/utils/fetchSate";
-import { getScheduleByDate } from "@/lib/getSchedule";
 import { getFormattedDate } from "@/lib/utils/format-date";
 import { Sticky } from "./sticky";
+import { ScheduleEntry } from "@/types/schedule";
 
 type Props = {
-  date: string;
+  scheduleEntries: ScheduleEntry[];
 };
 
-export default async function ScheduleSummary({ date }: Props) {
-  const scheduleEntry = await fetchSafe(() => getScheduleByDate(date));
-
-  return scheduleEntry && scheduleEntry.length > 0 ? (
+export default async function ScheduleSummary({ scheduleEntries }: Props) {
+  return scheduleEntries && scheduleEntries.length > 0 ? (
     <div
       data-layout="schedule"
       className="mt-4 flex flex-wrap gap-2 border-t-1 border-dotted border-gray-300 p-2"
     >
-      {scheduleEntry?.map((entry) => (
+      {scheduleEntries?.map((entry) => (
         <Sticky
           key={entry.id}
           className="flex flex-col items-center justify-start gap-1 px-2 py-1"

@@ -17,7 +17,7 @@ export const getScheduleList = async (): Promise<ScheduleEntry[]> => {
     }
 
     const schedules = await res.json();
-    // console.log(schedules);
+    console.log(schedules);
     return schedules;
   } catch (error) {
     console.error("Fetch error:", error);

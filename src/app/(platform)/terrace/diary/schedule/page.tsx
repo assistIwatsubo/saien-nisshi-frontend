@@ -24,7 +24,7 @@ export default async function Page() {
         </ul>
       </HatakeArea>
       <BottomNav>
-        <LinkButtonWithIcon href="terrace" />
+        <LinkButtonWithIcon variant="terrace" />
       </BottomNav>
       <LinkButtonCalendar />
     </>

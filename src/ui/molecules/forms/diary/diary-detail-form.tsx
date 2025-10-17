@@ -62,7 +62,7 @@ export default function DiaryDetailForm({
   useEffect(() => {
     if (!detail) return;
     setSelectedType(detail.type);
-    const values: Partial<Record<FieldLabelType, string>> = {};
+    const values: Partial<Record<FieldLabelType | "memo", string>> = {};
     switch (detail.type) {
       case "crop":
         values.crop_name = detail.crop_name.join(", ");
@@ -79,6 +79,7 @@ export default function DiaryDetailForm({
       case "other":
         break;
     }
+    values.memo = detail.memo ?? ""; // ← 追加
     setDetailValues(values);
   }, [detail]);
 
@@ -148,8 +149,8 @@ export default function DiaryDetailForm({
           key={key}
           className="flex flex-col items-center justify-start gap-2"
         >
-          <div className="flex w-full items-stretch justify-start gap-4">
-            <h4 className="min-w-[120px] py-2">{fieldLabels[key]}</h4>
+          <div className="flex w-full flex-col items-stretch justify-start gap-2 md:flex-row md:gap-4">
+            <h4 className="min-w-[120px] md:py-4">{fieldLabels[key]}</h4>
             <div className="flex w-full flex-col gap-2">
               <input
                 type="text"
@@ -208,8 +209,12 @@ export default function DiaryDetailForm({
           name="matome"
           placeholder="今日はどんなことをしましたか？"
           className="w-full rounded-sm border-2 border-[var(--app-border-gray)] bg-amber-50/50 p-2"
-          value={detail?.memo ?? ""}
-          onChange={(e) => updateDetail(e.target.value)}
+          value={detailValues.memo ?? ""}
+          onChange={(e) => {
+            const newValues = { ...detailValues, memo: e.target.value };
+            setDetailValues(newValues);
+            updateDetail(e.target.value);
+          }}
         />
       </div>
 

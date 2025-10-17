@@ -12,6 +12,7 @@ import { getDiaryList } from "@/lib/getDiary";
 import { Tag } from "@/ui/atoms/tag"; // Tagコンポーネントのimport
 import ScheduleSummary from "@/ui/atoms/schedule-summary";
 import { diaryInfo } from "@/lib/utils/diaryInfo";
+import JumpNav from "@/ui/atoms/JumpNav";
 
 export default async function Page() {
   const diaries = await fetchSafe(getDiaryList);
@@ -32,24 +33,12 @@ export default async function Page() {
     <>
       <PageTitle title="日誌一覧" icon={<BookOpenText size={32} />} />
 
-      <nav className="fixed top-8 right-0">
-        <ul className="flex flex-col gap-1">
-          {uniqueMonths.map((ym) => {
-            const [, month] = ym.split("-");
-            const firstId = monthFirstEntryMap.get(ym);
-            return (
-              <li key={ym}>
-                <a
-                  href={`#${firstId}`} // ここで記事IDにリンク
-                  className="block rounded-tl-md rounded-bl-md bg-amber-700 p-4 text-white shadow-md hover:scale-125 hover:bg-amber-500 active:bg-amber-500"
-                >
-                  {month}月
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+      <JumpNav
+        items={uniqueMonths.map((ym) => ({
+          id: monthFirstEntryMap.get(ym)!,
+          label: ym.split("-")[1] + "月",
+        }))}
+      />
       <HatakeArea>
         {diaries?.map((entry) => (
           <article
@@ -92,7 +81,9 @@ export default async function Page() {
                   </div>
                 </div>
               </div>
-              <ScheduleSummary date={entry.date} />
+              {entry.schedules && (
+                <ScheduleSummary scheduleEntries={entry.schedules} />
+              )}
             </Link>
           </article>
         ))}

@@ -1,11 +1,10 @@
-import { UserData } from "@/types/user-data";
 import { getAccessToken } from "./getAccessToken";
 
-export const getUserData = async (userId: string): Promise<UserData | null> => {
+export const getFieldCrop = async () => {
   try {
     const token = await getAccessToken();
-    const res = await fetch(`http://localhost:8080/api/users/${userId}`, {
-      cache: "no-store", // 最新データを毎回取得
+    const res = await fetch(`http://localhost:8080/api/field-crops/`, {
+      cache: "no-store",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -16,8 +15,9 @@ export const getUserData = async (userId: string): Promise<UserData | null> => {
       return null;
     }
 
-    const user = await res.json();
-    return user;
+    const fieldsCrops = await res.json();
+    // console.log(fieldsCrops);
+    return fieldsCrops;
   } catch (error) {
     console.error("Fetch error:", error);
     return null;

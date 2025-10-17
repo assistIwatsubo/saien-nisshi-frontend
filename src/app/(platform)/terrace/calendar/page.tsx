@@ -1,4 +1,3 @@
-// page.tsx
 import { getDateParts } from "@/lib/utils/format-date";
 import PageTitle from "@/ui/molecules/page-title";
 import { PencilLine } from "lucide-react";

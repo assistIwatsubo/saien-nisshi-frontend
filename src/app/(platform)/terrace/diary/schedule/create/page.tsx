@@ -68,7 +68,7 @@ export default async function Page() {
         </section>
       </HatakeArea>
       <BottomNav>
-        <LinkButtonWithIcon href="terrace" />
+        <LinkButtonWithIcon variant="terrace" />
       </BottomNav>
     </>
   );

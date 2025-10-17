@@ -10,9 +10,9 @@ import { getDatetimeLocalString } from "@/lib/utils/format-date";
 import { getDateParts, getISODate } from "@/lib/utils/format-date";
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function Page({ params }: Props) {
@@ -109,11 +109,12 @@ export default async function Page({ params }: Props) {
         </section>
       </HatakeArea>
       <BottomNav>
-        <LinkButtonWithIcon href="terrace" />
-        <LinkButtonWithIcon href="diary" />
+        <LinkButtonWithIcon variant="terrace" />
+        <LinkButtonWithIcon variant="archive" />
         <LinkButtonWithIcon
-          href="diary"
-          cancel
+          variant="archive"
+          mode="cancel"
+          type="schedule"
           editSuffixPath={getISODate(new Date(scheduleEntry.start))}
         />
       </BottomNav>

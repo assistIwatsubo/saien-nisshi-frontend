@@ -32,29 +32,28 @@ export default function DiaryDetailCard({ detail }: Props) {
         {detail.type === "pesticide" && (
           <div className="flex flex-wrap items-center gap-2">
             <Tag
-              label={`${detail.crop_name}：${detail.pesticide_name}`}
+              label={`${detail.crop_name}：${detail.pesticide_name} ${detail.field_name ?? ""}`}
               type={detail.type}
             />
 
             {detail.field_name && (
-              <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600">
-                {detail.field_name}
-              </span>
+              <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600"></span>
             )}
 
             {detail.concentration && (
               <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600">
-                {detail.concentration
-                  ? `濃度: ${detail.concentration}${detail.concentration_unit ?? ""}`
-                  : ""}
-                {detail.dilution_rate ? ` 希釈率: ${detail.dilution_rate}` : ""}
+                {`濃度: ${detail.concentration}${detail.concentration_unit ?? ""}`}
+              </span>
+            )}
+            {detail.dilution_rate && (
+              <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600">
+                {`希釈倍率: ${detail.dilution_rate}`}
               </span>
             )}
 
             {detail.applied_amount && (
               <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600">
-                {`散布量: ${detail.applied_amount}`}
-                {detail.amount_unit}
+                {`散布量: ${detail.applied_amount}${detail.amount_unit ?? ""}`}
               </span>
             )}
           </div>

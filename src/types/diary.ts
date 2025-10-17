@@ -1,3 +1,5 @@
+import { ScheduleEntry } from "./schedule";
+
 export type DiaryEntry = {
   id: string;
   user: {
@@ -9,6 +11,7 @@ export type DiaryEntry = {
   title: string | null;
   summary: string | null;
   details?: DiaryDetail[];
+  schedules?: ScheduleEntry[];
 };
 
 export type DiaryDetailType = "crop" | "pesticide" | "other";
@@ -31,6 +34,7 @@ export const FIELD_LABEL_TYPES = [
   "concentration",
   "dilution_rate",
   "applied_amount",
+  "memo",
 ] as const;
 export type FieldLabelType = (typeof FIELD_LABEL_TYPES)[number];
 
@@ -41,6 +45,7 @@ export const fieldLabels: Record<FieldLabelType, string> = {
   concentration: "濃度",
   dilution_rate: "希釈倍率",
   applied_amount: "散布量",
+  memo: "作業メモ",
 };
 
 // --- 各 detailType ごとの DiaryDetail 型 ---

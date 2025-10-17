@@ -1,5 +1,8 @@
-export type TagCategory = "cropName" | "fieldName" | "pesticideName";
+export interface FieldCrop {
+  crop_name: string;
+  field_name: string;
+}
 
-export type TagsByCategory = {
-  [key in TagCategory]: string[];
-};
+export interface UserField {
+  name: string;
+}

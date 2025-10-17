@@ -2,6 +2,8 @@ import { DiaryEntry } from "@/types/diary";
 import { getAccessToken } from "./getAccessToken";
 
 export const getDiaryList = async (): Promise<DiaryEntry[]> => {
+  console.log("fetchDiaryList started");
+  console.time("getDiaryList");
   try {
     const token = await getAccessToken();
     const res = await fetch(`http://localhost:8080/api/diaries/`, {
@@ -22,6 +24,8 @@ export const getDiaryList = async (): Promise<DiaryEntry[]> => {
   } catch (error) {
     console.error("Fetch error:", error);
     return [];
+  } finally {
+    console.timeEnd("getDiaryList");
   }
 };
 
@@ -56,7 +60,6 @@ export const getDiaryByDate = async (date: string): Promise<DiaryEntry[]> => {
     throw new Error("Failed to fetch diaries");
   }
   const diaries: DiaryEntry[] = await res.json();
-  console.log(diaries);
 
   return diaries;
 };

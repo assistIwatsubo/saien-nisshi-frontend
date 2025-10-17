@@ -15,13 +15,13 @@ import { CalendarSearch } from "lucide-react";
 import SnsButtonsNav from "@/ui/templates/sns-buttons-nav";
 
 type Props = {
-  params: {
+  params: Promise<{
     date: string;
-  };
+  }>;
 };
 
 export default async function Page({ params }: Props) {
-  const { date } = params;
+  const { date } = await params;
   const diaryEntries = await fetchSafe(() => getDiaryByDate(date));
   const diaryEntry = diaryEntries?.[0] ?? null;
   const scheduleEntry = await fetchSafe(() => getScheduleByDate(date));

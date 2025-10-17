@@ -8,6 +8,7 @@ export default function FormLogin() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,14 +18,18 @@ export default function FormLogin() {
         email,
         password,
         redirect: false,
-        callbackUrl: "/terrace",
+        redirectTo: "/terrace",
       });
 
       if (res?.error) {
         console.error("ログイン失敗:", res.error);
-      } else if (res?.url) {
-        // ログイン成功時に遷移
+        setError(
+          res?.error && "メールアドレスまたはパスワードが正しくありません。",
+        );
+      } else if (res?.ok && res.url) {
         router.push(res.url);
+      } else if (res?.ok) {
+        router.push("/terrace");
       } else {
         console.error("ログインフォームエラー: res.urlがありません", res);
       }
@@ -35,7 +40,7 @@ export default function FormLogin() {
 
   return (
     <>
-      <p className="mt-4 text-xl font-bold">ユーザーログイン</p>
+      <p className="my-4 text-xl font-bold">ユーザーログイン</p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-8">
         <div className="flex flex-col gap-1">
           <label htmlFor="email">メールアドレス</label>
@@ -62,6 +67,7 @@ export default function FormLogin() {
             className="rounded-md border px-3 py-2"
           />
         </div>
+        <p className="text-red-500">{error || "　"}</p>
 
         <Button type="submit">ログインする</Button>
       </form>

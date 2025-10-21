@@ -16,7 +16,7 @@ export type CalendarSchedule = {
 };
 
 export type CalendarEntry = {
-  diaries?: CalendarDiary[];
+  diary?: CalendarDiary;
   schedules?: CalendarSchedule[];
 };
 

@@ -42,12 +42,12 @@ export default function Calendar({
     const { iso } = getDateParts(date);
     const dayData = calendarMap.get(iso);
 
-    // diaries 情報
-    const diaries = dayData?.diaries ?? [];
-    const hasDiary = diaries.length > 0;
-    const detailTypes = diaries.flatMap((d) => d.detailTypes);
+    // ✅ 日誌情報
+    const diary = dayData?.diary;
+    const hasDiary = !!diary;
+    const detailTypes = diary?.detailTypes ?? [];
 
-    // schedules 情報
+    // ✅ スケジュール情報
     const schedules = dayData?.schedules ?? [];
     const isTodayOrHasDiary = isToday(date) || hasDiary;
 
@@ -62,7 +62,7 @@ export default function Calendar({
         {schedules.length > 0 && (
           <div className="absolute top-0 left-0 z-10 flex space-x-0.5 p-0.5">
             {schedules
-              .filter((s) => s.status !== "none")
+              .filter((s) => s.status !== "unused")
               .map((s) =>
                 s.status === "done" ? (
                   <SquareCheck
@@ -105,7 +105,7 @@ export default function Calendar({
           {day}
           {hasDiary && (
             <div className="absolute inset-0 -z-1 flex items-center justify-center">
-              {detailTypes && detailTypes.length > 0 ? (
+              {detailTypes.length > 0 ? (
                 <PieChart types={detailTypes} />
               ) : (
                 // detail がないときは白丸だけ
@@ -119,11 +119,11 @@ export default function Calendar({
       </div>
     );
 
-    // diaryがあるなら最初のidにリンク
+    // ✅ 日誌がある or スケジュールがあるならリンク化
     days.push(
       <div key={day} className="text-gray-800">
-        {diaries.length > 0 || schedules.length > 0 ? (
-          <Link href={`/terrace/diary/${iso}`} className="block">
+        {hasDiary || schedules.length > 0 ? (
+          <Link href={`/terrace/diary/${iso}?id=${diary?.id}`} className="block">
             {cellContent}
           </Link>
         ) : (

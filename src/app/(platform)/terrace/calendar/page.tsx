@@ -27,28 +27,24 @@ function createCalendarMap(
       const iso = getDateParts(new Date(entry.date)).iso;
       const diary: CalendarDiary = {
         id: entry.id,
-        detailTypes: entry.details?.map((d) => d.type) ?? [],
+        detailTypes: entry.diary_details?.map((d) => d.type) ?? [],
         date: entry.date,
       };
 
+      // 1日1件前提なので diaries ではなく diary
       const prev = map.get(iso) ?? {};
-      const diaries = prev.diaries ?? [];
-      diaries.push(diary);
-
-      map.set(iso, { ...prev, diaries });
+      map.set(iso, { ...prev, diary });
     }
   }
 
   // schedule をマップに追加
   if (scheduleEntries) {
     for (const s of scheduleEntries) {
-      // スケジュールの開始日から終了日までを日単位でマップに登録
       const start = new Date(s.start);
       const end = s.end ? new Date(s.end) : start;
 
       for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
         const iso = getDateParts(d).iso;
-
         const prev = map.get(iso) ?? {};
         const schedules = prev.schedules ?? [];
 
@@ -61,7 +57,6 @@ function createCalendarMap(
         };
 
         schedules.push(schedule);
-
         map.set(iso, { ...prev, schedules });
       }
     }
@@ -69,6 +64,7 @@ function createCalendarMap(
 
   return map;
 }
+
 
 export default async function Page() {
   const diaryEntries = await fetchSafe(getDiaryList);

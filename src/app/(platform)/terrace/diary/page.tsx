@@ -47,7 +47,7 @@ export default async function Page() {
             className="app-blurred-bg-white m-auto mb-8 rounded-md border-2 border-white/80 p-4 lg:max-w-4/5"
             id={entry.id}
           >
-            <Link href={`/terrace/diary/${entry.date}`}>
+            <Link href={`/terrace/diary/${entry.date}?id=${entry.id}`}>
               <div className="flex items-start justify-between gap-5">
                 <DiaryCalendarDisplay iso={entry.date} />
                 <div className="w-full">
@@ -57,22 +57,28 @@ export default async function Page() {
                     clamped
                   />
                   <div className="mt-2 flex flex-wrap gap-2">
-                    {entry.details
+                    {entry.diary_details
                       ?.filter(
                         (item): item is NonNullable<typeof item> =>
-                          !!item && item.type !== "other",
-                      ) // null除外 & "other"除外
+                          !!item ,
+                      )
                       .map((item) => (
                         <div key={item.id} className="mx-1">
                           {item.type === "pesticide" && (
-                            <Tag
-                              label={`${item.crop_name}：${item.pesticide_name}`}
+                          <Tag
+                              label={`${item.diary_detail_pesticide?.crop_name}：${item.diary_detail_pesticide?.pesticide_name}`}
                               type={item.type}
                             />
                           )}
                           {item.type === "crop" && (
                             <Tag
-                              label={`${item.crop_name}：${item.field_name}`}
+                              label={`${item.diary_detail_crop?.crop_name}：${item.diary_detail_crop?.field_name}`}
+                              type={item.type}
+                            />
+                          )}
+                          {item.type === "other" && (
+                            <Tag
+                              label={`その他：${item.memo?.slice(0, 6)}…`}
                               type={item.type}
                             />
                           )}

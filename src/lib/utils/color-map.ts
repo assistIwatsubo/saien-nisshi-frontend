@@ -35,5 +35,5 @@ export const scheduleTimePhaseColorMap: Record<ScheduleTimePhase, string> = {
 export const scheduleStatus: Record<ScheduleStatus, string> = {
   done: "text-green-500",
   undone: "text-red-500",
-  none: "",
+  unused: "",
 };

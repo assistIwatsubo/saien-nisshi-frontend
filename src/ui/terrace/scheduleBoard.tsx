@@ -19,8 +19,8 @@ export default function ScheduleBoard({ schedules }: ScheduleProps) {
       <h3 className="block w-full bg-gray-100 py-1 text-center text-xs font-bold text-[var(--app-accent-color)]">
         直近の予定
       </h3>
-      <nav className="flex flex-1 items-center justify-between">
-        <ul className="flex flex-wrap items-stretch text-sm">
+      <nav className="flex items-center justify-between">
+        <ul className="flex min-h-24 flex-wrap items-stretch text-sm">
           {visibleItems ? (
             visibleItems?.length > 0 &&
             visibleItems.slice(0, 3).map((item) => (
@@ -32,16 +32,16 @@ export default function ScheduleBoard({ schedules }: ScheduleProps) {
             <ErrorMessage message="予定の取得に失敗しました" />
           )}
         </ul>
-        <div className="h-full max-w-1/4 flex-1 p-2">
-          <Link
-            className="flex h-full flex-1 flex-col items-center justify-center rounded-sm border-2 border-dashed border-gray-400 p-1 text-center text-xs font-bold text-gray-500"
-            href="/terrace/diary/schedule/create"
-          >
-            <Plus width={16} />
-            予定を追加
-          </Link>
-        </div>
       </nav>
+      <div className="h-full p-2">
+        <Link
+          className="flex gap-2 items-center justify-center rounded-sm border-2 border-dashed border-gray-400 p-0.5 text-center text-xs font-bold text-gray-500"
+          href="/terrace/diary/schedule/create"
+        >
+          <Plus width={16} />
+          予定を追加する
+        </Link>
+      </div>
     </section>
   );
 }

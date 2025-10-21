@@ -41,25 +41,23 @@ export const getDiaryById = async (id: string): Promise<DiaryEntry> => {
     throw new Error(`Failed to fetch schedule ${id}`);
   }
 
-  const schedule: DiaryEntry = await res.json();
-  return schedule;
+  const diary: DiaryEntry = await res.json();
+  return diary;
 };
 
-export const getDiaryByDate = async (date: string): Promise<DiaryEntry[]> => {
+export const getDiaryLatest = async (limit: number): Promise<DiaryEntry[] | null> => {
   const token = await getAccessToken();
-  const res = await fetch(
-    `http://localhost:8080/api/diaries?date=${encodeURIComponent(date)}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const res = await fetch(`http://localhost:8080/api/diaries?latest=${limit}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch diaries");
+    throw new Error(`Failed to fetch schedule latest`);
   }
-  const diaries: DiaryEntry[] = await res.json();
 
-  return diaries;
-};
+  const latestDiaries: DiaryEntry[] = await res.json();
+  return latestDiaries;
+}
+

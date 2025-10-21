@@ -11,7 +11,7 @@ export default function DailyCalendarDisplay({ iso }: Props) {
   return (
     <time
       dateTime={formattedIso}
-      className="flex w-auto flex-col items-stretch justify-start bg-white font-bold shadow-md"
+      className="flex h-fit w-auto flex-col items-stretch justify-start bg-white font-bold shadow-md"
     >
       <span className="bg-gray-100 text-center text-gray-400">{year}</span>
       <div className="flex w-auto flex-col items-stretch justify-start px-4 py-1">

@@ -3,7 +3,7 @@ import DiaryCalendarDisplay from "@/ui/atoms/dairy-calendar-display";
 import DiarySummary from "@/ui/diary/diary-summary";
 import DiaryDetailCard from "@/ui/diary/diary-detail-card";
 import { fetchSafe } from "@/lib/utils/fetchSate";
-import { getDiaryByDate } from "@/lib/getDiary";
+import { getDiaryById } from "@/lib/getDiary";
 import BottomNav from "@/ui/templates/bottom-nav";
 import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
@@ -15,15 +15,27 @@ import { CalendarSearch } from "lucide-react";
 import SnsButtonsNav from "@/ui/templates/sns-buttons-nav";
 
 type Props = {
-  params: Promise<{
+  params: {
     date: string;
-  }>;
+  };
+  searchParams: {
+    id?: string;
+  };
 };
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params, searchParams }: Props) {
   const { date } = await params;
-  const diaryEntries = await fetchSafe(() => getDiaryByDate(date));
-  const diaryEntry = diaryEntries?.[0] ?? null;
+  const  diaryId  = await searchParams?.id;
+  
+  if (!diaryId) {
+    return (
+      <div className="py-8 text-center text-red-500">
+        IDが指定されていません。
+      </div>
+    );
+  }
+
+  const diaryEntry = await fetchSafe(() => getDiaryById(diaryId));
   const scheduleEntry = await fetchSafe(() => getScheduleByDate(date));
 
   if (!diaryEntry && (!scheduleEntry || scheduleEntry.length === 0)) {
@@ -33,6 +45,7 @@ export default async function Page({ params }: Props) {
       </div>
     );
   }
+
 
   const isFuture = new Date(date) >= new Date();
 
@@ -59,7 +72,6 @@ export default async function Page({ params }: Props) {
             >
               <div className="flex w-full items-start justify-between gap-5 px-4">
                 <DiaryCalendarDisplay iso={diaryEntry?.date ?? date} />
-
                 <div className="w-full">
                   {diaryEntry ? (
                     <DiarySummary
@@ -77,14 +89,14 @@ export default async function Page({ params }: Props) {
               </div>
               {diaryEntry && <SnsButtonsNav diary={diaryEntry} />}
 
-              {diaryEntry?.details && diaryEntry.details.length > 0 && (
+              {diaryEntry?.diary_details && diaryEntry.diary_details.length > 0 && (
                 <div
                   data-role="diary-content-details"
                   className="flex w-full flex-col items-center justify-start gap-8 border-t-1 border-b-1 border-dashed border-gray-400 px-4 py-8"
                 >
                   <h3 className="text-lg font-bold">詳細</h3>
                   <div className="w-full space-y-8">
-                    {diaryEntry.details.map((detail, i) => (
+                    {diaryEntry.diary_details.map((detail, i) => (
                       <DiaryDetailCard key={i} detail={detail} />
                     ))}
                   </div>

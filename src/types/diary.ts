@@ -10,7 +10,7 @@ export type DiaryEntry = {
   date: string; // ISO形式 yyyy-mm-dd
   title: string | null;
   summary: string | null;
-  details?: DiaryDetail[];
+  diary_details?: DiaryDetail[];
   schedules?: ScheduleEntry[];
 };
 
@@ -50,35 +50,28 @@ export const fieldLabels: Record<FieldLabelType, string> = {
 
 // --- 各 detailType ごとの DiaryDetail 型 ---
 export type CropDetail = {
-  id: string;
-  diary_id: string;
-  type: "crop";
-  crop_name: string[];
-  field_name: string[];
-  memo?: string;
+  crop_name: string,
+  field_name: string,
 };
 
 export type PesticideDetail = {
-  id: string;
-  diary_id: string;
-  type: "pesticide";
-  crop_name: string;
-  field_name: string[];
-  pesticide_name: string;
-  concentration?: string; // 原液濃度
-  concentration_unit?: string; // % とか割
-  dilution_rate?: string; // 希釈率
-  applied_amount?: string; // 実際に散布した量
-  amount_unit?: string; // L, ml, g, kg
-  memo?: string;
+  crop_name?: string,
+  field_name?: string,
+  pesticide_name: string,
+  amount?: string,
+  amount_unit?: string,
+  concentration?: string,
+  concentration_unit?: string,
+  dilution_rate?: string,
 };
 
-export type OtherDetail = {
-  id: string;
-  diary_id: string;
-  type: "other";
-  memo?: string;
+export type DiaryDetail = {
+  id: number;
+  position: number,
+  type: DiaryDetailType,
+  diary_detail_crop?: CropDetail,
+  diary_detail_pesticide?: PesticideDetail,
+  memo?: string,
+  created_at: string,
+  updated_at?: string,
 };
-
-// --- Union ---
-export type DiaryDetail = CropDetail | PesticideDetail | OtherDetail;

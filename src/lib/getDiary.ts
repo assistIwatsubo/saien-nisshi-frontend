@@ -1,7 +1,7 @@
 import { DiaryEntry } from "@/types/diary";
 import { getAccessToken } from "./getAccessToken";
 
-export const getDiaryList = async (): Promise<DiaryEntry[]> => {
+export const getDiaryList = async (): Promise<DiaryEntry[] | undefined> => {
   console.log("fetchDiaryList started");
   console.time("getDiaryList");
   try {
@@ -15,15 +15,14 @@ export const getDiaryList = async (): Promise<DiaryEntry[]> => {
 
     if (!res.ok) {
       console.error("API request failed:", res.status, res.statusText);
-      return [];
+      return undefined;
     }
 
     const diaries = await res.json();
-    console.log(diaries);
-    return diaries;
+    return diaries.data;
   } catch (error) {
     console.error("Fetch error:", error);
-    return [];
+    return undefined;
   } finally {
     console.timeEnd("getDiaryList");
   }
@@ -41,11 +40,13 @@ export const getDiaryById = async (id: string): Promise<DiaryEntry> => {
     throw new Error(`Failed to fetch schedule ${id}`);
   }
 
-  const diary: DiaryEntry = await res.json();
-  return diary;
+  const diary = await res.json();
+  return diary.data;
 };
 
-export const getDiaryLatest = async (limit: number): Promise<DiaryEntry[] | null> => {
+export const getDiaryLatest = async (
+  limit: number,
+): Promise<DiaryEntry[] | null> => {
   const token = await getAccessToken();
   const res = await fetch(`http://localhost:8080/api/diaries?latest=${limit}`, {
     headers: {
@@ -59,5 +60,4 @@ export const getDiaryLatest = async (limit: number): Promise<DiaryEntry[] | null
 
   const latestDiaries: DiaryEntry[] = await res.json();
   return latestDiaries;
-}
-
+};

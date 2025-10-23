@@ -4,6 +4,7 @@
 export type HelperCharacter = "Ladybug" | "Bee" | "Frog";
 
 // アプリモード
-export type AppMode = "pro" | "beginner";
-
-export const APP_MODE_LABEL = { pro: "脱！家庭菜園", beginner: "家庭菜園" };
+export type AppMode = {
+    mode: string,
+    label: string,
+};

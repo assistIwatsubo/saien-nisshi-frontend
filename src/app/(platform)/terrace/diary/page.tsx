@@ -9,13 +9,18 @@ import BottomNav from "@/ui/templates/bottom-nav";
 import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getDiaryList } from "@/lib/getDiary";
-import { Tag } from "@/ui/atoms/tag"; // Tagコンポーネントのimport
+import { Tag } from "@/ui/atoms/tag"; 
 import ScheduleSummary from "@/ui/atoms/schedule-summary";
 import { diaryInfo } from "@/lib/utils/diaryInfo";
 import JumpNav from "@/ui/atoms/JumpNav";
 
 export default async function Page() {
   const diaries = await fetchSafe(getDiaryList);
+
+  if (!diaries) return;
+
+  console.log(diaries);
+
   const { hasDiary, date } = await diaryInfo();
 
   // 事前に月ごとの最初の記事IDをマップ化
@@ -23,7 +28,7 @@ export default async function Page() {
   diaries?.forEach((entry) => {
     const ym = entry.date.slice(0, 7); // 'YYYY-MM'
     if (!monthFirstEntryMap.has(ym)) {
-      monthFirstEntryMap.set(ym, entry.id); // 月の最初の記事を保存
+      monthFirstEntryMap.set(ym, entry.diary_id); // 月の最初の記事を保存
     }
   });
 
@@ -42,12 +47,12 @@ export default async function Page() {
       <HatakeArea>
         {diaries?.map((entry) => (
           <article
-            key={entry.id}
+            key={entry.diary_id}
             data-layout="diary"
             className="app-blurred-bg-white m-auto mb-8 rounded-md border-2 border-white/80 p-4 lg:max-w-4/5"
-            id={entry.id}
+            id={entry.diary_id}
           >
-            <Link href={`/terrace/diary/${entry.date}?id=${entry.id}`}>
+            <Link href={`/terrace/diary/${entry.date}?id=${entry.diary_id}`}>
               <div className="flex items-start justify-between gap-5">
                 <DiaryCalendarDisplay iso={entry.date} />
                 <div className="w-full">
@@ -57,29 +62,29 @@ export default async function Page() {
                     clamped
                   />
                   <div className="mt-2 flex flex-wrap gap-2">
-                    {entry.diary_details
+                    {entry.details
                       ?.filter(
-                        (item): item is NonNullable<typeof item> =>
-                          !!item ,
+                        (detail): detail is NonNullable<typeof detail> =>
+                          !!detail ,
                       )
-                      .map((item) => (
-                        <div key={item.id} className="mx-1">
-                          {item.type === "pesticide" && (
+                      .map((detail) => (
+                        <div key={detail.detail_id} className="mx-1">
+                          {detail.type === "pesticide" && (
                           <Tag
-                              label={`${item.diary_detail_pesticide?.crop_name}：${item.diary_detail_pesticide?.pesticide_name}`}
-                              type={item.type}
+                              label={`${detail.crop_name}：${detail.pesticide?.pesticide_name}`}
+                              type={detail.type}
                             />
                           )}
-                          {item.type === "crop" && (
+                          {detail.type === "crop" && (
                             <Tag
-                              label={`${item.diary_detail_crop?.crop_name}：${item.diary_detail_crop?.field_name}`}
-                              type={item.type}
+                              label={`${detail.crop_name}：${detail.field_name}`}
+                              type={detail.type}
                             />
                           )}
-                          {item.type === "other" && (
+                          {detail.type === "other" && (
                             <Tag
-                              label={`その他：${item.memo?.slice(0, 6)}…`}
-                              type={item.type}
+                              label={`その他：${detail.memo?.slice(0, 6)}…`}
+                              type={detail.type}
                             />
                           )}
                         </div>

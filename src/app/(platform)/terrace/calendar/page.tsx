@@ -26,8 +26,8 @@ function createCalendarMap(
     for (const entry of diaryEntries) {
       const iso = getDateParts(new Date(entry.date)).iso;
       const diary: CalendarDiary = {
-        id: entry.id,
-        detailTypes: entry.diary_details?.map((d) => d.type) ?? [],
+        id: entry.diary_id,
+        detailTypes: entry.details?.map((d) => d.type) ?? [],
         date: entry.date,
       };
 

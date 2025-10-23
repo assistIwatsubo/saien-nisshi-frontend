@@ -1,24 +1,33 @@
-import { HelperCharacter, AppMode } from ".";
+import { AppMode } from ".";
+
+export type MeData = {
+  user_id: string;
+  user_slug: string,
+  user_name: string;
+  nickname?: string;
+  favorite_crop?: FavoriteCrop;
+  image_url?: string;
+  prefecture?: string;
+  followings?: UserData[];
+  current_mode_data: CurrentModeData,
+};
 
 export type UserData = {
-  id: string;
-  name: string;
-  email: string;
-  token: string; // Passportアクセストークン
+  user_slug: string,
+  user_name: string;
+  nickname?: string;
+  favorite_crop?: FavoriteCrop;
+  image_url?: string;
+  prefecture?: string;
+  current_mode_data: CurrentModeData,
 };
 
-export type UserProfile = {
-  appMode: AppMode;
-  proLevel: number;
-  beginnerLevel: number;
-  nickname: string;
-  favoriteCrop: string;
-  iconUrl: string;
-  helperCharacter: HelperCharacter;
-  region?: string;
+export type FavoriteCrop = {
+  crop_id: number;
+  crop_name: string;
+}
 
-  registeredAt: string; // ユーザー登録日（ISO8601文字列）
-
-  // フロント表示用の「現在のモード開始日」
-  currentAppModeStartedAt?: string;
-};
+export type CurrentModeData = {
+  duration_days: number;
+  mode: AppMode;
+}

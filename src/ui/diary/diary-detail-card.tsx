@@ -6,9 +6,10 @@ type Props = {
   detail: DiaryDetail;
 };
 
+
 export default function DiaryDetailCard({ detail }: Props) {
   const { border, bg } = diaryTypeColorMap[detail.type];
-
+  
   return (
     <div className="flex items-start justify-start gap-0">
       <h4
@@ -23,7 +24,7 @@ export default function DiaryDetailCard({ detail }: Props) {
         {/* 作物用 */}
         {detail.type === "crop" && (
           <Tag
-            label={`${detail.diary_detail_crop?.crop_name}：${detail.diary_detail_crop?.field_name}`}
+            label={`${detail.crop_name}：${detail.field_name}`}
             type={detail.type}
           />
         )}
@@ -32,34 +33,34 @@ export default function DiaryDetailCard({ detail }: Props) {
         {detail.type === "pesticide" && (
           <div className="flex flex-wrap items-center gap-2">
             <Tag
-              label={`${detail.diary_detail_pesticide?.crop_name}：${detail.diary_detail_pesticide?.pesticide_name}（${detail.diary_detail_pesticide?.field_name ?? "圃場名未設定"}）`}
+              label={`${detail.crop_name}：${detail.pesticide?.pesticide_name}（${detail.field_name ?? "圃場名未設定"}）`}
               type={detail.type}
             />
 
-            {detail.diary_detail_pesticide?.concentration && (
+            {detail.pesticide?.concentration && (
               <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600">
-                {`濃度: ${detail.diary_detail_pesticide?.concentration}${detail.diary_detail_pesticide?.concentration_unit ?? ""}`}
+                {`濃度: ${detail.pesticide?.concentration}${detail.pesticide?.concentration_unit ?? ""}`}
               </span>
             )}
-            {detail.diary_detail_pesticide?.dilution_rate && (
+            {detail.pesticide?.diluration_rate && (
               <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600">
-                {`希釈倍率: ${detail.diary_detail_pesticide?.dilution_rate}`}
+                {`希釈倍率: ${detail.pesticide?.diluration_rate}`}
               </span>
             )}
 
-            {detail.diary_detail_pesticide?.amount && (
+            {detail.pesticide?.amount && (
               <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600">
-                {`散布量: ${detail.diary_detail_pesticide?.amount}${detail.diary_detail_pesticide?.amount_unit ?? ""}`}
+                {`散布量: ${detail.pesticide?.amount}${detail.pesticide?.amount_unit ?? ""}`}
               </span>
             )}
           </div>
         )}
 
         {/* 共通メモ */}
-        {detail.memo && (
+        {((detail.type === 'other') || detail.memo) && (
           <div className="flex flex-col gap-2">
             <p className="rounded-md bg-white/50 p-2 text-gray-600">
-              {detail.memo}
+              {detail.memo ?? "記入なし"}
             </p>
           </div>
         )}

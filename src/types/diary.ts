@@ -1,16 +1,11 @@
 import { ScheduleEntry } from "./schedule";
 
 export type DiaryEntry = {
-  id: string;
-  user: {
-    id: string;
-    name: string;
-    avatarUrl?: string;
-  };
+  diary_id: string;
   date: string; // ISO形式 yyyy-mm-dd
   title: string | null;
   summary: string | null;
-  diary_details?: DiaryDetail[];
+  details?: DiaryDetail[];
   schedules?: ScheduleEntry[];
 };
 
@@ -50,28 +45,29 @@ export const fieldLabels: Record<FieldLabelType, string> = {
 
 // --- 各 detailType ごとの DiaryDetail 型 ---
 export type CropDetail = {
+  // いまのところつかってない
   crop_name: string,
   field_name: string,
 };
 
 export type PesticideDetail = {
-  crop_name?: string,
-  field_name?: string,
+  pesticide_id: number,
   pesticide_name: string,
   amount?: string,
   amount_unit?: string,
   concentration?: string,
   concentration_unit?: string,
-  dilution_rate?: string,
+  diluration_rate?: string,
 };
 
 export type DiaryDetail = {
-  id: number;
+  detail_id: number;
   position: number,
   type: DiaryDetailType,
-  diary_detail_crop?: CropDetail,
-  diary_detail_pesticide?: PesticideDetail,
+  crop_field_id?: number,
+  crop_name?: string,
+  field_name?: string,
+  crop?: CropDetail,
+  pesticide?: PesticideDetail,
   memo?: string,
-  created_at: string,
-  updated_at?: string,
 };

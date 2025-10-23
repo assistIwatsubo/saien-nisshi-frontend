@@ -20,7 +20,7 @@ export default function ScheduleBoard({ schedules }: ScheduleProps) {
         直近の予定
       </h3>
       <nav className="flex items-center justify-between">
-        <ul className="flex min-h-24 flex-wrap items-stretch text-sm">
+        <ul className="flex min-h-24 flex-wrap items-stretch text-sm w-full">
           {visibleItems ? (
             visibleItems?.length > 0 &&
             visibleItems.slice(0, 3).map((item) => (

@@ -5,50 +5,37 @@ import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import BottomNav from "@/ui/templates/bottom-nav";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getUserData } from "@/lib/getUserData";
-// import Image from "next/image";
-// import { APP_MODE_LABEL } from "@/types";
-// import UserIcon from "@/ui/atoms/user-icon";
-import { demoUsers } from "@/mocks/userData";
+import Image from "next/image";
+import UserIcon from "@/ui/atoms/user-icon";
 import LinkButtonMini from "@/ui/atoms/link-button-mini";
 import { Pencil } from "lucide-react";
 import { CollapsibleItem } from "@/ui/atoms/collapsible-item";
+import type { UserData } from "@/types/user-data";
 
-const currentUserId = "u001"; // 実際はセッションや JWT などから取得
 
 export default async function Page() {
-  const userData = await fetchSafe(() => getUserData(currentUserId));
+  const userData = await fetchSafe(() => getUserData());
 
   if (!userData) {
     return;
   }
 
-  // function calcDaysSince(dateString?: string): number | null {
-  //   if (!dateString) return null;
-  //   const start = new Date(dateString);
-  //   const today = new Date();
-
-  //   // ミリ秒差分 → 日数
-  //   const diffMs = today.getTime() - start.getTime();
-  //   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-  //   // 当日を1日目として数える
-  //   return diffDays + 1;
-  // }
+  console.log(userData);
 
   return (
     <>
       <EngawaArea title="マイページ">
         <div className="flex flex-col items-center justify-start p-8">
           <figure className="rounded-full bg-white p-6">
-            {/* <Image
-              src={userData.iconUrl}
-              alt={`${userData.name}`}
+            <Image
+              src={`http://localhost:8080${userData.image_url}`}
+              alt={userData.user_name}
               width={150}
               height={150}
-            /> */}
+            />
           </figure>
           <div className="flex flex-col gap-2 py-6 text-center font-bold">
-            <p className="text-xl">{userData.name}さん</p>
+            <p className="text-xl">{userData.user_name}さん</p>
             <p className="text-lg">
               レベル
               {/* {userData.appMode === "pro"
@@ -58,18 +45,14 @@ export default async function Page() {
           </div>
           <ul className="flex w-3/4 flex-col gap-4 rounded-2xl bg-white px-8 py-4">
             <li className="border-b-2 border-[var(--app-secondary-color)] pb-2 text-center">
-              {" "}
-              {/* {APP_MODE_LABEL[userData.appMode]}モード継続：
-              {(() => {
-                const days = calcDaysSince(userData.currentAppModeStartedAt);
-                return days !== null ? `${days}日` : "―";
-              })()} */}
+              {userData.current_mode_data?.mode.label}モード継続<br />
+              {userData.current_mode_data?.duration_days}日
             </li>
             <li className="flex">
               <div className="flex-2/5">二つ名</div>
               <div className="flex flex-3/5 items-center before:mr-2 before:content-[':']">
                 <button className="flex w-full items-center justify-between border-b border-dashed px-2">
-                  {/* <span>{userData.nickname}</span> */}
+                  <span>{userData.nickname}</span>
                   <Pencil size={18} />
                 </button>
               </div>
@@ -79,7 +62,7 @@ export default async function Page() {
               <div className="flex-2/5">好きな作物</div>
               <div className="flex flex-3/5 items-center before:mr-2 before:content-[':']">
                 <button className="flex w-full items-center justify-between border-b border-dashed px-2">
-                  {/* <span>{userData.favoriteCrop}</span> */}
+                  <span>{userData.favorite_crop?.crop_name || "登録なし"}</span>
                   <Pencil size={18} />
                 </button>
               </div>
@@ -130,13 +113,14 @@ export default async function Page() {
             iconType="star"
           />
           <ol className="flex flex-wrap gap-4 py-4">
-            {demoUsers.map((u) => (
-              <li key={u.id}>
-                {/* <UserIcon
-                  userId={u.id}
-                  userName={u.name}
-                  iconSrc={u.iconUrl ?? ""}
-                /> */}
+            {userData.followings?.map((u: UserData) => (
+              <li key={u.user_slug} className="flex flex-col items-center justify-start gap-0.5">
+                <UserIcon
+                  userSlug={u.user_slug}
+                  userName={u.user_name}
+                  iconSrc={u.image_url}
+                />
+                <span className="text-xs">{u.user_name}</span>
               </li>
             ))}
           </ol>

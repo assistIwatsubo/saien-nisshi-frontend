@@ -2,17 +2,17 @@ import Link from "next/link";
 import Image from "next/image";
 
 type IconProps = {
-  userId: string;
+  userSlug: string;
   userName: string;
-  iconSrc: string;
+  iconSrc?: string;
 };
 
-export default function UserIcon({ userId, userName, iconSrc }: IconProps) {
+export default function UserIcon({ userSlug, userName, iconSrc }: IconProps) {
   return (
-    <Link href={`/${userId}/profile`}>
+    <Link href={`/${userSlug}/profile`}>
       <div className="h-14 w-14 overflow-hidden rounded-full border-2 border-[var(--app-primary-color)] bg-white p-1">
         <Image
-          src={iconSrc ?? "/icons/sample-user-icon.png"}
+          src={`http://localhost:8080${iconSrc}`}
           alt={userName}
           width={150}
           height={150}

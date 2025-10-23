@@ -19,14 +19,14 @@ type Props = {
     date: string;
   };
   searchParams: {
-    id?: string;
+    diaryId?: string;
   };
 };
 
 export default async function Page({ params, searchParams }: Props) {
   const { date } = await params;
-  const  diaryId  = await searchParams?.id;
-  
+  const { diaryId } = await searchParams;
+
   if (!diaryId) {
     return (
       <div className="py-8 text-center text-red-500">
@@ -46,10 +46,11 @@ export default async function Page({ params, searchParams }: Props) {
     );
   }
 
-
   const isFuture = new Date(date) >= new Date();
 
   const { year, month, day } = getDateParts(new Date(date));
+
+  console.log(diaryEntry);
 
   return (
     <>
@@ -89,14 +90,14 @@ export default async function Page({ params, searchParams }: Props) {
               </div>
               {diaryEntry && <SnsButtonsNav diary={diaryEntry} />}
 
-              {diaryEntry?.diary_details && diaryEntry.diary_details.length > 0 && (
+              {diaryEntry?.details && diaryEntry.details.length > 0 && (
                 <div
                   data-role="diary-content-details"
                   className="flex w-full flex-col items-center justify-start gap-8 border-t-1 border-b-1 border-dashed border-gray-400 px-4 py-8"
                 >
                   <h3 className="text-lg font-bold">詳細</h3>
                   <div className="w-full space-y-8">
-                    {diaryEntry.diary_details.map((detail, i) => (
+                    {diaryEntry.details.map((detail, i) => (
                       <DiaryDetailCard key={i} detail={detail} />
                     ))}
                   </div>

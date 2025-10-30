@@ -5,5 +5,6 @@ export const getAccessToken = async (): Promise<string> => {
   if (!session?.user?.accessToken) {
     throw new Error("Unauthorized: トークンが不正です");
   }
+
   return session.user.accessToken;
 };

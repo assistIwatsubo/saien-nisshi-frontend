@@ -1,7 +1,7 @@
 import { ScheduleEntry } from "./schedule";
 
 export type DiaryEntry = {
-  diary_id: string;
+  diaryId: number;
   date: string; // ISO形式 yyyy-mm-dd
   title: string | null;
   summary: string | null;
@@ -23,51 +23,51 @@ export const typeLabels: Record<DiaryDetailType, string> = {
 };
 
 export const FIELD_LABEL_TYPES = [
-  "crop_name",
-  "field_name",
-  "pesticide_name",
+  "cropName",
+  "fieldName",
+  "pesticideName",
   "concentration",
-  "dilution_rate",
-  "applied_amount",
+  "dilutionRate",
+  "appliedAmount",
   "memo",
 ] as const;
 export type FieldLabelType = (typeof FIELD_LABEL_TYPES)[number];
 
 export const fieldLabels: Record<FieldLabelType, string> = {
-  crop_name: "作物名",
-  field_name: "圃場名",
-  pesticide_name: "薬剤名",
+  cropName: "作物名",
+  fieldName: "圃場名",
+  pesticideName: "薬剤名",
   concentration: "濃度",
-  dilution_rate: "希釈倍率",
-  applied_amount: "散布量",
+  dilutionRate: "希釈倍率",
+  appliedAmount: "散布量",
   memo: "作業メモ",
 };
 
 // --- 各 detailType ごとの DiaryDetail 型 ---
 export type CropDetail = {
   // いまのところつかってない
-  crop_name: string,
-  field_name: string,
+  cropName: string;
+  fieldName: string;
 };
 
 export type PesticideDetail = {
-  pesticide_id: number,
-  pesticide_name: string,
-  amount?: string,
-  amount_unit?: string,
-  concentration?: string,
-  concentration_unit?: string,
-  diluration_rate?: string,
+  pesticideId: number;
+  pesticideName: string;
+  amount?: string;
+  amountUnit?: string;
+  concentration?: string;
+  concentrationUnit?: string;
+  dilurationRate?: string;
 };
 
 export type DiaryDetail = {
-  detail_id: number;
-  position: number,
-  type: DiaryDetailType,
-  crop_field_id?: number,
-  crop_name?: string,
-  field_name?: string,
-  crop?: CropDetail,
-  pesticide?: PesticideDetail,
-  memo?: string,
+  detailId: number;
+  position: number;
+  type: DiaryDetailType;
+  cropFieldId?: number;
+  cropName?: string;
+  fieldName?: string;
+  crop?: CropDetail;
+  pesticide?: PesticideDetail;
+  memo?: string;
 };

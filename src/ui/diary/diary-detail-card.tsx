@@ -6,10 +6,9 @@ type Props = {
   detail: DiaryDetail;
 };
 
-
 export default function DiaryDetailCard({ detail }: Props) {
   const { border, bg } = diaryTypeColorMap[detail.type];
-  
+
   return (
     <div className="flex items-start justify-start gap-0">
       <h4
@@ -24,7 +23,7 @@ export default function DiaryDetailCard({ detail }: Props) {
         {/* 作物用 */}
         {detail.type === "crop" && (
           <Tag
-            label={`${detail.crop_name}：${detail.field_name}`}
+            label={`${detail.cropName}：${detail.fieldName}`}
             type={detail.type}
           />
         )}
@@ -33,31 +32,31 @@ export default function DiaryDetailCard({ detail }: Props) {
         {detail.type === "pesticide" && (
           <div className="flex flex-wrap items-center gap-2">
             <Tag
-              label={`${detail.crop_name}：${detail.pesticide?.pesticide_name}（${detail.field_name ?? "圃場名未設定"}）`}
+              label={`${detail.cropName}：${detail.pesticide?.pesticideName}（${detail.fieldName ?? "圃場名未設定"}）`}
               type={detail.type}
             />
 
             {detail.pesticide?.concentration && (
               <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600">
-                {`濃度: ${detail.pesticide?.concentration}${detail.pesticide?.concentration_unit ?? ""}`}
+                {`濃度: ${detail.pesticide?.concentration}${detail.pesticide?.concentrationUnit ?? ""}`}
               </span>
             )}
-            {detail.pesticide?.diluration_rate && (
+            {detail.pesticide?.dilurationRate && (
               <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600">
-                {`希釈倍率: ${detail.pesticide?.diluration_rate}`}
+                {`希釈倍率: ${detail.pesticide?.dilurationRate}`}
               </span>
             )}
 
             {detail.pesticide?.amount && (
               <span className="rounded-sm bg-gray-200 px-1 py-0.5 text-xs text-gray-600">
-                {`散布量: ${detail.pesticide?.amount}${detail.pesticide?.amount_unit ?? ""}`}
+                {`散布量: ${detail.pesticide?.amount}${detail.pesticide?.amountUnit ?? ""}`}
               </span>
             )}
           </div>
         )}
 
         {/* 共通メモ */}
-        {((detail.type === 'other') || detail.memo) && (
+        {(detail.type === "other" || detail.memo) && (
           <div className="flex flex-col gap-2">
             <p className="rounded-md bg-white/50 p-2 text-gray-600">
               {detail.memo ?? "記入なし"}

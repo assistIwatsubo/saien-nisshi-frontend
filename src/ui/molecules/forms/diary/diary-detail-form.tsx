@@ -43,14 +43,14 @@ export default function DiaryDetailForm({
 
   // タイプごとのフィールドキー
   const typeFieldKeys: Record<DiaryDetailType, FieldLabelType[]> = {
-    crop: ["crop_name", "field_name"],
+    crop: ["cropName", "fieldName"],
     pesticide: [
-      "crop_name",
-      "field_name",
-      "pesticide_name",
+      "cropName",
+      "fieldName",
+      "pesticideName",
       "concentration",
-      "dilution_rate",
-      "applied_amount",
+      "dilutionRate",
+      "appliedAmount",
     ],
     other: [],
   };
@@ -65,16 +65,16 @@ export default function DiaryDetailForm({
     const values: Partial<Record<FieldLabelType | "memo", string>> = {};
     switch (detail.type) {
       case "crop":
-        values.crop_name = detail.crop_name.join(", ");
-        values.field_name = detail.field_name.join(", ");
+        values.cropName = detail.cropName.join(", ");
+        values.fieldName = detail.fieldName.join(", ");
         break;
       case "pesticide":
-        values.crop_name = detail.crop_name;
-        values.field_name = detail.field_name.join(", ");
-        values.pesticide_name = detail.pesticide_name;
+        values.cropName = detail.cropName;
+        values.fieldName = detail.fieldName.join(", ");
+        values.pesticideName = detail.pesticideName;
         values.concentration = detail.concentration ?? "";
-        values.dilution_rate = detail.dilution_rate ?? "";
-        values.applied_amount = detail.applied_amount ?? "";
+        values.dilutionRate = detail.dilutionRate ?? "";
+        values.appliedAmount = detail.appliedAmount ?? "";
         break;
       case "other":
         break;
@@ -91,12 +91,12 @@ export default function DiaryDetailForm({
       case "crop":
         newDetail = {
           id,
-          diary_id: detail.diary_id,
+          diaryId: detail.diaryId,
           type: "crop",
-          crop_name: (detailValues.crop_name ?? "")
+          cropName: (detailValues.cropName ?? "")
             .split(",")
             .map((v) => v.trim()),
-          field_name: (detailValues.field_name ?? "")
+          fieldName: (detailValues.fieldName ?? "")
             .split(",")
             .map((v) => v.trim()),
           memo: memo ?? detail.memo ?? "",
@@ -105,24 +105,24 @@ export default function DiaryDetailForm({
       case "pesticide":
         newDetail = {
           id,
-          diary_id: detail.diary_id,
+          diaryId: detail.diaryId,
           type: "pesticide",
-          crop_name: detailValues.crop_name ?? "",
-          field_name: (detailValues.field_name ?? "")
+          cropName: detailValues.cropName ?? "",
+          fieldName: (detailValues.fieldName ?? "")
             .split(",")
             .map((v) => v.trim()),
-          pesticide_name: detailValues.pesticide_name ?? "",
+          pesticideName: detailValues.pesticideName ?? "",
           concentration: detailValues.concentration,
-          dilution_rate: detailValues.dilution_rate,
-          applied_amount: detailValues.applied_amount,
-          amount_unit: (detail as PesticideDetail).amount_unit,
+          dilutionRate: detailValues.dilutionRate,
+          appliedAmount: detailValues.appliedAmount,
+          amountUnit: (detail as PesticideDetail).amountUnit,
           memo: memo ?? detail.memo ?? "",
         };
         break;
       case "other":
         newDetail = {
           id,
-          diary_id: detail.diary_id,
+          diaryId: detail.diaryId,
           type: "other",
           memo: memo ?? detail.memo ?? "",
         };

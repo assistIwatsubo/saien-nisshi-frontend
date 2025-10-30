@@ -19,13 +19,13 @@ type Props = {
     date: string;
   };
   searchParams: {
-    diaryId?: string;
+    id?: string;
   };
 };
 
 export default async function Page({ params, searchParams }: Props) {
   const { date } = await params;
-  const { diaryId } = await searchParams;
+  const { id: diaryId } = await searchParams;
 
   if (!diaryId) {
     return (

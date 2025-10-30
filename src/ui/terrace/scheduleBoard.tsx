@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 
 type ScheduleProps = {
-  schedules: ScheduleEntry[] | null;
+  schedules: ScheduleEntry[] | undefined;
 };
 
 export default function ScheduleBoard({ schedules }: ScheduleProps) {

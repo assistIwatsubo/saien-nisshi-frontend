@@ -1,8 +1,8 @@
-export type CommunityDiaryEntry = {
-  id: string;
-  userId: string;
+export type FollowingDiaryEntry = {
+  userSlug: string;
   userName: string;
-  iconSrc: string;
+  imageUrl: string;
+  diaryId: number;
   title: string;
-  dateTime: string; // ISO形式
+  date: string; // ISO形式
 };

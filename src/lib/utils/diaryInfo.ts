@@ -1,6 +1,7 @@
 import { getISODate } from "@/lib/utils/format-date";
 import { DiaryEntry } from "@/types/diary";
-import { getDiaryLatest } from "../getDiary";
+import { getDiaryOfToday } from "../getDiary";
+import { fetchSafe } from "./fetchSate";
 
 const today = getISODate(new Date());
 
@@ -10,8 +11,9 @@ export type DiaryInfo = {
 };
 
 export const diaryInfo = async (date: string = today): Promise<DiaryInfo> => {
-  const diaries: DiaryEntry[] | null = await getDiaryLatest(1); 
-  const hasDiary = (diaries?.length ?? 0) > 0; 
+  const diary: DiaryEntry | undefined = await fetchSafe(getDiaryOfToday);
+
+  const hasDiary = !!diary;
 
   return {
     hasDiary,

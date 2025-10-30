@@ -26,7 +26,7 @@ function createCalendarMap(
     for (const entry of diaryEntries) {
       const iso = getDateParts(new Date(entry.date)).iso;
       const diary: CalendarDiary = {
-        id: entry.diary_id,
+        id: entry.diaryId,
         detailTypes: entry.details?.map((d) => d.type) ?? [],
         date: entry.date,
       };
@@ -64,7 +64,6 @@ function createCalendarMap(
 
   return map;
 }
-
 
 export default async function Page() {
   const diaryEntries = await fetchSafe(getDiaryList);

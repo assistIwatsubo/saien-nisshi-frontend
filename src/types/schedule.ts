@@ -2,7 +2,7 @@ export type ScheduleStatus = "unused" | "undone" | "done";
 
 export interface ScheduleEntry {
   id: string;
-  user_id: string;
+  userId: string;
   title: string;
   start: string;
   end?: string;

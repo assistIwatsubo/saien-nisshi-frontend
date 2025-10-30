@@ -25,7 +25,7 @@ export const { signIn, signOut, auth, handlers } = NextAuth({
             id: data.id,
             name: data.name,
             email: data.email,
-            accessToken: data.access_token,
+            accessToken: data.accessToken,
           };
         } catch (err) {
           console.error("Fetch failed:", err);

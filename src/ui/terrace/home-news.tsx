@@ -6,7 +6,7 @@ import ErrorMessage from "../atoms/error-message";
 const contentClass = "block w-full bg-white p-2";
 
 type NewsProps = {
-  latestNews: NewsEntry | null;
+  latestNews: NewsEntry | undefined;
 };
 
 export default function HomeNews({ latestNews }: NewsProps) {

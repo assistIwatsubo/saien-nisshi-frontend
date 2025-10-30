@@ -12,7 +12,6 @@ import { Pencil } from "lucide-react";
 import { CollapsibleItem } from "@/ui/atoms/collapsible-item";
 import type { UserData } from "@/types/user-data";
 
-
 export default async function Page() {
   const userData = await fetchSafe(() => getUserData());
 
@@ -20,22 +19,20 @@ export default async function Page() {
     return;
   }
 
-  console.log(userData);
-
   return (
     <>
       <EngawaArea title="マイページ">
         <div className="flex flex-col items-center justify-start p-8">
           <figure className="rounded-full bg-white p-6">
             <Image
-              src={`http://localhost:8080${userData.image_url}`}
-              alt={userData.user_name}
+              src={`http://localhost:8080${userData.imageUrl}`}
+              alt={userData.userName}
               width={150}
               height={150}
             />
           </figure>
           <div className="flex flex-col gap-2 py-6 text-center font-bold">
-            <p className="text-xl">{userData.user_name}さん</p>
+            <p className="text-xl">{userData.userName}さん</p>
             <p className="text-lg">
               レベル
               {/* {userData.appMode === "pro"
@@ -45,8 +42,9 @@ export default async function Page() {
           </div>
           <ul className="flex w-3/4 flex-col gap-4 rounded-2xl bg-white px-8 py-4">
             <li className="border-b-2 border-[var(--app-secondary-color)] pb-2 text-center">
-              {userData.current_mode_data?.mode.label}モード継続<br />
-              {userData.current_mode_data?.duration_days}日
+              {userData.currentModeData?.mode.label}モード継続
+              <br />
+              {userData.currentModeData?.durationDays}日
             </li>
             <li className="flex">
               <div className="flex-2/5">二つ名</div>
@@ -62,7 +60,7 @@ export default async function Page() {
               <div className="flex-2/5">好きな作物</div>
               <div className="flex flex-3/5 items-center before:mr-2 before:content-[':']">
                 <button className="flex w-full items-center justify-between border-b border-dashed px-2">
-                  <span>{userData.favorite_crop?.crop_name || "登録なし"}</span>
+                  <span>{userData.favoriteCrop?.cropName || "登録なし"}</span>
                   <Pencil size={18} />
                 </button>
               </div>
@@ -114,13 +112,16 @@ export default async function Page() {
           />
           <ol className="flex flex-wrap gap-4 py-4">
             {userData.followings?.map((u: UserData) => (
-              <li key={u.user_slug} className="flex flex-col items-center justify-start gap-0.5">
+              <li
+                key={u.userSlug}
+                className="flex flex-col items-center justify-start gap-0.5"
+              >
                 <UserIcon
-                  userSlug={u.user_slug}
-                  userName={u.user_name}
-                  iconSrc={u.image_url}
+                  userSlug={u.userSlug}
+                  userName={u.userName}
+                  iconSrc={u.imageUrl}
                 />
-                <span className="text-xs">{u.user_name}</span>
+                <span className="text-xs">{u.userName}</span>
               </li>
             ))}
           </ol>

@@ -5,14 +5,11 @@ import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
 import BottomNav from "@/ui/templates/bottom-nav";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getUserData } from "@/lib/getUserData";
-import { APP_MODE_LABEL } from "@/types";
 import { CollapsibleItem } from "@/ui/atoms/collapsible-item";
 import Button from "@/ui/atoms/button";
 
-const currentUserId = "u001"; // 実際はセッションや JWT などから取得
-
 export default async function Page() {
-  const userData = await fetchSafe(() => getUserData(currentUserId));
+  const userData = await fetchSafe(() => getUserData());
 
   if (!userData) {
     return;
@@ -44,7 +41,7 @@ export default async function Page() {
                       value="beginner"
                       className="mr-2 scale-120"
                     />
-                    {APP_MODE_LABEL["beginner"]}モード
+                    {userData.currentModeData?.mode.label}モード
                   </label>
                   <label htmlFor="app-mode-pro">
                     <input
@@ -54,7 +51,7 @@ export default async function Page() {
                       value="pro"
                       className="mr-2 scale-120"
                     />
-                    {APP_MODE_LABEL["pro"]}モード
+                    {userData.currentModeData?.mode.label}モード
                   </label>
                   <Button>変更する</Button>
                 </form>
@@ -289,7 +286,7 @@ export default async function Page() {
         </SectionH3>
       </EngawaArea>
       <BottomNav>
-        <LinkButtonWithIcon href="terrace" />
+        <LinkButtonWithIcon variant="terrace" />
       </BottomNav>
     </>
   );

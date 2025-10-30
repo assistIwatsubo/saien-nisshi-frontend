@@ -1,33 +1,40 @@
 import { AppMode } from ".";
 
 export type MeData = {
-  user_id: string;
-  user_slug: string,
-  user_name: string;
+  userId: string;
+  userSlug: string;
+  userName: string;
   nickname?: string;
-  favorite_crop?: FavoriteCrop;
-  image_url?: string;
+  favoriteCrop?: FavoriteCrop;
+  imageUrl?: string;
   prefecture?: string;
   followings?: UserData[];
-  current_mode_data: CurrentModeData,
+  currentModeData: CurrentModeData;
 };
 
 export type UserData = {
-  user_slug: string,
-  user_name: string;
+  userSlug: string;
+  userName: string;
   nickname?: string;
-  favorite_crop?: FavoriteCrop;
-  image_url?: string;
+  favoriteCrop?: FavoriteCrop;
+  imageUrl?: string;
   prefecture?: string;
-  current_mode_data: CurrentModeData,
+  currentModeData: CurrentModeData;
 };
 
 export type FavoriteCrop = {
-  crop_id: number;
-  crop_name: string;
-}
+  cropId: number;
+  cropName: string;
+};
 
 export type CurrentModeData = {
-  duration_days: number;
+  durationDays: number;
   mode: AppMode;
-}
+};
+
+export type FieldData = {
+  id: number;
+  name: string;
+  address: string;
+  memo: string;
+};

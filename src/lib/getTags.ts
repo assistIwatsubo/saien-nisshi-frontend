@@ -1,6 +1,6 @@
 import { FieldLabelType } from "@/types/diary";
 import { getFieldCrop } from "./getFieldCrop";
-import { getUserField } from "./getUserField";
+import { getUserField } from "./getCropField";
 import { FieldCrop, UserField } from "@/types/tags";
 
 export const getTags = async (): Promise<Record<FieldLabelType, string[]>> => {
@@ -11,12 +11,12 @@ export const getTags = async (): Promise<Record<FieldLabelType, string[]>> => {
 
   // tagsオブジェクトを初期化
   const tags: Record<FieldLabelType, string[]> = {
-    crop_name: fieldCrops.map((item: FieldCrop) => item?.crop_name),
-    field_name: userFields.map((item: UserField) => item?.name),
-    pesticide_name: [],
+    cropName: fieldCrops.map((item: FieldCrop) => item?.cropName),
+    fieldName: userFields.map((item: UserField) => item?.name),
+    pesticideName: [],
     concentration: [],
-    dilution_rate: [],
-    applied_amount: [],
+    dilutionRate: [],
+    appliedAmount: [],
   };
 
   // そのまま返す

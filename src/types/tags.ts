@@ -1,6 +1,6 @@
 export interface FieldCrop {
-  crop_name: string;
-  field_name: string;
+  cropName: string;
+  fieldName: string;
 }
 
 export interface UserField {

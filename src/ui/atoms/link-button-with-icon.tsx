@@ -8,9 +8,11 @@ import {
   Pencil,
   X,
   CalendarPlus,
+  FilePen,
+  FilePenLine,
 } from "lucide-react";
 
-type Variant = "editor" | "archive" | "terrace" | "scheduleCreate";
+type Variant = "editor" | "archive" | "terrace" | "schedule" | "plan";
 type Mode = "create" | "edit" | "cancel";
 type ButtonType = "diary" | "schedule";
 
@@ -39,6 +41,27 @@ const resolveConfig = (
         label: "日誌一覧へ",
         href: "/terrace/diary",
       };
+    case "plan":
+      switch (mode) {
+        case "edit":
+          return {
+            icon: FilePenLine,
+            label: "作付計画表を編集",
+            href: "/terrace/plan/edit",
+          };
+        case "cancel":
+          return {
+            icon: X,
+            label: "編集中止",
+            href: "/terrace/plan",
+          };
+        default:
+          return {
+            icon: FilePen,
+            label: "作付計画表",
+            href: "/terrace/plan",
+          };
+      }
     case "editor":
       if (type === "diary") {
         switch (mode) {
@@ -105,7 +128,7 @@ export default function LinkButtonWithIcon({
     href,
   } = resolveConfig(variant, mode, editSuffixPath, type);
 
-  const iconClassName = mode === "edit" ? "rotate-180" : "";
+  const iconClassName = type === "diary" && mode === "edit" ? "rotate-180" : "";
 
   return (
     <Link

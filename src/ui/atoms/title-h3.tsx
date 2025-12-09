@@ -87,7 +87,10 @@ export default function TitleH3({
 
     default:
       return (
-        <h3 className="mb-4 flex items-center gap-2 whitespace-nowrap" id={id}>
+        <h3
+          className="mb-4 flex items-center justify-center gap-2 font-bold whitespace-nowrap"
+          id={id}
+        >
           {Icon && (
             <span style={{ color: colorValue }}>
               <Icon color="currentColor" />

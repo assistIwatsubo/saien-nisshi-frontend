@@ -1,11 +1,11 @@
 import {
-  Mochiy_Pop_One,
   BIZ_UDMincho,
   M_PLUS_2,
   M_PLUS_Rounded_1c,
+  Shippori_Antique,
 } from "next/font/google";
 
-export const appTitle = Mochiy_Pop_One({
+export const appTitle = Shippori_Antique({
   weight: "400",
   subsets: ["latin"],
 });

@@ -34,7 +34,11 @@ export default function Calendar({
 
   // 空白埋め
   for (let i = 0; i < firstDayOfWeek; i++) {
-    days.push(<div key={`empty-${i}`} />);
+    days.push(
+      <div key={`empty-${i}`} className="text-gray-800">
+        <div className="relative h-12 flex-col items-center justify-center lg:h-14" />
+      </div>,
+    );
   }
 
   for (let day = 1; day <= totalDays; day++) {
@@ -52,7 +56,7 @@ export default function Calendar({
     const isTodayOrHasDiary = isToday(date) || hasDiary;
 
     const cellContent = (
-      <div className="relative h-12 w-full flex-col items-center justify-center">
+      <div className="relative h-12 flex-col items-center justify-center lg:h-14">
         {/* 今日をハイライト */}
         {isToday(date) && (
           <span className="absolute inset-0 z-0 rounded-sm bg-[var(--app-home-base-color)]/75" />
@@ -96,7 +100,7 @@ export default function Calendar({
         {/* 日付 + PieChart */}
         <span
           className={[
-            "relative z-5 inline-flex h-full w-full items-center justify-center",
+            "relative z-5 inline-flex h-full items-center justify-center",
             isTodayOrHasDiary ? "app-text-outline-white font-bold" : "",
           ]
             .filter(Boolean)
@@ -123,7 +127,10 @@ export default function Calendar({
     days.push(
       <div key={day} className="text-gray-800">
         {hasDiary || schedules.length > 0 ? (
-          <Link href={`/terrace/diary/${iso}?id=${diary?.id}`} className="block">
+          <Link
+            href={`/terrace/diary/${iso}?id=${diary?.id}`}
+            className="block"
+          >
             {cellContent}
           </Link>
         ) : (
@@ -134,18 +141,22 @@ export default function Calendar({
   }
 
   return (
-    <div className="app-blurred-bg-white mx-auto w-full max-w-lg rounded-lg border-4 border-[var(--app-primary-color)] shadow-lg">
+    <section className="rounded-lg border-4 border-[var(--app-primary-color)] bg-white">
       <div className="bg-[var(--app-primary-color)] p-2 text-center text-xl font-bold text-white">
-        {year}年 {month + 1}月
+        <h3>
+          {year}年 {month + 1}月
+        </h3>
       </div>
 
-      <div className="grid grid-cols-7 border-t-1 border-dashed border-white/25 bg-[var(--app-primary-color)] p-2 text-center text-sm font-bold text-white">
+      <div className="text-md grid grid-cols-7 border-t-1 border-dashed border-white/25 bg-[var(--app-primary-color)] p-2 text-center font-bold text-white">
         {WEEKDAYS.map((day) => (
           <div key={day}>{day}</div>
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-y-2 py-2 text-center">{days}</div>
-    </div>
+      <div className="grid grid-cols-7 gap-y-2 py-2 text-center text-lg">
+        {days}
+      </div>
+    </section>
   );
 }

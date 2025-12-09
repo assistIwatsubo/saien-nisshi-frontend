@@ -1,4 +1,5 @@
-import Link from "next/link";import { DiaryEntry } from "@/types/diary";
+import Link from "next/link";
+import { DiaryEntry } from "@/types/diary";
 import ErrorMessage from "../atoms/error-message";
 
 type DiaryProps = {
@@ -16,7 +17,7 @@ export default function Diaries({ entries }: DiaryProps) {
         ) : (
           entries.map((entry) => (
             <li key={entry.date}>
-              <Link href={`/diary/${entry.id}`}>
+              <Link href={`/diary/${entry.diaryId}`}>
                 <article className="app-blurred-bg-white flex gap-4 rounded-md border-2 border-[var(--app-secondary-color)] p-4">
                   <time
                     dateTime={entry.date}
@@ -42,8 +43,10 @@ export default function Diaries({ entries }: DiaryProps) {
                       {entry.title}
                     </h4>
                     <p className="line-clamp-3 text-sm">{entry.summary}</p>
-                    <div data-role="tags-display" className="mt-2 flex gap-2">
-                    </div>
+                    <div
+                      data-role="tags-display"
+                      className="mt-2 flex gap-2"
+                    ></div>
                   </div>
                 </article>
               </Link>

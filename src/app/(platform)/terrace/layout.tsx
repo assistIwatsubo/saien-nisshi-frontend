@@ -18,7 +18,7 @@ export default function RootLayout({
     <>
       <CalendarProvider>
         <div data-layout="background" className="relative">
-          <BackgroundImage imageUrl="/images/sample-engawa.png" />
+          <BackgroundImage imageUrl="/images/sample-engawa.jpeg" />
           <SeasonalEffect season="spring" />
         </div>
         <main className="relative z-0 min-h-screen w-full flex-grow">

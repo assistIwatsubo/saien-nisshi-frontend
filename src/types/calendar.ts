@@ -2,7 +2,7 @@ import { DiaryDetailType } from "./diary";
 import type { ScheduleStatus } from "./schedule";
 
 export type CalendarDiary = {
-  id: string;
+  id: number;
   date: string;
   detailTypes: DiaryDetailType[];
 };

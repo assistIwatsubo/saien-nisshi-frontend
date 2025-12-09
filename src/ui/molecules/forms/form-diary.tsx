@@ -48,8 +48,8 @@ export default function FormDiary({ initialData, tags }: Props) {
         "flashMessage",
         initialData ? "編集完了しました" : "追加完了しました",
       );
-      if (initialData && initialData?.id) {
-        Router.push(`/terrace/diary/${initialData.id}`);
+      if (initialData && initialData?.diaryId) {
+        Router.push(`/terrace/diary/${initialData.diaryId}`);
       } else {
         Router.push("/terrace"); // 新規作成後は一覧やトップに遷移
       }
@@ -77,7 +77,7 @@ export default function FormDiary({ initialData, tags }: Props) {
         className="mt-4 flex w-full flex-col items-center justify-start gap-8 border-t-1 border-b-1 border-dashed border-gray-400 px-4 py-8"
       >
         <h3 className="text-lg font-bold">詳細を編集する</h3>
-        <DiaryDetailList values={details} tags={tags} onChange={setDetails} />
+        {/* <DiaryDetailList values={details} tags={tags} onChange={setDetails} /> */}
       </div>
       <p className="font-red-500">{error}</p>
       <div className="w-full pb-8 text-center">

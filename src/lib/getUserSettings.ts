@@ -1,6 +1,6 @@
 import { getAccessToken } from "./getAccessToken";
 import { PlanEntry } from "@/types/plan";
-import { FieldData } from "@/types/user-data";
+import { FieldData, LayoutData } from "@/types/user-data";
 
 export const getUserSettings = async (): Promise<
   Record<string, string> | undefined
@@ -66,6 +66,28 @@ export const getFields = async (): Promise<FieldData[] | undefined> => {
 
     const fields = await res.json();
     return fields;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const getLayouts = async (): Promise<LayoutData[] | undefined> => {
+  try {
+    const token = await getAccessToken();
+    const res = await fetch(`http://localhost:8080/api/layouts`, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      console.error("設定取得失敗");
+      return undefined;
+    }
+
+    const layouts = await res.json();
+    return layouts.data;
   } catch (e) {
     console.error(e);
   }

@@ -10,9 +10,17 @@ import {
   CalendarPlus,
   FilePen,
   FilePenLine,
+  Grid2X2,
+  Grid2X2Plus,
 } from "lucide-react";
 
-type Variant = "editor" | "archive" | "terrace" | "schedule" | "plan";
+type Variant =
+  | "editor"
+  | "archive"
+  | "terrace"
+  | "schedule"
+  | "plan"
+  | "layout";
 type Mode = "create" | "edit" | "cancel";
 type ButtonType = "diary" | "schedule";
 
@@ -60,6 +68,27 @@ const resolveConfig = (
             icon: FilePen,
             label: "作付計画表",
             href: "/terrace/plan",
+          };
+      }
+    case "layout":
+      switch (mode) {
+        case "edit":
+          return {
+            icon: Grid2X2Plus,
+            label: "作付図を編集",
+            href: "/terrace/layout/edit",
+          };
+        case "cancel":
+          return {
+            icon: X,
+            label: "編集中止",
+            href: "/terrace/layout",
+          };
+        default:
+          return {
+            icon: Grid2X2,
+            label: "作付図を見る",
+            href: "/terrace/layout",
           };
       }
     case "editor":

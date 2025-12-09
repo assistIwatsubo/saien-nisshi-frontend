@@ -1,7 +1,7 @@
 import Link from "next/link";
-import HomeNews from "@/ui/terrace/home-news";
-import DateDisplay from "@/ui/atoms/dairy-calendar-display";
-import ScheduleBoard from "@/ui/terrace/scheduleBoard";
+// import HomeNews from "@/ui/terrace/home-news";
+// import DateDisplay from "@/ui/atoms/dairy-calendar-display";
+// import ScheduleBoard from "@/ui/terrace/scheduleBoard";
 import EngawaArea from "@/ui/templates/engawa-area";
 import TitleH3 from "@/ui/atoms/title-h3";
 import SectionH3 from "@/ui/molecules/section-h3";
@@ -14,49 +14,53 @@ import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getNewsLatest } from "@/lib/getNews";
 import { getFollowingsWithDiaries } from "@/lib/getUserData";
 import { getScheduleList } from "@/lib/getSchedule";
-import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
+import { getLayouts, getPlans } from "@/lib/getUserSettings";
+import { getFields } from "@/lib/getUserSettings";
 import EngawaText from "@/ui/molecules/engawa-text";
-import LinkButtonCalendar from "@/ui/atoms/link-button-calendar";
-import PageTitle from "@/ui/molecules/page-title";
-import { HousePlus } from "lucide-react";
+import MainArea from "@/ui/templates/main-area";
 import HelpNavigation from "@/ui/organisms/help-navigation";
 import Logout from "@/ui/molecules/logout";
-import { getDiaryOfToday } from "@/lib/getDiary";
+import { getDiaryList } from "@/lib/getDiary";
 
 export default async function Page() {
-  const [latestNews, schedules, followingDiaries, diaryInfo] =
-    await Promise.all([
-      fetchSafe(getNewsLatest),
-      fetchSafe(getScheduleList),
-      fetchSafe(() => getFollowingsWithDiaries(3)),
-      fetchSafe(getDiaryOfToday),
-    ]);
-
-  const hasDiary = !!diaryInfo;
+  const [
+    latestNews,
+    schedules,
+    followingDiaries,
+    diaryEntries,
+    fields,
+    layouts,
+    plans,
+  ] = await Promise.all([
+    fetchSafe(getNewsLatest),
+    fetchSafe(getScheduleList),
+    fetchSafe(() => getFollowingsWithDiaries(3)),
+    fetchSafe(getDiaryList),
+    fetchSafe(getFields),
+    fetchSafe(getLayouts),
+    fetchSafe(getPlans),
+  ]);
 
   return (
     <>
-      <PageTitle title="縁側" icon={<HousePlus size={32} />} />
       <HatakeArea>
-        <HomeNews latestNews={latestNews} />
+        {/* <HomeNews latestNews={latestNews} />
         <div className="flex items-stretch justify-between gap-8">
           <DateDisplay />
           <ScheduleBoard schedules={schedules} />
-        </div>
+        </div> */}
+
+        <MainArea
+          diaryEntries={diaryEntries}
+          scheduleEntries={schedules}
+          fields={fields}
+          layouts={layouts}
+          plans={plans}
+        />
+
         {/* <HomeCharacter homeState="default" /> */}
-        <div className="absolute right-0 bottom-0 left-0 w-full py-8 text-center">
-          <nav className="flex items-start justify-center gap-8 p-4">
-            <LinkButtonWithIcon
-              variant="editor"
-              type="diary"
-              mode={hasDiary ? "edit" : "create"}
-            />
-            <LinkButtonWithIcon variant="archive" />
-            <LinkButtonWithIcon variant="plan" />
-          </nav>
-        </div>
       </HatakeArea>
-      <EngawaArea title="休憩メニュー">
+      <EngawaArea title="ひとやすみ">
         <EngawaText textName={["edamame", "ingen"]} />
         <SectionH3>
           <TitleH3
@@ -106,7 +110,6 @@ export default async function Page() {
         </nav>
       </EngawaArea>
       <HelpNavigation />
-      <LinkButtonCalendar />
     </>
   );
 }

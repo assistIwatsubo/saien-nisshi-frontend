@@ -49,7 +49,7 @@ body {
   text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
 }
 .app-blurred-bg-white {
-  background-color: rgba(255, 255, 255, 0.75); /* bg-white/75 相当 */
+  background-color: rgba(251, 251, 250, 0.95);
   backdrop-filter: blur(4px); /* backdrop-blur-sm 相当 */
 }
 .app-blurred-bg-ivory {

@@ -38,3 +38,30 @@ export type FieldData = {
   address: string;
   memo: string;
 };
+
+export type LayoutData = {
+  layoutId: number;
+  year: number;
+  title: string;
+  fieldId: number;
+  fieldName: string;
+  direction: string;
+  gap: number;
+  memo: string;
+  ridges?: RidgeData[];
+};
+
+export type RidgeData = {
+  ridgeId: number;
+  name: string;
+  size: number;
+  position: number;
+  ridgeDetails?: RidgeDetailData[];
+};
+
+export type RidgeDetailData = {
+  ridgeDetailId: number;
+  cropName: string;
+  position: number;
+  ratio: number;
+};

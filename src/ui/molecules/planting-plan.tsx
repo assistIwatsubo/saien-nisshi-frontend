@@ -1,8 +1,7 @@
 import PlantingPlanDisplay from "@/ui/molecules/planting-plan-display";
 import PlantingPlanForm from "./planting-plan-form";
-import { fetchSafe } from "@/lib/utils/fetchSate";
-import { getPlans } from "@/lib/getUserSettings";
-import { getFields } from "@/lib/getUserSettings";
+import { PlanEntry } from "@/types/plan";
+import { FieldData } from "@/types/user-data";
 
 const rowLabels = ["圃場", "割合", "品目"];
 const months = [
@@ -29,15 +28,14 @@ const childrenStyle = `min-w-20 text-right font-bold text-white ${childrenCommon
 
 type Props = {
   edit?: boolean;
+  plans?: PlanEntry[];
+  fields?: FieldData[];
 };
 
-export default async function PlantingPlan({ edit = false }: Props) {
-  const planEntries = await fetchSafe(getPlans);
-  const fields = await fetchSafe(getFields);
-
+export default function PlantingPlan({ edit = false, plans, fields }: Props) {
   return (
-    <div className="app-blurred-bg-white min-w-full rounded-lg rounded-tl-none p-4">
-      <div className="flex w-auto items-start justify-start overflow-auto rounded-md border-2 border-white bg-white/50 shadow-sm">
+    <div className="app-blurred-bg-white min-w-full overflow-auto rounded-lg rounded-tl-none p-4">
+      <div className="flex w-auto items-start justify-start rounded-md border-2 border-white bg-white/50 shadow-sm">
         <ol
           data-label="table-header"
           className={`w-fit divide-green-800 ${parentCommonStyle}`}
@@ -63,14 +61,14 @@ export default async function PlantingPlan({ edit = false }: Props) {
           <PlantingPlanForm
             parentCommonStyle={parentCommonStyle}
             childrenCommonStyle={childrenCommonStyle}
-            planEntries={planEntries}
+            planEntries={plans}
             fields={fields}
           />
         ) : (
           <PlantingPlanDisplay
             parentCommonStyle={parentCommonStyle}
             childrenCommonStyle={childrenCommonStyle}
-            planEntries={planEntries}
+            planEntries={plans}
           />
         )}
       </div>

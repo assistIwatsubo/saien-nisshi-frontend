@@ -27,22 +27,23 @@ export default function CalendarViewWithScroll({
   }, [year, month]);
 
   return (
-    <div className="flex flex-col gap-12 pb-8">
+    <ol className="flex h-full snap-x snap-mandatory gap-4 overflow-x-auto">
       {monthsToShow.map(({ year, month }) => {
         const displayMonth = month + 1; // 1〜12 表示用
         return (
-          <div
+          <li
             key={`${year}-${displayMonth}`}
             id={`calendar-${year}-${displayMonth}`}
+            className="w-full flex-shrink-0 snap-start p-8 lg:px-12"
           >
             <Calendar
               year={year}
               month={month}
               calendarMap={calendarMap} // diary + schedule を統合した map
             />
-          </div>
+          </li>
         );
       })}
-    </div>
+    </ol>
   );
 }

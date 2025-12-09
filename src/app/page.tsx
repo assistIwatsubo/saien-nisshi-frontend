@@ -9,31 +9,25 @@ export default function Page() {
         data-role="content-wrapper"
         className="mx-auto flex w-full flex-col items-center justify-start bg-[var(--app-base-color)]"
       >
-        <section data-role="apptitle-section" className="relative py-24">
-          <div className="absolute top-1/5 left-1/8 z-10 w-1/2">
+        <section
+          data-role="apptitle-section"
+          className="w-full bg-[url(/images/sample-engawa.jpeg)] bg-[length:100%_auto] bg-center bg-no-repeat"
+        >
+          <div className="w-fit lg:w-[60vw] bg-[linear-gradient(to_right,rgba(255,255,255,0.75),rgba(255,255,255,0))] py-8 pr-18 pl-12">
             <hgroup className="py-4 text-center">
               <h1
-                className={`${appTitle.className} mb-4 text-4xl text-[var(--app-primary-color)] drop-shadow`}
+                className={`${appTitle.className} mb-6 text-5xl text-white drop-shadow`}
               >
-                えんがわ＋
-                <br />
-                Diary
+                <small className="block py-2 text-3xl">ENGAWA＋</small>
+                菜縁日誌
               </h1>
               <p
                 className={`text-xl text-[var(--app-primary-color)] drop-shadow`}
               >
-                家庭菜園から始める農ライフ
+                菜園がつなぐ人の縁、地域の縁
               </p>
             </hgroup>
             <LoginWithModal />
-          </div>
-          <div className="m-auto max-w-2/3 opacity-80 md:max-w-1/3 lg:translate-x-2/5">
-            <Image
-              src="/images/engawa.png"
-              alt="家庭菜園から就農支援まで"
-              width={1200}
-              height={1081}
-            />
           </div>
         </section>
         <div data-role="section-wrapper">
@@ -42,19 +36,28 @@ export default function Page() {
               <h2
                 className={`${appTitle.className} my-8 text-2xl font-bold text-[var(--app-primary-color)]`}
               >
-                えんがわ＋Diary（えんがわぷらすだいありー）
+                <small>
+                  <ruby>
+                    ENGAWA＋<rp>(</rp>
+                    <rt>えんがわぷらす</rt>
+                    <rp>)</rp>
+                  </ruby>
+                </small>
+                <ruby>
+                  菜縁日誌<rp>(</rp>
+                  <rt>さいえんにっし</rt>
+                  <rp>)</rp>
+                </ruby>
                 <span className="ml-1 text-xl font-normal text-gray-800">
                   とは？
                 </span>
               </h2>
               <p>
-                <span className="leading-loose underline decoration-1 underline-offset-4">
-                  農家になりたい人のための
-                </span>
-                <br />
-                栽培支援アプリです。
+                家庭菜園を始めたい人や、副業農家を目指す人のための栽培支援アプリです。
               </p>
-              <p>栽培日誌＋教科書＋コミュニティ機能＋直売所出店支援まで！</p>
+              <p className="leading-loose underline decoration-1 underline-offset-4">
+                栽培日誌＋教科書＋コミュニティ機能＋直売所出店支援まで！
+              </p>
             </hgroup>
           </section>
           <section>

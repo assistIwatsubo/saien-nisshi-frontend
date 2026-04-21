@@ -22,7 +22,7 @@ export default function FieldLayoutDisplay({ layout }: Props) {
 
       {/* gapをlayout.gap(cm)で動的に反映 */}
       <div
-        className="mt-4 flex items-start justify-start overflow-auto border-t border-dashed border-gray-300 p-4"
+        className="mt-4 flex items-start justify-center overflow-auto border-t border-dashed border-gray-300 p-4"
         style={{
           gap: layout.gap * pxPerCm, // 畝間の通路幅
         }}

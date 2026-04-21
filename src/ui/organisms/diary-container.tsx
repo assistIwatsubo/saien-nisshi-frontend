@@ -8,13 +8,13 @@ type Props = {
 
 export default function DiaryContainer({ diaryEntries }: Props) {
   return (
-    <ol className="flex h-full snap-x snap-mandatory gap-4 divide-x-1 divide-dashed divide-[#f87171] overflow-x-auto py-2">
+    <ol className="flex snap-x snap-mandatory gap-4">
       {diaryEntries?.map((entry, index) => (
         <li
           key={entry.diaryId ?? index}
-          className="w-full flex-shrink-0 snap-start"
+          className="app-blurred-bg-white h-auto w-full flex-shrink-0 snap-start p-4"
         >
-          <section className="overflow-y-auto p-4">
+          <article className="overflow-y-auto py-2">
             <hgroup className="flex items-center justify-start gap-4 pb-4">
               <h3 className="text-xl">
                 {getFormattedDate(new Date(entry.date))}
@@ -36,7 +36,7 @@ export default function DiaryContainer({ diaryEntries }: Props) {
                 </div>
               </div>
             )}
-          </section>
+          </article>
         </li>
       ))}
     </ol>

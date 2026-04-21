@@ -42,8 +42,7 @@ export const getPlans = async (): Promise<PlanEntry[] | undefined> => {
     }
 
     const plans = await res.json();
-    console.log(plans.data);
-    return plans.data;
+    return plans;
   } catch (e) {
     console.error(e);
   }

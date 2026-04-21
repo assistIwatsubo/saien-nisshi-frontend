@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { DiaryEntry } from "@/types/diary";
 import { ScheduleEntry } from "@/types/schedule";
 import { FieldData, LayoutData } from "@/types/user-data";
@@ -7,13 +10,8 @@ import DiaryContainer from "./diary-container";
 import FieldLayout from "../molecules/field-layout";
 import PlantingPlan from "../molecules/planting-plan";
 import { PlanEntry } from "@/types/plan";
-
-type NavItem = {
-  key: string;
-  label: string;
-  icon?: React.ReactNode;
-  color: string;
-};
+import { NavItem } from "@/types/main-nav";
+import TabNav from "../molecules/tab-nav";
 
 type Props = {
   selected: string | null;
@@ -38,16 +36,28 @@ export default function MainContents({
 }: Props) {
   const activeItem = navItems.find((i) => i.key === displaying);
 
+  const [selectedYear, setSelectedYear] = useState<number>(
+    new Date().getFullYear(),
+  );
+
+  const handleYearSelect = (year: number) => {
+    setSelectedYear(year);
+  };
+  const years = [2025];
   const isClearing = selected === null;
 
   return (
-    <div
+    <section
       key={selected}
-      className={`app-blurred-bg-white h-[90vh] w-3/4 overflow-hidden border-l-4 ${isClearing ? "animate-fadeOut" : "animate-slideIn"} `}
+      className={`h-[90vh] w-3/4 overflow-auto border-l-4 ${isClearing ? "animate-fadeOut" : "animate-slideIn"} `}
       style={{
         borderColor: activeItem?.color ?? "#ccc",
+        background: `${activeItem?.color}50`,
+        backdropFilter: "blur(2px)",
       }}
     >
+      <TabNav years={years} onYearSelect={handleYearSelect} />
+
       {/* --- Diary --- */}
       {displaying === "diary" && <DiaryContainer diaryEntries={diaryEntries} />}
 
@@ -58,7 +68,10 @@ export default function MainContents({
           scheduleEntries={scheduleEntries}
         />
       )}
-      {displaying === "plan" && <PlantingPlan plans={plans} fields={fields} />}
+      {displaying === "plan" && (
+        <PlantingPlan plan={plans[selectedYear]} fields={fields} />
+      )}
+
       {displaying === "layout" && (
         <FieldLayout fields={fields} layouts={layouts} />
       )}
@@ -96,6 +109,6 @@ export default function MainContents({
           animation: fadeOut 0.3s ease-in forwards;
         }
       `}</style>
-    </div>
+    </section>
   );
 }

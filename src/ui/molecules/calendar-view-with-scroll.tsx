@@ -27,14 +27,14 @@ export default function CalendarViewWithScroll({
   }, [year, month]);
 
   return (
-    <ol className="flex h-full snap-x snap-mandatory gap-4 overflow-x-auto">
+    <ol className="flex h-full w-full snap-x snap-mandatory gap-4">
       {monthsToShow.map(({ year, month }) => {
         const displayMonth = month + 1; // 1〜12 表示用
         return (
           <li
             key={`${year}-${displayMonth}`}
             id={`calendar-${year}-${displayMonth}`}
-            className="w-full flex-shrink-0 snap-start p-8 lg:px-12"
+            className="app-blurred-bg-white w-full flex-shrink-0 snap-start p-8 lg:px-12"
           >
             <Calendar
               year={year}

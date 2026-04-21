@@ -33,28 +33,8 @@ export default function FieldLayout({ edit = false, fields, layouts }: Props) {
   };
 
   return (
-    <article data-layout="plan">
-      <nav>
-        <ol>
-          {!layouts || layouts.length === 0 ? (
-            <li>
-              <h3 className="app-blurred-bg-white w-fit rounded-t-lg px-4 py-1 text-xl font-bold">
-                {new Date().getFullYear()}年
-              </h3>
-            </li>
-          ) : (
-            layouts.map((l) => (
-              <li key={`nav-${l.layoutId}`}>
-                <h3 className="app-blurred-bg-white w-fit rounded-t-lg px-4 py-1 text-xl font-bold">
-                  {l.year}年
-                </h3>
-              </li>
-            ))
-          )}
-        </ol>
-      </nav>
-
-      <div className="app-blurred-bg-white min-w-full rounded-lg rounded-tl-none p-4">
+    <article data-layout="plan" className="app-blurred-bg-white h-full w-full">
+      <div className="min-w-full rounded-lg rounded-tl-none p-4">
         <div className="flex w-auto items-start justify-start rounded-md border-2 border-white bg-white/50 p-4 shadow-sm">
           {!layouts || layouts.length === 0 ? (
             // データがない場合は登録用フォームだけを表示

@@ -1,8 +1,6 @@
 import EngawaArea from "@/ui/templates/engawa-area";
 import SectionH3 from "@/ui/molecules/section-h3";
 import TitleH3 from "@/ui/atoms/title-h3";
-import LinkButtonWithIcon from "@/ui/atoms/link-button-with-icon";
-import BottomNav from "@/ui/templates/bottom-nav";
 import { fetchSafe } from "@/lib/utils/fetchSate";
 import { getUserData } from "@/lib/getUserData";
 import Image from "next/image";
@@ -11,6 +9,7 @@ import LinkButtonMini from "@/ui/atoms/link-button-mini";
 import { Pencil } from "lucide-react";
 import { CollapsibleItem } from "@/ui/atoms/collapsible-item";
 import type { UserData } from "@/types/user-data";
+import LinkButtonLarge from "@/ui/atoms/link-button-large";
 
 export default async function Page() {
   const userData = await fetchSafe(() => getUserData());
@@ -133,10 +132,9 @@ export default async function Page() {
             />
           </div>
         </SectionH3>
+        <LinkButtonLarge label="戻る" href="/terrace" />
+        
       </EngawaArea>
-      <BottomNav>
-        <LinkButtonWithIcon variant="terrace" />
-      </BottomNav>
     </>
   );
 }

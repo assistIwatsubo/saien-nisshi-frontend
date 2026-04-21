@@ -24,54 +24,55 @@ export const parentCommonStyle =
 
 export const childrenCommonStyle = "h-10 px-2 py-0.5 content-center";
 
-const childrenStyle = `min-w-20 text-right font-bold text-white ${childrenCommonStyle} bg-[var(--app-primary-color)] `;
+const childrenStyle = `min-w-20 text-right font-bold text-white ${childrenCommonStyle} bg-[var(--app-primary-color)]`;
 
 type Props = {
   edit?: boolean;
-  plans?: PlanEntry[];
+  plan: PlanEntry;
   fields?: FieldData[];
 };
 
-export default function PlantingPlan({ edit = false, plans, fields }: Props) {
+export default function PlantingPlan({ edit = false, plan, fields }: Props) {
   return (
-    <div className="app-blurred-bg-white min-w-full overflow-auto rounded-lg rounded-tl-none p-4">
-      <div className="flex w-auto items-start justify-start rounded-md border-2 border-white bg-white/50 shadow-sm">
-        <ol
-          data-label="table-header"
-          className={`w-fit divide-green-800 ${parentCommonStyle}`}
-        >
-          {rowLabels.map((item) => (
-            <li
-              key={`header-${item}`}
-              className={` ${childrenStyle} bg-[var(--app-secondary-color)]`}
-            >
-              {item}
-            </li>
-          ))}
-          {months.map((item) => (
-            <li
-              key={`header-${item}`}
-              className={`${childrenStyle} bg-[var(--app-primary-color)]`}
-            >
-              {item}
-            </li>
-          ))}
-        </ol>
-        {edit ? (
-          <PlantingPlanForm
-            parentCommonStyle={parentCommonStyle}
-            childrenCommonStyle={childrenCommonStyle}
-            planEntries={plans}
-            fields={fields}
-          />
-        ) : (
-          <PlantingPlanDisplay
-            parentCommonStyle={parentCommonStyle}
-            childrenCommonStyle={childrenCommonStyle}
-            planEntries={plans}
-          />
-        )}
-      </div>
-    </div>
+    <section className="app-blurred-bg-white flex w-fit flex-shrink-0 items-start justify-start p-4">
+      <ol
+        data-label="table-header"
+        className={`w-fit divide-green-800 ${parentCommonStyle}`}
+      >
+        {/* 見出し部分 */}
+        {rowLabels.map((item) => (
+          <li
+            key={`header-${item}`}
+            className={` ${childrenStyle} bg-[var(--app-secondary-color)]`}
+          >
+            {item}
+          </li>
+        ))}
+        {months.map((item) => (
+          <li
+            key={`header-${item}`}
+            className={`${childrenStyle} bg-[var(--app-primary-color)]`}
+          >
+            {item}
+          </li>
+        ))}
+      </ol>
+
+      {/* 編集モードか表示モードかで切り替え */}
+      {edit ? (
+        <PlantingPlanForm
+          parentCommonStyle={parentCommonStyle}
+          childrenCommonStyle={childrenCommonStyle}
+          planEntry={plan} // 選択された年度のデータ
+          fields={fields}
+        />
+      ) : (
+        <PlantingPlanDisplay
+          parentCommonStyle={parentCommonStyle}
+          childrenCommonStyle={childrenCommonStyle}
+          planEntry={plan} // 選択された年度のデータ
+        />
+      )}
+    </section>
   );
 }

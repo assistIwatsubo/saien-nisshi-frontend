@@ -10,6 +10,7 @@ import { DiaryEntry } from "@/types/diary";
 import { ScheduleEntry } from "@/types/schedule";
 import { FieldData, LayoutData } from "@/types/user-data";
 import { PlanEntry } from "@/types/plan";
+import { NavItem } from "@/types/main-nav";
 
 type Props = {
   diaryEntries: DiaryEntry[] | undefined;
@@ -17,13 +18,6 @@ type Props = {
   fields: FieldData[] | undefined;
   layouts: LayoutData[] | undefined;
   plans: PlanEntry[] | undefined;
-};
-
-type NavItem = {
-  key: string;
-  label: string;
-  icon: React.ReactNode;
-  color: string;
 };
 
 const navItems: NavItem[] = [

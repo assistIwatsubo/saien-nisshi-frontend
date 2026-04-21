@@ -1,5 +1,5 @@
 import Link from "next/link";
-// import HomeNews from "@/ui/terrace/home-news";
+import HomeNews from "@/ui/terrace/home-news";
 // import DateDisplay from "@/ui/atoms/dairy-calendar-display";
 // import ScheduleBoard from "@/ui/terrace/scheduleBoard";
 import EngawaArea from "@/ui/templates/engawa-area";
@@ -40,11 +40,10 @@ export default async function Page() {
     fetchSafe(getLayouts),
     fetchSafe(getPlans),
   ]);
-
   return (
     <>
       <HatakeArea>
-        {/* <HomeNews latestNews={latestNews} />
+        {/*
         <div className="flex items-stretch justify-between gap-8">
           <DateDisplay />
           <ScheduleBoard schedules={schedules} />
@@ -61,26 +60,29 @@ export default async function Page() {
         {/* <HomeCharacter homeState="default" /> */}
       </HatakeArea>
       <EngawaArea title="ひとやすみ">
-        <EngawaText textName={["edamame", "ingen"]} />
-        <SectionH3>
-          <TitleH3
-            id="text-area-title"
-            label="お役立ち情報"
-            type="withLine"
-            color="primary"
-            iconType="lightbulb"
-          />
-          <ul className="py-2">
-            <li>
-              <Link
-                href="/text/edamame"
-                className="block w-full rounded-md border-2 border-[var(--app-primary-color)] bg-white px-4 py-3"
-              >
-                スライダー作る
-              </Link>
-            </li>
-          </ul>
-        </SectionH3>
+        <HomeNews latestNews={latestNews} />
+        <div className="flex gap-4 py-8">
+          <EngawaText textName={["edamame", "ingen"]} />
+          <SectionH3>
+            <TitleH3
+              id="text-area-title"
+              label="お役立ち情報"
+              type="withLine"
+              color="primary"
+              iconType="lightbulb"
+            />
+            <ul className="py-2">
+              <li>
+                <Link
+                  href="/text/edamame"
+                  className="block w-full rounded-md border-2 border-[var(--app-primary-color)] bg-white px-4 py-3"
+                >
+                  スライダー作る
+                </Link>
+              </li>
+            </ul>
+          </SectionH3>
+        </div>
         {followingDiaries && followingDiaries.length > 0 ? (
           <SectionH3>
             <TitleH3

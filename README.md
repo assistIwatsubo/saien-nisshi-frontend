@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 菜縁日誌 - フロントエンド (Next.js)
 
-## Getting Started
+本プロジェクトのフロントエンド（UI/UX層）リポジトリです。
+Next.jsを活用し、WEBアプリケーション開発・フルスタック開発の練習のため作成したプロトタイプです。
+バックエンドはDocker環境にLaravelを用意し、データ設計から行いました。
 
-First, run the development server:
+## 🚀 開発のポイント
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 将来的にネイティブアプリ開発も見据えて、React Nativeを使えるようになるためにReact系であるNext.jsを採択。
+- ナラティブUIを意識し、「家庭菜園を行っていた祖母宅の縁側から眺める庭」をイメージ。
+- モダンな開発に慣れるため、TypeScript、Tailwind.css、アトミックデザインのコンポーネント設計を導入。
+- 別リポジトリのLaravel APIと連携し、データ設計・テーブル設計などを練習。データの取得やユーザー認証も行っています。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 使用技術
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: Next.js
+- **Styling**: Tailwind CSS
+- **Design Tools**: Figma
+- **Communication**: Docker, Git
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔗 関連リポジトリ
 
-## Learn More
+- **バックエンド (Laravel + Docker)**: [https://github.com/assistIwatsubo/saien-nisshi-api]
 
-To learn more about Next.js, take a look at the following resources:
+## 🖼 プレビュー / 設計
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<img width="1920" height="869" alt="Image" src="https://github.com/user-attachments/assets/0a736189-a478-4456-a254-5152c549c6e9" />
+<img width="1920" height="2562" alt="Image" src="https://github.com/user-attachments/assets/68e2908c-f3bd-42e1-8e70-8f59aa929499" />
+<img width="1920" height="869" alt="Image" src="https://github.com/user-attachments/assets/a63060b1-1942-4d0d-82c5-da4eed2514f3" />
+<img width="1920" height="869" alt="Image" src="https://github.com/user-attachments/assets/cbe19983-1ba1-4ffd-b5ae-89feb8852063" />
+<img width="1920" height="869" alt="Image" src="https://github.com/user-attachments/assets/b4c4426b-1114-4b30-9c36-acaa9c08967d" />
+<img width="1920" height="869" alt="Image" src="https://github.com/user-attachments/assets/4343485f-8767-4362-8eaf-3f7b8a95abea" />
